@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateConfigurationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('configurations', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
+            $table->enum('currency',['MXN','USD','EUR'])->default('MXN');
+            $table->string('timezone')->required();
+            $table->string('notification_voucher')->required();
+            $table->string('notification_details')->required();
+            $table->string('notification_card')->required();
+            $table->unsignedBigInteger('hotel_id');
+            $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('configurations');
+    }
+}
