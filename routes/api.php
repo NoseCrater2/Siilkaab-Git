@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('hotels','Api\HotelController')->only('index','show','store','update','delete');
 
 Route::post('oauth/token','\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
 
@@ -30,4 +31,23 @@ Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 
 
 
-Route::apiResource('bookables','Api\BookableController')->only(['index','show']);
+
+
+Route::apiResource('hotels','Api\HotelController')->only('index','show','store','update','destroy');
+
+Route::apiResource('amenities','Api\AmenityController')->only('index','show','store','update','destroy');
+Route::apiResource('conditions','Api\ConditionController')->only('index','show','store','update','destroy');
+Route::apiResource('configurations','Api\ConfigurationController')->only('index','show','store','update','destroy');
+Route::apiResource('countries','Api\CountryController')->only('index','show');
+Route::apiResource('contacts','Api\ContactController')->only('index','show','store','update','destroy');
+Route::apiResource('currencies','Api\CurrencyController')->only('index','show');
+Route::apiResource('pools','Api\PoolController')->only('index','show','store','update','destroy');
+Route::apiResource('regimes','Api\RegimeController')->only('index','show','store','update','destroy');
+Route::apiResource('restaurants','Api\RestaurantController')->only('index','show','store','update','destroy');
+Route::apiResource('schedules','Api\ScheduleController')->only('index','show','store','update','destroy');
+Route::apiResource('securities','Api\SecurityController')->only('index','show','store','update','destroy');
+Route::apiResource('users','Api\UserController')->only('index','show','store','update','destroy');
+
+
+
+Route::post('convert_currency','Api\HotelController@convert_currency');

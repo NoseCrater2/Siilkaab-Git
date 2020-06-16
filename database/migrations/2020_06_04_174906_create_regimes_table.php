@@ -15,20 +15,21 @@ class CreateRegimesTable extends Migration
     {
         Schema::create('regimes', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->boolean('special')->default(false);
+            $table->enum('priority',['normal','medium','high'])->default('normal');
             $table->boolean('only_room')->required()->default(false);
-            $table->date('start_period');
-            $table->date('final_period');
-            $table->double('lodging_breakfast_children');
-            $table->double('lodging_breakfast_adult');
-            $table->double('half_pension_children');
-            $table->double('half_pension_adult');
-            $table->double('full_pension_children');
-            $table->double('full_pension_adult');
-            $table->double('all_included_children');
-            $table->double('all_included_adult');
+            $table->datetime('start_period');
+            $table->datetime('final_period');
+            $table->double('lodging_breakfast_children')->default(0.0);
+            $table->double('lodging_breakfast_adult')->default(0.0);
+            $table->double('half_pension_children')->default(0.0);
+            $table->double('half_pension_adult')->default(0.0);
+            $table->double('full_pension_children')->default(0.0);
+            $table->double('full_pension_adult')->default(0.0);
+            $table->double('all_included_children')->default(0.0);
+            $table->double('all_included_adult')->default(0.0);
             $table->unsignedBigInteger('hotel_id');
             $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

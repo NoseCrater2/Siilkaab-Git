@@ -15,13 +15,14 @@ class CreateConfigurationsTable extends Migration
     {
         Schema::create('configurations', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->enum('currency',['MXN','USD','EUR'])->default('MXN');
             $table->string('timezone')->required();
             $table->string('notification_voucher')->required();
             $table->string('notification_details')->required();
             $table->string('notification_card')->required();
+            $table->unsignedBigInteger('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->unsignedBigInteger('hotel_id');
-            $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->timestamps();
         });
     }

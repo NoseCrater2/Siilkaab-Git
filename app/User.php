@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','last_name','email', 'password','type','language','timezone'
+        'name','last_name','email', 'password','type','language','timezone','currency_id'
     ];
 
     /**
@@ -40,5 +40,16 @@ class User extends Authenticatable
 
     public function hotels(){
         return $this->belongsToMany(Hotel::class);
-	}
+    }
+    
+    public function currency()
+    {
+        return $this->belongsTo('App\Currency');
+    }
+
+    public static function make_password(){
+        $pass = '';
+        $pass = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 8);
+        return $pass;
+    }
 }

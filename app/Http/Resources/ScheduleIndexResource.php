@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookableShowResource extends JsonResource
+class ScheduleIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,11 @@ class BookableShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description
+            'day' => $this->day,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'restaurant_id'=> isset($this->restaurant)?$this->restaurant->id:null,
+            'restaurant'=> isset($this->restaurant)?$this->restaurant->name:null,
         ];
     }
 }

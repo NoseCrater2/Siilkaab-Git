@@ -10,14 +10,19 @@ class Configuration extends Model
         'notification_voucher',
         'notification_details',
         'notification_card',
-        'currency',
         'timezone',
+        'currency_id',
         'hotel_id'
     ];
 
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo('App\Currency');
     }
    
 }

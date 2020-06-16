@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookableIndexResource extends JsonResource
+class CountryIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,7 @@ class BookableIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description
+            'name' => $this->name,
         ];
     }
 }

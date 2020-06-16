@@ -12,4 +12,11 @@ class Schedule extends Model
             'end_time',
             'restaurant_id'
     ];
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
+
+
 }

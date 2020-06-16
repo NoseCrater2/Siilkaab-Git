@@ -12,4 +12,15 @@ class Currency extends Model
         'symbol',
     ];
     
+
+    public function configurations()
+    {
+        $this->hasMany(Configuration::class);
+    }
+
+
+    public function users()
+    {
+        $this->hasMany(User::class);
+    }
 }

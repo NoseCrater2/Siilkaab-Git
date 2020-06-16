@@ -20,12 +20,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->required();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->required();
-            $table->string('type')->required();
+            $table->enum('type',['manager','administrator','super'])->default('manager')->required();
             $table->string('language')->required();
             $table->string('timezone')->required();
-            $table->enum('currency',['MXN','USD','EUR'])->default('MXN');
+            $table->unsignedBigInteger('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
+
         });
     }
 

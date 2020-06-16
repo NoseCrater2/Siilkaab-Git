@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hotel extends Model
 {
+
+    //use HotelObserver;
     protected $fillable = [
         'title',
         'url',
