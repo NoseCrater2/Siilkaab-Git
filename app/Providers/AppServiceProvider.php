@@ -6,12 +6,14 @@ use App\Condition;
 use App\Configuration;
 use App\Contact;
 use App\Hotel;
+use App\HotelUser;
 use App\Pool;
 use App\User;
 use App\Observers\HotelObserver;
 use App\Observers\ConditionObserver;
 use App\Observers\ContactObserver;
 use App\Observers\ConfigurationObserver;
+use App\Observers\HotelUserObserver;
 use App\Observers\PoolObserver;
 use App\Observers\RegimeObserver;
 use App\Observers\RestaurantObserver;
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Restaurant::observe(RestaurantObserver::class);
         Regime::observe(RegimeObserver::class);
         User::observe(UserObserver::class);
+        HotelUser::observe(HotelUserObserver::class);
         //JsonResource::withoutWrapping();
     }
 }

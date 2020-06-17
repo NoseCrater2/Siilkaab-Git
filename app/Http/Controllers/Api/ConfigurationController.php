@@ -56,7 +56,7 @@ class ConfigurationController extends Controller
      */
     public function show(Configuration $configuration)
     {
-        return new ConfigurationIndexResource(Configuration::findOrFail($configuration));
+        return new ConfigurationIndexResource(Configuration::findOrFail($configuration->id));
     }
 
    
@@ -92,6 +92,6 @@ class ConfigurationController extends Controller
      */
     public function destroy(Configuration $configuration)
     {
-        //
+        $configuration->delete();
     }
 }

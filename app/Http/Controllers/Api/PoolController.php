@@ -96,6 +96,6 @@ class PoolController extends Controller
      */
     public function destroy(Pool $pool)
     {
-        //
+        $pool->delete();
     }
 }

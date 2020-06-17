@@ -57,7 +57,7 @@ class ConditionController extends Controller
      */
     public function show(Condition $condition)
     {
-        return new ConditionIndexResource(Condition::findOrFail($condition));
+        return new ConditionIndexResource(Condition::findOrFail($condition->id));
     }
 
     
@@ -95,6 +95,6 @@ class ConditionController extends Controller
      */
     public function destroy(Condition $condition)
     {
-        //
+        $condition->delete();
     }
 }

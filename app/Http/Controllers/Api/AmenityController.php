@@ -16,9 +16,9 @@ class AmenityController extends Controller
         );
     }
 
-    public function show($id)
+    public function show(Amenity $amenity)
     {
-        return new AmenityIndexResource(Amenity::findOrFail($id));
+        return new AmenityIndexResource(Amenity::findOrFail($amenity->id));
     }
 
 

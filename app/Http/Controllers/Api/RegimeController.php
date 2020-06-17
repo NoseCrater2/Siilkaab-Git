@@ -112,6 +112,6 @@ class RegimeController extends Controller
      */
     public function destroy(Regime $regime)
     {
-        //
+        $regime->delete();
     }
 }

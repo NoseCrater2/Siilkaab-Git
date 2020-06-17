@@ -52,4 +52,9 @@ class User extends Authenticatable
         $pass = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 8);
         return $pass;
     }
+
+    public function HotelUser()
+    {
+        return $this->hasMany(HotelUser::class);
+    }
 }

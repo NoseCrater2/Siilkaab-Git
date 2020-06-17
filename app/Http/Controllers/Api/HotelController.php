@@ -21,9 +21,9 @@ class HotelController extends Controller
         );
     }
 
-    public function show($id)
+    public function show(Hotel $hotel)
     {
-        return new HotelShowResource(Hotel::findOrFail($id));
+        return new HotelShowResource(Hotel::findOrFail($hotel->id));
     }
 
     public function store(Request $request)
@@ -35,6 +35,7 @@ class HotelController extends Controller
             'reference_code'=>'required',
             'image'=>'image',
             'short_text' => 'required',
+            'large_text' => 'string'
         ]);
                 
         $image = null;

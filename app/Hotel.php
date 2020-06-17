@@ -58,4 +58,9 @@ class Hotel extends Model
         return $this->hasOne(Security::class);
     }
 
+    public function HotelUser()
+    {
+        return $this->hasMany(HotelUser::class);
+    }
+
 }

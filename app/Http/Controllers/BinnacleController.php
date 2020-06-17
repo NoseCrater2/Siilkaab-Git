@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Binnacle;
+use App\Http\Resources\BinnacleIndexResource;
 use Illuminate\Http\Request;
 
 class BinnacleController extends Controller
@@ -14,29 +15,14 @@ class BinnacleController extends Controller
      */
     public function index()
     {
-        //
+        return BinnacleIndexResource::collection(
+            Binnacle::all()
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -46,31 +32,11 @@ class BinnacleController extends Controller
      */
     public function show(Binnacle $binnacle)
     {
-        //
+        return new BinnacleIndexResource(Binnacle::findOrFail($binnacle->id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Binnacle  $binnacle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Binnacle $binnacle)
-    {
-        //
-    }
+  
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Binnacle  $binnacle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Binnacle $binnacle)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -80,6 +46,6 @@ class BinnacleController extends Controller
      */
     public function destroy(Binnacle $binnacle)
     {
-        //
+        $binnacle->delete();
     }
 }
