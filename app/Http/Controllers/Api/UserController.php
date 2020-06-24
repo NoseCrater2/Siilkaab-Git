@@ -36,7 +36,6 @@ class UserController extends Controller
             'name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
             'type' => 'required|in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'required|timezone',

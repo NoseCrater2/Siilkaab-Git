@@ -20,6 +20,7 @@ class BinnacleIndexResource extends JsonResource
             'action' => $this->action,
             'model' => $this->model,
             'details' => $this->details,
+            'created_at' => $this->created_at->diffForHumans(),
         ];
     }
 }

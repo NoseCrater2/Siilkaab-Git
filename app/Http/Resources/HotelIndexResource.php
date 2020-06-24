@@ -17,12 +17,12 @@ class HotelIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'Title' => $this->title,
-            'Url' => $this->url,
-            'ReferenceConde' => $this->reference_code,
-            'Image' => $this->image,
-            'LargeText' => $this->large_text,
-            'ShortText' => $this->short_text,
+            'title' => $this->title,
+            //'Url' => $this->url,
+            'reference_code' => $this->reference_code,
+            //'Image' => $this->image,
+            //'LargeText' => $this->large_text,
+            'shortText' => $this->short_text,
         ];
     }
 }
