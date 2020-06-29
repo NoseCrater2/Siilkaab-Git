@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         'currencies',
         'users',
         'countries',
+        'hotels',
         
       ]);
 
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         CurrenciesTableSeeder::class,
         UsersTableSeeder::class,
         CountriesTableSeeder::class,
+        HotelsTableSeeder::class
         
         
       ]);
