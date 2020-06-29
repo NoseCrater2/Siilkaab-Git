@@ -20,7 +20,14 @@ const routes = [
     {
         path: "/hotel/:id",
         component: Hotel, 
-        name: "hotel"
+        name: "hotelNoParam",
+       
+    },
+    {
+        path: "/hotel/",
+        component: Hotel, 
+        name: "hotelParam",
+        
     },
     {
         path: "/hotels/",

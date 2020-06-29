@@ -28,10 +28,9 @@ class DatabaseSeeder extends Seeder
         CurrenciesTableSeeder::class,
         UsersTableSeeder::class,
         CountriesTableSeeder::class,
-        HotelsTableSeeder::class
-        
-        
+        HotelsTableSeeder::class,      
       ]);
+
 
       DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

@@ -24,14 +24,12 @@
 
         <v-data-table       
         v-model="selected"
-        item-key="title"
+        item-key="id"
         show-select
         :headers="headers"
         :items="hotels" 
         :items-per-page="20"
         :single-select="singleSelect"
-        :sort-by="['title']"
-        :short-desc="[true,false]"
         multi-sort
         class="elevation-1"
         :search="search"
@@ -40,8 +38,8 @@
             <v-switch v-model="singleSelect" label="Selección única" class="pa-3"></v-switch>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-            <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+            <router-link :to="'hotel/'+item.id"><v-icon small class="mr-2" >mdi-pencil</v-icon></router-link>
+            <v-icon small>mdi-delete</v-icon>
           </template>
         </v-data-table>
       </v-card>
@@ -95,7 +93,7 @@ export default {
 
     methods:{
       editItem (item) {
-      
+        
     },
 
     deleteItem (item) {
