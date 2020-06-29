@@ -49,7 +49,7 @@ Route::apiResource('securities','Api\SecurityController')->only('index','show','
 Route::apiResource('users','Api\UserController')->only('index','show','store','update','destroy');
 Route::apiResource('hotels_users/{user}','Api\HotelUserController')->only('index','store');
 Route::apiResource('hotels_users/{user}/hotels','Api\HotelUserController')->only('destroy');
-
+Route::get('timezones','Api\HotelController@getTimeZones');
 
 Route::apiResource('binnacles','BinnacleController')->only('index','show','destroy');
 

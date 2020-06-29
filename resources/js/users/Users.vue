@@ -14,14 +14,13 @@
                     
                 <v-data-table
                     v-model="selected"  
-                    item-key="name"
+                    item-key="id"
                     show-select
                     :headers="headers"
                     :items="users" 
+
                     :items-per-page="20"
                     :single-select="singleSelect"
-                    :sort-by="['name']"
-                    :short-desc="[true,false]"
                     multi-sort
                     class="elevation-1"
                     :search="search"
@@ -43,92 +42,124 @@
                               single-line
                               hide-details
                             ></v-text-field>
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog v-model="dialog" persistent max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
                 dark
                 class="mb-2"
                 v-bind="attrs"
+               
                 v-on="on"
               >Nuevo Usuario</v-btn>
             </template>
             <v-card>
               <v-card-title>
-            <span class="headline">Nuevo Usuario</span>
+            <span class="headline">{{ formTitle }}</span>
              </v-card-title>
               <v-card-text>
+                <v-form v-model="valid">
             <v-container>
               <v-row>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field label="Nombre(s)*" required></v-text-field>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field 
+                    label="Nombre(s)*" 
+                    v-model="editedItem.name" 
+                    required
+
+                    ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field label="Apellido(s)*" hint="example of helper text only on focus"></v-text-field>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field label="Apellido(s)*" v-model="editedItem.last_name"  ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field label="Email*" required></v-text-field>
+                  <v-text-field label="Email*" v-model="editedItem.email" required ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
-                    :items="['Super Admin', 'Administrador', 'Manager']"
+                    :items="['super', 'administrator', 'manager']"
                     label="Tipo*"
+
+                    v-model="editedItem.type"
                     required
                   ></v-select>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-autocomplete
-                    :items="['Español', 'Inglish']"
-                    label="Lenguaje"
-                    required
-                  ></v-autocomplete>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
-                    :items="['America/Mexico_City', 'America/Chihuahua', 'America/Hermosillo', 'America/Mazatlan']"
-                    label="Zona horaria*"
+                    :items="['Spanish', 'English']"
+                    label="Lenguaje*"
+                    v-model="editedItem.language"
+
                     required
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-autocomplete
-                    :items="['Peso-MXN', 'Dollar-USD']"
-                    label="Moneda"
+
+                  <div v-if="timezones">
+                    <v-autocomplete
+                    :items="timezones"
+                    label="Zona horaria*"
+
+                    v-model="editedItem.timezone"
                     required
                   ></v-autocomplete>
+                  </div>
+
+                  <div v-else>
+                    <v-autocomplete
+                    :items="[]"
+                    label="Zona horaria*"
+                    v-model="editedItem.timezone"
+
+                    required
+                  ></v-autocomplete>
+                  </div>
+                  
+
+
+                </v-col>
+                <v-col cols="12" sm="6">
+
+                  <div v-if="currencies">
+                    <v-autocomplete
+                    :items="currencies"
+                    label="Moneda*"
+                    item-value="currency_id"
+                    item-text="currency"
+                    v-model="editedItem.currency_id"
+                    required
+                    >
+                    
+                    </v-autocomplete>
+                  </div>
+
+                  <div v-else>
+                    <v-autocomplete
+                    :items="[]"
+                    label="Moneda*"
+                    item-text="currency"
+                    item-value="currency_id"
+                    v-model="editedItem.currency_id"
+                    required
+                    ></v-autocomplete>
+                  </div>
+                  
                 </v-col>
               </v-row>
             </v-container>
-            <small>*Campos obligatorios</small>
+            </v-form>
+            <div v-if="errors">
+              
+                <div v-for=" error in errors" :key="error.id">
+                   <v-alert type="error">
+                     {{error}}
+                    </v-alert>
+                 </div> 
+
+            </div>
+            
           </v-card-text>
-              <!--<v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.name" label="Nombre(s)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.calories" label="Apellido(s)"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.fat" label="Email"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.carbs" label="Tipo"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Lenguaje"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Zona horaria"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.protein" label="Moneda"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>-->
-  
+              
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
@@ -157,17 +188,6 @@
             </v-data-table>
             </v-card>
         </v-app>
-           <!-- <div class="row" v-for="row in rows" :key="'row' + row">
-                <div class="col d-flex align-items-stetch" v-for="(hotel,column) in hotelsInRow(row)" :key="'row' + row + column">
-                    <hotel-list-item 
-                       v-bind="hotel"
-                    ></hotel-list-item>
-                </div>
-
-                <div class="col" v-for="p in placeholdersInRow(row)"  :key="'placeholder' + row + p">
-
-                </div>
-            </div>-->
          
         </div>     
     </div>
@@ -180,34 +200,60 @@ export default {
     
     data(){
         return {
+          editedIndex: -1,
           dialog: false,
-            search:'',
+          valid:false,
+          search:'',
            singleSelect: false,
            selected: [],
+           timezones:[],
+           errors:[],
           users: null,
+          currencies:'',
           loading: false,
-          columns: 3,
+          editedItem:{
+            name:'',
+            last_name:'',
+            email: '',
+            type:'',
+            language:'',
+            timezone:'',
+            currency:'',
+            currency_id:'',
+          },
+          defaultItem:{
+            name:'',
+            last_name:'',
+            email: '',
+            type:'',
+            language:'',
+            timezone:'',
+            currency:'',
+            currency_id:'',
+
+          },
           headers: [
         {
           text: 'Nombre',
           align: 'start',
           sortable: true,
-          value: 'name',
+          value: 'all_name',
         },
         { text: 'Email', value: 'email' },
         { text: 'Tipo', value: 'type' },
         { text: 'ID', value: 'id' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      editedItem:{
-
-      },
-      defaultItem:{
-
-      }
+     
         };
     },
     
+    computed:{
+      formTitle(){
+        return this.editedIndex === -1 ? 'Nuevo Usuario' : 'Editar Usuario'
+      }
+    },
+
     created(){
         this.loading = true;
         const request = axios
@@ -216,31 +262,68 @@ export default {
                 this.users = response.data.data;
                 this.loading = false;
         });
+         this.getTimeZones();
+        this.chargeAddProps();
+       
     },
 
     methods:{
-       editItem (item) {
+
+      chargeAddProps(){
+        const request = axios
+            .get("/api/currencies")
+            .then(response => { 
+                this.currencies = response.data.data;
+                
+               });
+      },
+
+    getTimeZones(){
+      const request = axios
+            .get("/api/timezones")
+            .then(response => { 
+                this.timezones = response.data;
+        });
+    },
+    editItem (item) {
       
+      this.editedIndex = this.users.indexOf(item)
+      this.editedItem = Object.assign({},item)
+      this.dialog = true
+
     },
 
     deleteItem (item) {
-      
+      const index = this.users.indexOf(item)
+      confirm('¿Eliminar este usuario?') && axios.delete('/api/users/'+item.id);
     },
      close () {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
+        this.errors = [];
       })
     },
-
+    
     save () {
+      this.errors =[]
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
+        axios.put('/api/users/'+this.editedItem.id,this.editedItem);
+      } else {        
+         axios.post('/api/users',this.editedItem).catch(err => {
+           if(err.response && err.response.status && 422 === err.response.status){
+                this.errors = err.response.data.errors
+                
+              }
+          });
+
+          console.log('primero paso por aqui'+this.errors);
+       
       }
-      this.close()
+       if(this.errors.length === 0){
+          this.close();
+        }
     },
     }
 

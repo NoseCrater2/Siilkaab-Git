@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Hotel;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HotelIndexResource;
+use App\Http\Resources\TimezoneResource;
 use App\Http\Resources\HotelShowResource;
+use DateTimeZone;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Collection;
 
 use function GuzzleHttp\json_decode;
 
@@ -127,4 +130,15 @@ class HotelController extends Controller
         return $done;
 
     }
+
+    public function getTimeZones()
+    {
+      
+        return DateTimeZone::listIdentifiers(DateTimeZone::AMERICA); 
+       
+    }
+
+    
+
+
 }

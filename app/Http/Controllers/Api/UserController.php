@@ -32,16 +32,32 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $data = $request->validate([
+        $rules =[
             'name' => 'required|string',
-            'last_name' => 'required|string',
             'email' => 'required|email|unique:users',
             'type' => 'required|in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'required|timezone',
             'currency_id' => 'required|exists:currencies,id'
-        ]);
+        ];
 
+        $messages = [
+            'name.required' => 'Nombre es requerido',
+            'last_name.string' => 'Apellido no puede quedar vacío',
+            'language.string' => 'Lenguaje no puede quedar vacío',
+            'email.required' => 'Email es requerido',
+            'email.email' => 'Debe ser un Email válido',
+            'email.unique' => 'Este Email ya está registrado en el sistema',
+            'type.required' => 'El Tipo es requerido',
+            'type.in' => 'El tipo debe ser manager, administrator o super',
+            'timezone.required' => 'Zona horaria es requerida',
+            'timezone.timezone' => 'Debe ser una zona horaria válida',
+            'currency_id.required' => 'Moneda es requerida',
+            'currency_id.exists' => 'Debe ser un id válido de moneda',
+        ];
+
+        $data= $this->validate($request,$rules, $messages);
+        
         $data = $request->all();
         $pas = User::make_password();
         $GLOBALS['password_pivote'] = $pas;
@@ -76,15 +92,26 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         
-        $data = $request->validate([
+        $rules =[
             'name' => 'string',
-            'last_name' => 'string',
             'email' => 'email|unique:users,email,'.$user->id,
             'type' => 'in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'timezone',
             'currency_id' => 'exists:currencies,id'
-        ]);
+        ];
+
+        $messages = [
+            'name.string' => 'Nombre es requerido',
+            'language.string' => 'Lenguaje no puede quedar vacío',
+            'email.email' => 'Debe ser un Email válido',
+            'email.unique' => 'Este Email ya está registrado en el sistema',
+            'type.in' => 'El tipo debe ser manager, administrator o super',
+            'timezone.timezone' => 'Debe ser una zona horaria válida',
+            'currency_id.exists' => 'Debe ser un id válido de moneda',
+        ];
+
+        $data= $this->validate($request,$rules, $messages);
                 
         $data = $request->all();
         $pas = User::make_password();

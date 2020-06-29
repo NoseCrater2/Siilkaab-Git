@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CurrencyIndexResource extends JsonResource
+class TimezoneResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,10 +14,6 @@ class CurrencyIndexResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'currency_id' => $this->id,
-            'currency' => $this->name.' | '.$this->code.' | '.$this->symbol,
-           
-        ];
+       
     }
 }
