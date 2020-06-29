@@ -309,21 +309,27 @@ export default {
     save () {
       this.errors =[]
       if (this.editedIndex > -1) {
-        axios.put('/api/users/'+this.editedItem.id,this.editedItem);
+        axios.put('/api/users/'+this.editedItem.id,this.editedItem).catch(err => {
+           if(err.response && err.response.status && 422 === err.response.status){
+             this.errors = err.response.data.errors
+              }
+          }).then(response => { 
+                if(response){
+                  this.close()
+                }
+        });
       } else {        
          axios.post('/api/users',this.editedItem).catch(err => {
            if(err.response && err.response.status && 422 === err.response.status){
-                this.errors = err.response.data.errors
-                
+             this.errors = err.response.data.errors
               }
-          });
-
-          console.log('primero paso por aqui'+this.errors);
-       
+          }).then(response => { 
+                if(response){
+                  this.close()
+                }
+        });
       }
-       if(this.errors.length === 0){
-          this.close();
-        }
+       
     },
     }
 
