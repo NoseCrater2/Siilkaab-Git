@@ -208,7 +208,7 @@ export default {
            selected: [],
            timezones:[],
            errors:[],
-          users: null,
+          users: this.$store.state.lastStorage.users,
           currencies:'',
           loading: false,
           editedItem:{
@@ -255,11 +255,13 @@ export default {
     },
 
     created(){
+      
         this.loading = true;
         const request = axios
             .get("/api/users")
             .then(response => { 
                 this.users = response.data.data;
+                this.$store.commit('setLastStorage',response.data.data)
                 this.loading = false;
         });
          this.getTimeZones();
@@ -267,7 +269,11 @@ export default {
        
     },
 
+    
+
     methods:{
+
+      
 
       chargeAddProps(){
         const request = axios
@@ -315,6 +321,7 @@ export default {
               }
           }).then(response => { 
                 if(response){
+                   this.$store.dispatch('setLastStorage',response.data.data)
                   this.close()
                 }
         });
@@ -325,6 +332,7 @@ export default {
               }
           }).then(response => { 
                 if(response){
+                  this.$store.dispatch('setLastStorage',response.data.data)
                   this.close()
                 }
         });

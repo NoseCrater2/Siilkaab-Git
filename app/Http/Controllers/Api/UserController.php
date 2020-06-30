@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserIndexResource;
 use App\User;
+use App\Messages;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\UserIndexResource;
 
 class UserController extends Controller
 {
@@ -31,7 +33,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $data = $request->all();
         $rules =[
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
@@ -41,30 +43,19 @@ class UserController extends Controller
             'currency_id' => 'required|exists:currencies,id'
         ];
 
-        $messages = [
-            'name.required' => 'Nombre es requerido',
-            'last_name.string' => 'Apellido no puede quedar vacío',
-            'language.string' => 'Lenguaje no puede quedar vacío',
-            'email.required' => 'Email es requerido',
-            'email.email' => 'Debe ser un Email válido',
-            'email.unique' => 'Este Email ya está registrado en el sistema',
-            'type.required' => 'El Tipo es requerido',
-            'type.in' => 'El tipo debe ser manager, administrator o super',
-            'timezone.required' => 'Zona horaria es requerida',
-            'timezone.timezone' => 'Debe ser una zona horaria válida',
-            'currency_id.required' => 'Moneda es requerida',
-            'currency_id.exists' => 'Debe ser un id válido de moneda',
-        ];
-
-        $data= $this->validate($request,$rules, $messages);
+        $validator= Validator::make($data,$rules, Messages::getMessages());
         
-        $data = $request->all();
-        $pas = User::make_password();
-        $GLOBALS['password_pivote'] = $pas;
-        $data['password'] = bcrypt($pas);
-        $user = User::create($data);
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $pas = User::make_password();
+            $GLOBALS['password_pivote'] = $pas;
+            $data['password'] = bcrypt($pas);
+            $user = User::create($data);
         
-        return new UserIndexResource(User::findOrFail($user->id));
+            return new UserIndexResource(User::findOrFail($user->id));
+        }
+        
         
         
     }
@@ -92,6 +83,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         
+        $data = $request->all();
         $rules =[
             'name' => 'string',
             'email' => 'email|unique:users,email,'.$user->id,
@@ -101,24 +93,19 @@ class UserController extends Controller
             'currency_id' => 'exists:currencies,id'
         ];
 
-        $messages = [
-            'name.string' => 'Nombre es requerido',
-            'language.string' => 'Lenguaje no puede quedar vacío',
-            'email.email' => 'Debe ser un Email válido',
-            'email.unique' => 'Este Email ya está registrado en el sistema',
-            'type.in' => 'El tipo debe ser manager, administrator o super',
-            'timezone.timezone' => 'Debe ser una zona horaria válida',
-            'currency_id.exists' => 'Debe ser un id válido de moneda',
-        ];
 
-        $data= $this->validate($request,$rules, $messages);
-                
-        $data = $request->all();
-        $pas = User::make_password();
-        $GLOBALS['password_pivote'] = $pas;
-        $data['password'] = bcrypt($pas);
-        $user->update($data);
-        return new UserIndexResource(User::findOrFail($user->id));
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $data = $request->all();
+            $pas = User::make_password();
+            $GLOBALS['password_pivote'] = $pas;
+            $data['password'] = bcrypt($pas);
+            $user->update($data);
+            return new UserIndexResource(User::findOrFail($user->id));
+        }     
+       
     }
 
     /**

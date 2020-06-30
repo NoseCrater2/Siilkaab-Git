@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Messages;
 use App\Security;
-use App\Http\Resources\SecurityIndexResource;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\SecurityIndexResource;
+
 
 class SecurityController extends Controller
 {
@@ -29,7 +32,8 @@ class SecurityController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
 
             'alltime_security' => 'boolean',
             'security_alarm' => 'boolean',
@@ -39,12 +43,17 @@ class SecurityController extends Controller
             'fire_extinguishers' => 'boolean',
             'safe'  => 'in:free,paid,flag',
             'hotel_id' => 'required|exists:hotels,id',
-        ]);
+        ];
 
-        $data = $request->all();
-        $security = Security::create($data);
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $security = Security::create($data);
+            return new SecurityIndexResource(Security::findOrFail($security->id));
+        }
         
-        return new SecurityIndexResource(Security::findOrFail($security->id));
     }
 
     /**
@@ -68,7 +77,9 @@ class SecurityController extends Controller
      */
     public function update(Request $request, Security $security)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
+
             'alltime_security' => 'boolean',
             'security_alarm' => 'boolean',
             'smoke_alarm' => 'boolean',
@@ -77,11 +88,17 @@ class SecurityController extends Controller
             'fire_extinguishers' => 'boolean',
             'safe'  => 'in:free,paid,flag',
             'hotel_id' => 'exists:hotels,id',
-        ]);
-                
-        $data = $request->all();
-        $security->update($data);
-        return new SecurityIndexResource(Security::findOrFail($security->id));
+        ];
+
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $security->update($data);
+            return new SecurityIndexResource(Security::findOrFail($security->id));
+        }
+        
     }
 
     /**

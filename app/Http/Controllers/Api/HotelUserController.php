@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use App\Hotel;
+use App\Messages;
 use App\HotelUser;
-use App\Http\Resources\HotelUserIndexResource;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\HotelUserIndexResource;
 
 class HotelUserController extends Controller
 {
@@ -35,17 +37,25 @@ class HotelUserController extends Controller
      */
     public function store(Request $request, User $user)
     {
-        $data = $request->validate([
+        $data = $request->all();
+
+        $rules = [
             "hotels"    => "required|array|min:1",
             "hotels.*"  => "required|exists:hotels,id|distinct|min:1|different:hotel_id",
-        ]);
+        ];
                 
-        $data = $request->all();
-        $hotel_array = $data['hotels'];
-        $user->hotels()->syncWithoutDetaching($hotel_array);
-        return HotelUserIndexResource::collection(
-            HotelUser::all()
-        );
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $hotel_array = $data['hotels'];
+            $user->hotels()->syncWithoutDetaching($hotel_array);
+            return HotelUserIndexResource::collection(
+                HotelUser::all()
+            );
+        }
+       
     }
 
     

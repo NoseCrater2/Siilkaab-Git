@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Contact;
-use App\Http\Resources\ContactIndexResource;
-use App\Http\Controllers\Controller;
+use App\Messages;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ContactIndexResource;
 
 class ContactController extends Controller
 {
@@ -31,8 +33,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'url' => 'url|required',
             'email' => 'required|email',
             'phone' => 'required|alpha_num',
@@ -44,14 +46,16 @@ class ContactController extends Controller
             'legal_rep' => 'required|string',
             'country_id' => 'required|exists:countries,id',
             'hotel_id' => 'required|exists:hotels,id'
-        ]);
-                
-            
-            
-        $data = $request->all();
-        $contact = Contact::create($data);
-        
-        return new ContactIndexResource(Contact::findOrFail($contact->id));
+        ];
+                  
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $contact = Contact::create($data);
+             return new ContactIndexResource(Contact::findOrFail($contact->id));
+        }
+       
     }
 
     /**
@@ -76,7 +80,9 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        $data = $request->validate([
+        $data = $request->all();
+
+        $rules = [
             'url' => 'url',
             'email' => 'email',
             'phone' => 'alpha_num',
@@ -88,11 +94,16 @@ class ContactController extends Controller
             'legal_rep' => 'string',
             'country_id' => 'exists:countries,id',
             'hotel_id' => 'exists:hotels,id'
-        ]);
-                
-        $data = $request->all();
-        $contact->update($data);
-        return new ContactIndexResource(Contact::findOrFail($contact->id));
+        ];
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+       
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $contact->update($data);
+            return new ContactIndexResource(Contact::findOrFail($contact->id));
+        }
+        
     }
 
     /**

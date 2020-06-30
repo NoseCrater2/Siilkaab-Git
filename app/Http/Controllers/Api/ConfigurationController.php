@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Messages;
 use App\Configuration;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ConfigurationIndexResource;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ConfigurationIndexResource;
+
 
 class ConfigurationController extends Controller
 {
@@ -32,20 +35,25 @@ class ConfigurationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'notification_voucher' => 'required|email',
             'notification_details' => 'required|email',
             'notification_card' => 'required|email',
             'timezone' => 'required|timezone',
             'currency_id' => 'required|exists:currencies,id',
             'hotel_id' => 'required|exists:hotels,id'
-        ]);
+        ];
                 
          
-        $data = $request->all();
-        $configuration = Configuration::create($data);
-        
-        return new ConfigurationIndexResource(Configuration::findOrFail($configuration->id));
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $configuration = Configuration::create($data);
+            return new ConfigurationIndexResource(Configuration::findOrFail($configuration->id));
+        }
+       
     }
 
     /**
@@ -70,18 +78,24 @@ class ConfigurationController extends Controller
      */
     public function update(Request $request, Configuration $configuration)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'notification_voucher' => 'email',
             'notification_details' => 'email',
             'notification_card' => 'email',
             'timezone' => 'timezone',
             'currency_id' => 'exists:currencies,id',
             'hotel_id' => 'exists:hotels,id'
-        ]);
+        ];
                 
-        $data = $request->all();
-        $configuration->update($data);
-        return new ConfigurationIndexResource(Configuration::findOrFail($configuration->id));
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $configuration->update($data);
+            return new ConfigurationIndexResource(Configuration::findOrFail($configuration->id));
+        }
+        
     }
 
     /**

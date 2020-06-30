@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('hotels','Api\HotelController')->only('index','show','store','update','delete');
 
 Route::post('oauth/token','\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
 

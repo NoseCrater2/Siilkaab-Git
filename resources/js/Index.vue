@@ -257,12 +257,16 @@
 
 <script>
 
+import { mapState } from 'vuex';
+
 export default {
     
      props: {
     source: String,
     },
-    data: () => ({
+    data (){
+      return{
+        lastStorage: this.$store.state.lastStorage,
     dialog: false,
     drawer: null,
     route:'',
@@ -308,7 +312,14 @@ export default {
         ],
       },
     ],
-  }),
+  };
+  },
+
+  computed:{
+    ...mapState({
+      lastStorageComputed: "lastStorage"
+    }),
+  }
 }
 </script>
 

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ScheduleIndexResource;
 use App\Schedule;
+use App\Messages;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ScheduleIndexResource;
+
 
 class ScheduleController extends Controller
 {
@@ -31,17 +34,22 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'day' => 'required|string',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
             'restaurant_id' => 'required|exists:restaurants,id'
-        ]);
+        ];
 
-        $data = $request->all();
-        $schedule = Schedule::create($data);
-        
-        return new ScheduleIndexResource(Schedule::findOrFail($schedule->id));
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $schedule = Schedule::create($data);
+            return new ScheduleIndexResource(Schedule::findOrFail($schedule->id));
+        }
+       
     }
 
     /**
@@ -66,16 +74,21 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'day' => 'string',
             'start_time' => 'date_format:H:i',
             'end_time' => 'date_format:H:i|after:start_time',
             'restaurant_id' => 'exists:restaurants,id'
-        ]);
-                
-        $data = $request->all();
-        $schedule->update($data);
-        return new ScheduleIndexResource(Schedule::findOrFail($schedule->id));
+        ];
+
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $schedule->update($data);
+            return new ScheduleIndexResource(Schedule::findOrFail($schedule->id));
+        }
     }
 
     /**

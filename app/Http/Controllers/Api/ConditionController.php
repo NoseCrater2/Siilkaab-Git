@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Messages;
 use App\Condition;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ConditionIndexResource;
 
 class ConditionController extends Controller
@@ -31,22 +33,28 @@ class ConditionController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+       $rules = [
             'adults' => 'required|boolean',
             'children_age' => 'required_if:adults,0|Integer|min:0',
-            'adults_age' => 'Integer|min:0',
+            'adults_age' => 'required|Integer|min:0',
             'adults_regimen' => 'required_if:adults,0|Integer|min:0',
             'checkin_time' => 'required|date_format:H:i',
             'checkout_time' => 'required|date_format:H:i|after:checkin_time',
             'cancelation_text' => 'required',
             'hotel_id' => 'required|exists:hotels,id',
-        ]);
-                
-         
-        $data = $request->all();
-        $condition = Condition::create($data);
+        ];
+
+      
+        $validator= Validator::make($data,$rules, Messages::getMessages());
         
-        return new ConditionIndexResource(Condition::findOrFail($condition->id));
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $condition = Condition::create($data);
+            return new ConditionIndexResource(Condition::findOrFail($condition->id));
+        }
+       
     }
 
     /**
@@ -71,8 +79,9 @@ class ConditionController extends Controller
      */
     public function update(Request $request, Condition $condition)
     {
+        $data = $request->all();
 
-        $data = $request->validate([
+        $rules = [
             'adults' => 'boolean',
             'children_age' => 'required_if:adults,0|Integer|min:0',
             'adults_age' => 'Integer|min:0',
@@ -80,11 +89,16 @@ class ConditionController extends Controller
             'checkin_time' => 'date_format:H:i',
             'checkout_time' => 'date_format:H:i|after:checkin_time',
             'hotel_id' => 'exists:hotels,id',
-        ]);
-                
-        $data = $request->all();
-        $condition->update($data);
-        return new ConditionIndexResource(Condition::findOrFail($condition->id));
+        ];
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $condition->update($data);
+            return new ConditionIndexResource(Condition::findOrFail($condition->id));
+        }
+       
     }
 
     /**
@@ -97,4 +111,9 @@ class ConditionController extends Controller
     {
         $condition->delete();
     }
+
+
+   
+
+  
 }

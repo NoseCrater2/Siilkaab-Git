@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Hotel;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\HotelIndexResource;
-use App\Http\Resources\TimezoneResource;
-use App\Http\Resources\HotelShowResource;
 use DateTimeZone;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
+use App\Messages;
 use GuzzleHttp\Client;
-use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\HotelShowResource;
+use App\Http\Resources\HotelIndexResource;
+
 
 use function GuzzleHttp\json_decode;
 
@@ -31,26 +32,32 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
-       
-        $data = $request->validate([
+        $image = null;
+        $data = $request->all();
+        $rules = [
             'title'=>'required|unique:hotels',
             'url'=>'required|url',
             'reference_code'=>'required',
             'image'=>'image',
             'short_text' => 'required',
             'large_text' => 'string'
-        ]);
-                
-        $image = null;
-        if($request->hasFile('image')){
-            $image= $request->image->store('');
-            $request['image']=$image;
-        }    
-            
-        $data = $request->all();
-        $hotel = Hotel::create($data);
+        ];
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
         
-        return new HotelShowResource(Hotel::findOrFail($hotel->id));
+           
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            if($request->hasFile('image')){
+                $image= $request->image->store('');
+                $data['image']=$image;
+            } 
+            $hotel = Hotel::create($data);
+            return new HotelShowResource(Hotel::findOrFail($hotel->id));
+        }
+        
+       
     }
 
     /**
@@ -62,29 +69,29 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        $data = $request->validate([
+        $data = $request->all();
+
+        $rules = [
             'title'=>'unique:hotels,id,'.'$hotel->id',
             'url'=>'url',
             'image'=>'image',
-        ]);
-        
-        if($request->has('title'))
-        $hotel->title = $request['title'];
-        if($request->has('url'))
-        $hotel->url = $request['url'];
-        if($request->has('reference_code'))
-        $hotel->reference_code = $request['reference_code'];
-        if($request->has('short_text'))
-        $hotel->short_text = $request['short_text'];
-        if($request->has('large_text'))
-        $hotel->large_text = $request['large_text'];
-        if($request->hasFile('image')){
-            Storage::delete($hotel->image);
-            $hotel->image = $request->image->store('');
-        }
+        ];
+        $validator= Validator::make($data,$rules, Messages::getMessages());
 
-        $hotel->save();
-        return new HotelShowResource(Hotel::findOrFail($hotel->id));
+        
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            if($request->hasFile('image')){
+                Storage::delete($hotel->image);
+                $data['image'] = $request->image->store('');
+            }
+            $hotel->update($data);
+            return new HotelShowResource(Hotel::findOrFail($hotel->id));
+        }
+       
+        
     }
 
     /**

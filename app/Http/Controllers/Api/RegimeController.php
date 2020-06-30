@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\RegimeIndexResource;
 use App\Regime;
+use App\Messages;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\RegimeIndexResource;
+
 
 class RegimeController extends Controller
 {
@@ -21,15 +24,7 @@ class RegimeController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +34,9 @@ class RegimeController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([  
+        $data = $request->all();
+
+        $rules = [  
             'priority' => 'required|in:normal,medium,high',
             'only_room' => 'boolean',
             'start_period' => 'date_format:Y-m-d H:i',
@@ -53,12 +50,17 @@ class RegimeController extends Controller
             'all_included_children' => 'numeric',
             'all_included_adult' => 'numeric',
             'hotel_id' => 'required|exists:hotels,id',
-        ]);
+        ];
 
-        $data = $request->all();
-        $regime = Regime::create($data);
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $regime = Regime::create($data);
+            return new RegimeIndexResource(Regime::findOrFail($regime->id));
+        }
         
-        return new RegimeIndexResource(Regime::findOrFail($regime->id));
     }
 
     /**
@@ -83,7 +85,9 @@ class RegimeController extends Controller
      */
     public function update(Request $request, Regime $regime)
     {
-         $data = $request->validate([
+        $data = $request->all();
+
+        $rules  = [
             'priority' => 'in:normal,medium,high',
             'only_room' => 'boolean',
             'start_period' => 'date_format:Y-m-d H:i',
@@ -97,11 +101,16 @@ class RegimeController extends Controller
             'all_included_children' => 'numeric',
             'all_included_adult' => 'numeric',
             'hotel_id' => 'exists:hotels,id',
-        ]);
-                
-        $data = $request->all();
-        $regime->update($data);
-        return new RegimeIndexResource(Regime::findOrFail($regime->id));
+        ];
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $regime->update($data);
+            return new RegimeIndexResource(Regime::findOrFail($regime->id));
+        }
+        
     }
 
     /**

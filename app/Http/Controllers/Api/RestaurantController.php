@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\RestaurantIndexResource;
+use App\Messages;
 use App\Restaurant;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\RestaurantIndexResource;
+
 
 class RestaurantController extends Controller
 {
@@ -30,17 +33,22 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+
+        $rules = [
             'name' => 'required',
             'menu_type' => 'required|in:a la carte,buffet,both',
             'hotel_id' => 'required|exists:hotels,id'
-        ]);
-                
-         
-        $data = $request->all();
-        $restaurant = Restaurant::create($data);
-        
-        return new RestaurantIndexResource(Restaurant::findOrFail($restaurant->id));
+        ];
+                 
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $restaurant = Restaurant::create($data);
+            return new RestaurantIndexResource(Restaurant::findOrFail($restaurant->id));
+        }
+       
     }
 
     /**
@@ -65,15 +73,21 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'name' => 'string',
             'menu_type' => 'in:a la carte,buffet,both',
             'hotel_id' => 'exists:hotels,id'
-        ]);
+        ];
                 
-        $data = $request->all();
-        $restaurant->update($data);
-        return new RestaurantIndexResource(Restaurant::findOrFail($restaurant->id));
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $restaurant->update($data);
+            return new RestaurantIndexResource(Restaurant::findOrFail($restaurant->id));
+        }
+        
     }
 
     /**

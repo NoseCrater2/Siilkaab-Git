@@ -1,4 +1,31 @@
-import Vue from 'vue'
+
+export default{
+
+  state :{
+    lastStorage: {
+      users: null,
+    }
+  },
+  mutations: {
+    setLastStorage(state, payload){
+      state.lastStorage = payload;
+    }
+  },
+  actions: {
+    setLastStorage(context, payload){
+      context.commit('setLastStorage',payload)
+      localStorage.setItem('lastStorage',JSON.stringify(payload));
+    },
+    loadStoreState(context){
+      const lastStorage = localStorage.getItem('lastStorage');
+      if(lastStorage){
+        context.commit('setLastStorage',JSON.parse(lastStorage));
+      }
+    }
+  },
+}
+
+/*import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 Vue.use(Vuex)
@@ -72,4 +99,4 @@ const store = new Vuex.Store({
   }
 })
 
-export default store
+export default store*/

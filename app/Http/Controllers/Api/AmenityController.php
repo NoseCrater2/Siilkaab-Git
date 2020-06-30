@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Amenity;
+use App\Messages;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AmenityIndexResource;
+
 use Illuminate\Http\Request;
 
 class AmenityController extends Controller
@@ -24,7 +27,8 @@ class AmenityController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules = [
             'spa'=> 'in:free,paid,flag',
             'air_conditioned'=>'boolean',
             'no_smoke_rooms'=>'boolean',
@@ -80,12 +84,17 @@ class AmenityController extends Controller
             'calefaction'=>'boolean',
             'keep_bags'=>'boolean',
             'hotel_id'=> 'required|exists:hotels,id',
-        ]);
+        ];
                 
-        $data = $request->all();
-        $amenity = Amenity::create($data);
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $amenity = Amenity::create($data);
+            return new AmenityIndexResource(Amenity::findOrFail($amenity->id));
+        }
         
-        return new AmenityIndexResource(Amenity::findOrFail($amenity->id));
     }
 
         /**
@@ -97,7 +106,8 @@ class AmenityController extends Controller
      */
     public function update(Request $request, Amenity $amenity)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $rules =[
             'spa'=> 'in:free,paid,flag',
             'air_conditioned'=>'boolean',
             'no_smoke_rooms'=>'boolean',
@@ -152,11 +162,18 @@ class AmenityController extends Controller
             'vip_service'=>'boolean',
             'calefaction'=>'boolean',
             'keep_bags'=>'boolean',
-            'hotel_id'=> 'required|exists:hotels,id',
-        ]);
+            'hotel_id'=> 'exists:hotels,id',
+        ];
 
-        $amenity->update($data);
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+        
+        if($validator->fails()){
+            return $validator->errors();
+        }else{
+            $amenity->update($data);
         return new AmenityIndexResource(Amenity::findOrFail($amenity->id));
+        }
+        
     }
 
 
