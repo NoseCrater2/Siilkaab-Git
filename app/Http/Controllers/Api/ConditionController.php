@@ -49,7 +49,7 @@ class ConditionController extends Controller
         $validator= Validator::make($data,$rules, Messages::getMessages());
         
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $condition = Condition::create($data);
             return new ConditionIndexResource(Condition::findOrFail($condition->id));

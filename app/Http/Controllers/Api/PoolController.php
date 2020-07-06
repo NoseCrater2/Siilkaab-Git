@@ -95,7 +95,7 @@ class PoolController extends Controller
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $pool->update($data);
             return new PoolIndexResource(Pool::findOrFail($pool->id));

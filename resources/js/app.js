@@ -6,7 +6,8 @@ import router from "./routes";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import Index from "./Index";
-import storeDefinition from "./store";
+import storeDefinition from "./store/store";
+import axios from 'axios';
 
 
 window.Vue = require('vue');
