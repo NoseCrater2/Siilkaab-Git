@@ -27,7 +27,6 @@ const routes = [
         path: "/hotel/",
         component: Hotel, 
         name: "hotelParam",
-        
     },
     {
         path: "/hotels/",

@@ -8,6 +8,7 @@ import Vuex from "vuex";
 import Index from "./Index";
 import storeDefinition from "./store";
 
+
 window.Vue = require('vue');
 
 
