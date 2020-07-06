@@ -43,7 +43,7 @@ class RestaurantController extends Controller
                  
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $restaurant = Restaurant::create($data);
             return new RestaurantIndexResource(Restaurant::findOrFail($restaurant->id));

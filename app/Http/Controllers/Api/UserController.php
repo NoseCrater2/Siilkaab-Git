@@ -46,7 +46,8 @@ class UserController extends Controller
         $validator= Validator::make($data,$rules, Messages::getMessages());
         
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
+            
         }else{
             $pas = User::make_password();
             $GLOBALS['password_pivote'] = $pas;
@@ -96,7 +97,7 @@ class UserController extends Controller
 
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $data = $request->all();
             $pas = User::make_password();
@@ -117,5 +118,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        return new UserIndexResource($user);
+
     }
 }
