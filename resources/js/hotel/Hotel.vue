@@ -41,7 +41,7 @@
                 </v-list>
               </v-card>
             </v-col>
-            <v-col cols="12" sm="auto" md="auto" xs="auto">
+            <v-col cols="12" sm="auto" md="9">
               <v-card class="pa-2" outlined tile>
                 <!--Contenido del card-->
                 <!--PRINCIPAL-->
