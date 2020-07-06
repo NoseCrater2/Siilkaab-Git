@@ -168,7 +168,7 @@ class AmenityController extends Controller
         $validator= Validator::make($data,$rules, Messages::getMessages());
         
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $amenity->update($data);
         return new AmenityIndexResource(Amenity::findOrFail($amenity->id));

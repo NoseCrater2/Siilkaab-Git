@@ -29,8 +29,6 @@
                     :items="binnacles" 
                     :items-per-page="20"
                     :single-select="singleSelect"
-                    :sort-by="['Fecha']"
-                    :short-desc="[true,false]"
                     multi-sort
                     class="elevation-1"
                     :search="search"
@@ -56,7 +54,7 @@
 
 <script>
 
-
+import { mapActions, mapState } from 'vuex';
 export default {
     
     data(){
@@ -64,7 +62,6 @@ export default {
             search:'',
            singleSelect: false,
            selected: [],
-          binnacles: null,
           loading: false,
           columns: 3,
           headers: [
@@ -82,16 +79,15 @@ export default {
       ],
         };
     },
-    
-    created(){
+    computed:{
+       ...mapState({
+        binnacles: state => state.BinnacleModule.binnacles,
+      }),
+    },
+    mounted(){
         this.loading = true;
-
-        const request = axios
-            .get("/api/binnacles")
-            .then(response => { 
-                this.binnacles = response.data.data;
-                this.loading = false;
-        });
+        this.$store.dispatch('getBinnacles'),
+         this.loading = false;
     },
 
     methods:{

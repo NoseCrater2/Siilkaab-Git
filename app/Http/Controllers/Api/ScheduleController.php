@@ -84,7 +84,7 @@ class ScheduleController extends Controller
 
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $schedule->update($data);
             return new ScheduleIndexResource(Schedule::findOrFail($schedule->id));

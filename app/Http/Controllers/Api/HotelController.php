@@ -81,7 +81,7 @@ class HotelController extends Controller
         
 
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             if($request->hasFile('image')){
                 Storage::delete($hotel->image);

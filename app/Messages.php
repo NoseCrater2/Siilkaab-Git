@@ -24,7 +24,7 @@ class Messages extends Model
             'alpha_num' => 'Solo debe contener numeros y letras',
             'string' => 'Debe ser una cadena de texto',
             'numeric' => 'Debe ser un número',
-            'unique' => 'Ya hay un registro con este nombre y debe ser único',
+            'unique' => 'Ya hay un registro con este :attribute y debe ser único',
             'image' => 'Debe ser una imagen',
             'distinct' => 'Los campos deben ser distintos',
             'different' => 'Está intentando agregar un registro que ya existe :input',

@@ -47,7 +47,7 @@ class HotelUserController extends Controller
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
         if($validator->fails()){
-            return $validator->errors();
+            return response($validator->errors(),422);
         }else{
             $hotel_array = $data['hotels'];
             $user->hotels()->syncWithoutDetaching($hotel_array);
