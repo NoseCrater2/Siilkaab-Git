@@ -23,8 +23,7 @@ class CreateUsersTable extends Migration
             $table->enum('type',['manager','administrator','super'])->default('manager')->required();
             $table->string('language')->required();
             $table->string('timezone')->required();
-            $table->unsignedBigInteger('currency_id');
-            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
+            
             $table->rememberToken();
             $table->timestamps();
 

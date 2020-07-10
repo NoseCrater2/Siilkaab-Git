@@ -18,8 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        //$logged_user = User::find(auth('api')->user()->id);
+
         return UserIndexResource::collection(
-            User::all()
+           // $logged_user->users->all()
+           User::all()
         );
     }
 
@@ -33,6 +36,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+         //$logged_user = User::find(auth('api')->user()->id);
         $data = $request->all();
         $rules =[
             'name' => 'required|string',
@@ -40,7 +44,7 @@ class UserController extends Controller
             'type' => 'required|in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'required|timezone',
-            'currency_id' => 'required|exists:currencies,id'
+            
         ];
 
         $validator= Validator::make($data,$rules, Messages::getMessages());
@@ -49,12 +53,15 @@ class UserController extends Controller
             return response($validator->errors(),422);
             
         }else{
-            $pas = User::make_password();
-            $GLOBALS['password_pivote'] = $pas;
-            $data['password'] = bcrypt($pas);
-            $user = User::create($data);
+           
+                $pas = User::make_password();
+                $GLOBALS['password_pivote'] = $pas;
+                $data['password'] = bcrypt($pas);
+                $user = User::create($data);
         
-            return new UserIndexResource(User::findOrFail($user->id));
+                return new UserIndexResource(User::findOrFail($user->id));
+            
+            
         }
         
         
@@ -69,7 +76,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserIndexResource(User::findOrFail($user->id));
+        //$logged_user = User::find(auth('api')->user()->id);
+        return new UserIndexResource(User::findOrFail(
+           // $logged_user->users($user->id)
+            $user->id
+        ));
     }
 
     
@@ -91,7 +102,7 @@ class UserController extends Controller
             'type' => 'in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'timezone',
-            'currency_id' => 'exists:currencies,id'
+            
         ];
 
 

@@ -15,11 +15,12 @@ class BinnacleIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
+
             'id' => $this->id,
             'user' => $this->user,
             'action' => $this->action,
             'model' => $this->model,
-            'details' => $this->details,
+            'ip' =>$request->ip(),
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }

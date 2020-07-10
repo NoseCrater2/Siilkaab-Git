@@ -2,6 +2,7 @@ import Hotels from "./hotels/Hotels";
 import Hotel from "./hotel/Hotel";
 import Users from "./users/Users";
 import Binnacles from "./binnacle/Binnacles";
+import Binnacle from "./binnacle/Binnacle";
 import Dashboard from "./panels/Dashboard";
 
 
@@ -42,6 +43,11 @@ const routes = [
         path: "/binnacles/",
         component: Binnacles, 
         name: "binnacles"
+    },
+    {
+        path: "/binnacle/:id",
+        component: Binnacle, 
+        name: "binnacle"
     },
     {
         path: "/panel/",

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','last_name','email', 'password','type','language','timezone','currency_id'
+        'name','last_name','email', 'password','type','language','timezone',
     ];
 
     /**
@@ -56,5 +56,15 @@ class User extends Authenticatable
     public function HotelUser()
     {
         return $this->hasMany(HotelUser::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class,'parent_id');
     }
 }

@@ -30,6 +30,6 @@ $factory->define(User::class, function (Faker $faker) {
         'language' => 'Spanish',
         'timezone' => $faker->timezone,
         'remember_token' => Str::random(10),
-        'currency_id' => Currency::all()->random()->id,
+        
     ];
 });

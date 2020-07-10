@@ -14,8 +14,6 @@ class Condition extends Model
         'checkin_time',
         'checkout_time',
         'cancelation_text',
-        'manager_name',
-        'legal_rep',
         'hotel_id'
     ];
 

@@ -33,6 +33,9 @@ Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 
 
 Route::apiResource('hotels','Api\HotelController')->only('index','show','store','update','destroy');
+Route::apiResource('rooms','Api\RoomController')->only('index','show','store','update','destroy');
+Route::apiResource('bedrooms','Api\BedroomController')->only('index','show','store','update','destroy');
+Route::apiResource('room_amenities','Api\RoomAmenityController')->only('index','show','store','update','destroy');
 
 Route::apiResource('amenities','Api\AmenityController')->only('index','show','store','update','destroy');
 Route::apiResource('conditions','Api\ConditionController')->only('index','show','store','update','destroy');
