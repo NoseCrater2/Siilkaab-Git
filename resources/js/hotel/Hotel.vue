@@ -269,11 +269,7 @@ import { TiptapVuetifyPlugin } from "tiptap-vuetify";
 // don't forget to import CSS styles
 import "tiptap-vuetify/dist/main.css";
 // Vuetify Object (as described in the Vuetify 2 documentation)
-const vuetify = new Vuetify({
-  lang: {
-    current: "es"
-  }
-});
+const vuetify = new Vuetify();
 // use Vuetify's plugin
 Vue.use(Vuetify);
 // use this package's plugin
