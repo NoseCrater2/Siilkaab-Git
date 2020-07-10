@@ -35,7 +35,7 @@
         :search="search"
         >
           <template v-slot:top>
-            <v-switch v-model="singleSelect" label="Selección única" class="pa-3"></v-switch>
+            <v-switch v-model="singleSelect" label="Selección única" class="pa-3" inset></v-switch>
           </template>
           <template v-slot:item.actions="{ item }">
             <router-link :to="'hotel/'+item.id"><v-icon small class="mr-2" >mdi-pencil</v-icon></router-link>

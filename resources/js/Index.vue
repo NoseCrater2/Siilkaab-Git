@@ -1,199 +1,270 @@
 <template>
-    <div id="app">
-        <v-app id="inspire">
-            <v-app id="inspire">
-                <v-navigation-drawer
-                v-model="drawer"
-                :clipped="$vuetify.breakpoint.lgAndUp"
-                app>
-                  <v-list dense>
-                    <template v-for="item in items">
-                      <v-row
-                      v-if="item.heading"
-                      :key="item.heading"
-                       
-                      
-                      align="center">
-                        <v-col cols="6">
-                          <v-subheader v-if="item.heading">
-                            {{ item.heading }}
-                          </v-subheader>
-                        </v-col>
-                        <v-col
-                        cols="6"
-                        class="text-center">
-                          <a
-                          href="#!"
-                          class="body-2 black--text"
-                          >EDIT</a>
-                        </v-col>
-                      </v-row>
-                      <v-list-group
-                      v-else-if="item.children"
-                      :key="item.text"
-                      
-                      v-model="item.model"
-                      :prepend-icon="item.model ? item.icon : item['icon-alt']"
-                      append-icon="">
-                        <template v-slot:activator>
-                          <v-list-item-content>
-                            <v-list-item-title >
-                            {{ item.text }}
-                            
-                            </v-list-item-title>
-                          </v-list-item-content>
-                        </template>
-                        <v-list-item
-                        v-for="(child, i) in item.children"
-                        :key="i"
-                        link
-                        :to="child.route">
-                        <v-list-item-action v-if="child.icon" >
-                          <v-icon>{{ child.icon }}</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                          <v-list-item-title>
-                          {{ child.text }}
-                          </v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                      </v-list-group>
-                      <v-list-item
-                      v-else
-                      :key="item.text"
-                      link
-                      :to="item.route">
-                      <v-list-item-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ item.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-list>
-      </v-navigation-drawer>
-  
+  <div id="app">
+    <v-app id="inspire">
       <v-app-bar
-        :clipped-left="$vuetify.breakpoint.lgAndUp"
         app
         color="blue darken-3"
         dark
+        flat
+        :clipped-left="$vuetify.breakpoint.xlAndUp || $vuetify.breakpoint.lgAndUp || $vuetify.breakpoint.mdAndUp || $vuetify.breakpoint.smAndUp || $vuetify.breakpoint.xsOnly"
       >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title
-          style="width: 300px"
-          class="ml-0 pl-4"
-        >
+        <v-toolbar-title class="ml-0 pl-4" style="width: 200px">
           <span class="hidden-sm-and-down">Siilkaab Panel</span>
         </v-toolbar-title>
-        <v-text-field
-          flat
-          solo-inverted
-          hide-details
-          prepend-inner-icon="mdi-magnify"
-          label="Search"
-          class="hidden-sm-and-down"
-        ></v-text-field>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-apps</v-icon>
+        <!--
+        <v-btn icon large>
+          <v-avatar size="32px" item>
+            <v-img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Avatar"></v-img>
+          </v-avatar>
         </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-bell</v-icon>
-        </v-btn>
-        <v-btn
-          icon
-          large
-        >
-          <v-avatar
-            size="32px"
-            item
-          >
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-              alt="Vuetify"
-            ></v-img></v-avatar>
-        </v-btn>
+        -->
       </v-app-bar>
       <v-main>
-        <v-container  align="start"
-                justify="center">
-
-            <router-view></router-view>
-          
+        <v-container align="start" justify="center">
+          <router-view></router-view>
         </v-container>
       </v-main>
-      
+      <v-navigation-drawer
+        v-model="drawer"
+        app
+        permanent
+        color="#2b3b4a"
+        dark
+        :mini-variant.sync="navigationDrawerSize"
+        :clipped="$vuetify.breakpoint.xlOnly || $vuetify.breakpoint.lgAndDown"
+      >
+        <v-list dense nav class="py-0" style="padding-left: 0px">
+          <v-div v-for="(item, index) of itemsElementList" :key="item.title">
+            <v-list-item
+              v-if="index===0"
+              two-line
+              :class="'px-0' && navigationDrawerSize && paddingAvatar"
+            >
+              <v-list-item-avatar color="red">
+                <span class="white--text headline">GS</span>
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title>GUILLERMO SAMANO</v-list-item-title>
+                <v-list-item-subtitle>Superusuario</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item v-if="index < 2" :style="item.borderStyle" link>
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-group v-if="index >= 2" @click.stop="expandNavigationDrawer(index-2)">
+              <template v-slot:activator>
+                <v-list-item-icon>
+                  <v-icon :style="item.borderStyle">{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{item.text}}</v-list-item-title>
+                </v-list-item-content>
+              </template>
+              <v-div v-for="subItems of item.children" :key="subItems.id">
+                <v-list-item
+                  v-if="index >= 2"
+                  link
+                  :to="subItems.route"
+                  :style="subItems.borderStyle"
+                >
+                  <v-list-item-icon>
+                    <v-icon :style="subItems.borderStyleSub">{{ subItems.icon }}</v-icon>
+                  </v-list-item-icon>
+
+                  <v-list-item-content>
+                    <v-list-item-title>{{ subItems.text }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-div>
+            </v-list-group>
+          </v-div>
+        </v-list>
+      </v-navigation-drawer>
     </v-app>
-  </v-app>
-</div>  
+  </div>
 </template>
 
 
 <script>
-
-
-
 export default {
-    
-     props: {
-    source: String,
-    },
-    data (){
-      return{
-        lastStorage: this.$store.state.lastStorage,
-    dialog: false,
-    drawer: null,
-    route:'',
-    items: [
-      { icon: 'mdi-poll', text: 'Panel', route:'/panel' },
-      { icon: 'mdi-bell', text: 'Reservas' },
-      {
-        icon: 'mdi-chevron-up',
-        'icon-alt': 'mdi-chevron-down',
-        text: 'Control Diario',
-        model: false,
-        children: [
-          { text: 'Disponibilidad y Tarifas', icon:'mdi-clipboard-list' },
-          { text: 'Restricciones',icon:'mdi-domain-off' },
-        ],
-      },
-
-      {
-        icon: 'mdi-chevron-up',
-        'icon-alt': 'mdi-chevron-down',
-        text: 'Gestionar Alojamientos',
-        model: false,
-        children: [
-          { text: 'Hoteles', route:'/hotels',icon: 'mdi-domain' },
-          { text: 'Habitaciones', route:'/rooms',icon: 'mdi-bed' },
-          { text: 'Tarifas',icon: 'mdi-cash-multiple' },
-          { text: 'Descuentos',icon: 'mdi-label-percent' },
-          { text: 'Extras',icon: 'mdi-tag-plus'},
-          { text: 'Fotos', icon:'mdi-image-multiple' },
-        ],
-      },
-
-      {
-        icon: 'mdi-chevron-up',
-        'icon-alt': 'mdi-chevron-down',
-        text: 'Sistema',
-        model: false,
-        children: [
-          { text: 'Usuarios', route:'/users',icon:'mdi-account-group'},
-          { text: 'Historial de Usuarios',route:'/binnacles',icon:'mdi-history' },
-          { text: 'Ajustes de Pago',icon:'mdi-account-cash' },
-          { text: 'Ajustes de API',icon:'mdi-api' },
-        ],
-      },
-    ],
-  };
+  props: {
+    source: String
   },
-
- 
-}
+  data() {
+    return {
+      lastStorage: this.$store.state.lastStorage,
+      dialog: false,
+      drawer: null,
+      route: "",
+      paddingAvatar: "", //Clase que se añade al avatar del navigation si este esta en la config mini
+      arregloStatusClick: [false, false, false], //Array que contendra los estados del clic de cada menu desplegable del nav drawer
+      banderaStatusClickCOMPUTED: false, //Bandera que unificara el resultado de 'arregloStatusClick' para comprobarse en la Computed
+      itemsElementList: [
+        {
+          icon: "mdi-poll",
+          text: "Panel",
+          borderStyle: "padding-left: 13px",
+          route: "/panel"
+        },
+        {
+          icon: "mdi-bell",
+          text: "Reservas",
+          borderStyle: "padding-left: 13px"
+        },
+        {
+          icon: "mdi-clipboard-list",
+          text: "Control Diario",
+          borderStyle: "border-left: 5px solid #cb552d",
+          children: [
+            {
+              icon: "mdi-clipboard-list",
+              text: "Disponibilidad y Tarifas",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cb552d; padding-left: 3px"
+            },
+            {
+              icon: "mdi-domain-off",
+              text: "Restricciones",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cb552d; padding-left: 3px"
+            }
+          ]
+        },
+        {
+          icon: "mdi-office-building",
+          text: "Gestionar Alojamientos",
+          borderStyle: "border-left: 5px solid #cba818",
+          children: [
+            {
+              icon: "mdi-domain",
+              text: "Hoteles",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px",
+              route: "/hotels"
+            },
+            {
+              icon: "mdi-bed",
+              text: "Habitaciones",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px",
+              route: "/rooms"
+            },
+            {
+              icon: "mdi-cash-multiple",
+              text: "Tarifas",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px"
+            },
+            {
+              icon: "mdi-label-percent",
+              text: "Descuentos",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px"
+            },
+            {
+              icon: "mdi-tag-plus",
+              text: "Extras",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px"
+            },
+            {
+              icon: "mdi-image-multiple",
+              text: "Fotos",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #cba818; padding-left: 3px"
+            }
+          ]
+        },
+        {
+          icon: "mdi-cogs",
+          text: "Sistema",
+          borderStyle: "border-left: 5px solid #7a429b",
+          children: [
+            {
+              icon: "mdi-account-group",
+              text: "Usuarios",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #7a429b; padding-left: 3px",
+              route: "/users"
+            },
+            {
+              icon: "mdi-history",
+              text: "Historial de Usuarios",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #7a429b; padding-left: 3px",
+              route: "/binnacles"
+            },
+            {
+              icon: "mdi-account-cash",
+              text: "Ajustes de Pago",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #7a429b; padding-left: 3px"
+            },
+            {
+              icon: "mdi-api",
+              text: "Ajustes de API",
+              borderStyle: "padding-left: 37px",
+              borderStyleSub: "border-left: 2px solid #7a429b; padding-left: 3px"
+            }
+          ]
+        }
+      ]
+    };
+  },
+  methods: {
+    //Metodo llamado por el boton del item deslplegable del navigation drawer para expandirlo en pantallas sm/xs
+    expandNavigationDrawer() {
+      //Se utiliza arguments por convencion de Js que indica cuando un metodo no fue creado para recibir explicitamente parametros
+      for(let i = 0; i<this.arregloStatusClick.length; i++){
+        if(i === arguments[0]){
+          //Si coincide, cambia el valor a su contrario y los demas items los vuelve falsos
+          this.arregloStatusClick[i] = !this.arregloStatusClick[i];
+        }
+        else{
+          this.arregloStatusClick[i] = false;
+        }
+      }
+      if(this.arregloStatusClick[0] == true || this.arregloStatusClick[1] == true || this.arregloStatusClick[2] == true){
+        this.banderaStatusClickCOMPUTED = true;
+      }
+      if(this.arregloStatusClick[0] == false && this.arregloStatusClick[1] == false && this.arregloStatusClick[2] == false){
+        this.banderaStatusClickCOMPUTED = false;
+      }
+    }
+  },
+  computed: {
+    //Propiedad computada que controla la variante mini del navigation drawer dependiendo su pantalla size (breakpoint)
+    navigationDrawerSize() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          this.paddingAvatar = " padding-left: 7px"
+          if(this.banderaStatusClickCOMPUTED == true){
+            return false;
+          }
+          return true;
+        case "sm":
+          this.paddingAvatar = " padding-left: 7px"
+          if(this.banderaStatusClickCOMPUTED == true){
+            return false;
+          }
+          return true;
+        case "md":
+          return false;
+        case "lg":
+          return false;
+        case "xl":
+          return false;
+      }
+    }
+  }
+};
 </script>
-
