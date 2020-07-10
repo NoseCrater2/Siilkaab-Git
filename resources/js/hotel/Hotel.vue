@@ -17,7 +17,7 @@
             <v-btn color="primary" text>Nuevo hotel</v-btn>
           </template>
         </v-banner>
-        
+
         <v-container>
           <v-row no-gutters>
             <v-col id="columMenu" cols="6" md="3" sm="12">
@@ -51,15 +51,19 @@
                   </v-banner>
                   <v-row class="pa-6">
                     <v-col cols="12" md="8">
-                      <v-text-field v-model="titulo" label="Titulo" required></v-text-field>
+                      <v-text-field v-model="hotel.Title" label="Titulo" required></v-text-field>
                     </v-col>
 
                     <v-col cols="12" md="8">
-                      <v-text-field v-model="url" label="URL" required></v-text-field>
+                      <v-text-field v-model="hotel.Url" label="URL" required></v-text-field>
                     </v-col>
 
                     <v-col cols="12" md="8">
-                      <v-text-field v-model="codigRef" label="Codigo de referencia" required></v-text-field>
+                      <v-text-field
+                        v-model="hotel.ReferenceCode"
+                        label="Codigo de referencia"
+                        required
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                   <!--FOTOS-->
@@ -69,12 +73,9 @@
 
                   <div class="pa-10">
                     <v-row>
-                      <v-img
-                        max-width="400"
-                        class="white--text align-end"
-                        height="200px"
-                        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                      ></v-img>
+                      <v-card class="mx-3" max-width="400">
+                        <v-icon style="height:210px; width:300px">mdi-image</v-icon>
+                      </v-card>
                     </v-row>
                     <br />
                     <v-btn small color="grey" class="white--text">Seleccionar imagen</v-btn>
@@ -305,8 +306,14 @@ import {
 export default {
   data() {
     return {
+      //El objeto hotel si fue llamado de editar se llena de acuerdo a la response
       hotel: {
-
+        Image: null,
+        LargeText: null,
+        ReferenceCode: null,
+        ShortText: null,
+        Title: null,
+        Url: null
       },
       loading: false,
       //Al inicializar item en 0 indicamos que se por defecto el item seleccionado es el primero
@@ -383,7 +390,6 @@ export default {
       axios.get(`/api/hotels/${id}`).then(response => {
         this.hotel = response.data.data;
         this.loading = false;
-            console.log(this.hotel);
       });
     }
   }
