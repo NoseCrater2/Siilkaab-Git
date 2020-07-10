@@ -42,7 +42,7 @@
               </v-card>
             </v-col>
             <v-col cols="12" sm="auto" md="9">
-              <v-div v-if="iditemsListOptions===0">
+              <div v-if="iditemsListOptions===0">
                 <v-card class="pa-2" outlined tile>
                   <!--Contenido del card-->
                   <!--PRINCIPAL-->
@@ -107,8 +107,8 @@
                     </v-col>
                   </div>
                 </v-card>
-              </v-div>
-              <v-div v-if="iditemsListOptions===1">
+              </div>
+              <div v-if="iditemsListOptions===1">
                 <v-card class="pa-2" outlined tile>
                   <!--Contenido del card-->
                   <!--PRINCIPAL-->
@@ -156,8 +156,8 @@
                     </v-col>
                   </v-row>
                 </v-card>
-              </v-div>
-              <v-div v-if="iditemsListOptions===2">
+              </div>
+              <div v-if="iditemsListOptions===2">
                 <v-card class="pa-2" outlined tile>
                   <!--Contenido del card-->
                   <!--DIRECCION-->
@@ -205,8 +205,8 @@
                     </v-col>
                   </v-row>
                 </v-card>
-              </v-div>
-              <v-div v-if="iditemsListOptions===3">
+              </div>
+              <div v-if="iditemsListOptions===3">
                 <v-card class="pa-2" outlined tile>
                   <!--Contenido del card-->
                   <!--CONDICIONES-->
@@ -251,7 +251,7 @@
                     </v-col>
                   </div>
                 </v-card>
-              </v-div>
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -305,7 +305,9 @@ import {
 export default {
   data() {
     return {
-      hotel: null,
+      hotel: {
+
+      },
       loading: false,
       //Al inicializar item en 0 indicamos que se por defecto el item seleccionado es el primero
       iditemsListOptions: 0,
@@ -381,6 +383,7 @@ export default {
       axios.get(`/api/hotels/${id}`).then(response => {
         this.hotel = response.data.data;
         this.loading = false;
+            console.log(this.hotel);
       });
     }
   }
