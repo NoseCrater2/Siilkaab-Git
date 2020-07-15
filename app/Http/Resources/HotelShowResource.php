@@ -16,6 +16,11 @@ class HotelShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'idConfiguration' => isset ($this->configuration) ? $this->configuration->id : null,
+            'idContact' => isset ($this->contact) ? $this->contact->id : null,
+            'idCondition' => isset ($this->condition) ? $this->condition->id : null,
+            'idRegime' => isset ($this->regime) ? $this->regime->id : null,
+            'idAmenity' => isset ($this->amenity) ? $this->amenity->id : null,
             'Title' => $this->title,
             'Url' => $this->url,
             'ReferenceCode' => $this->reference_code,

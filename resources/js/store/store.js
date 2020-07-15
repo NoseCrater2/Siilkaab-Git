@@ -1,11 +1,12 @@
-import axios from 'axios';
 import UsersModule from './UsersModule';
 import BinnacleModule from './BinnacleModule';
-export default{
+import HotelModule from './HotelModule';
+export default {
 
   modules:{
     UsersModule,
     BinnacleModule,
+    HotelModule
   },
  
 }
