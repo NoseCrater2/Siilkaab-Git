@@ -21,7 +21,7 @@ class ConfigurationIndexResource extends JsonResource
             'notification_card' => $this->notification_card,
             'timezone' => $this->timezone,
             'currency_id' => isset($this->currency)?$this->currency->id:null,
-            'currency' => isset($this->currency)?$this->currency->code:null,
+            'currency' => isset($this->currency)?$this->currency->name.' | '.$this->currency->code.' | '.$this->currency->symbol:null,
             'hotel_id'=> isset($this->hotel)?$this->hotel->id:null,
             'hotel'=> isset($this->hotel)?$this->hotel->title:null,
             
