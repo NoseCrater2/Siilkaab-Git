@@ -5,7 +5,10 @@
       <!--PRINCIPAL-->
       <div v-if="hotel!==null">
         <v-banner single-line>
-          <h3>Principal</h3>
+          <div class="flexed">
+            <v-icon class="iconsInformation" left>mdi-information</v-icon>
+            <h3>Principal</h3>
+          </div>
         </v-banner>
         <v-row class="pa-6">
           <v-col cols="12" md="8">
@@ -22,7 +25,10 @@
         </v-row>
         <!--FOTOS-->
         <v-banner single-line>
-          <h3>Fotos</h3>
+          <div class="flexed">
+            <v-icon class="iconsInformation" left>mdi-image-area</v-icon>
+            <h3>Fotos</h3>
+          </div>
         </v-banner>
 
         <div class="pa-10">
@@ -37,7 +43,10 @@
         <br />
         <!--TEXTOS-->
         <v-banner single-line>
-          <h3>Textos</h3>
+          <div class="flexed">
+            <v-icon class="iconsInformation" left>mdi-text</v-icon>
+            <h3>Textos</h3>
+          </div>
         </v-banner>
 
         <div class="pa-4">
@@ -55,7 +64,7 @@
           <v-col cols="12" sm="6" md="12">
             <!--<v-textarea outlined no-resize rows="13" row-height="30" v-model="textoLargo"></v-textarea>-->
             <!--<vue-markdown :source="textoLargo" :html="false" :toc="false" show="show"></vue-markdown>-->
-            <MarkdownCompo></MarkdownCompo>
+            <MarkdownCompo containerType="Information"></MarkdownCompo>
           </v-col>
         </div>
       </div>
@@ -82,3 +91,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.iconsInformation {
+  margin-bottom: 6px;
+}
+.flexed {
+  display: flex;
+}
+</style>

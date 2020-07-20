@@ -97,14 +97,14 @@ export default {
             {
               icon: "mdi-clipboard-list",
               text: "Disponibilidad y Tarifas",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cb552d; padding-left: 3px"
             },
             {
               icon: "mdi-domain-off",
               text: "Restricciones",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cb552d; padding-left: 3px"
             }
@@ -118,7 +118,7 @@ export default {
             {
               icon: "mdi-domain",
               text: "Hoteles",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px",
               route: "/hotels"
@@ -126,7 +126,7 @@ export default {
             {
               icon: "mdi-bed",
               text: "Habitaciones",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px",
               route: "/rooms"
@@ -134,28 +134,28 @@ export default {
             {
               icon: "mdi-cash-multiple",
               text: "Tarifas",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px"
             },
             {
               icon: "mdi-label-percent",
               text: "Descuentos",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px"
             },
             {
               icon: "mdi-tag-plus",
               text: "Extras",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px"
             },
             {
               icon: "mdi-image-multiple",
               text: "Fotos",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #cba818; padding-left: 3px"
             }
@@ -169,7 +169,7 @@ export default {
             {
               icon: "mdi-account-group",
               text: "Usuarios",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #7a429b; padding-left: 3px",
               route: "/users"
@@ -177,7 +177,7 @@ export default {
             {
               icon: "mdi-history",
               text: "Historial de Usuarios",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #7a429b; padding-left: 3px",
               route: "/binnacles"
@@ -185,14 +185,14 @@ export default {
             {
               icon: "mdi-account-cash",
               text: "Ajustes de Pago",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #7a429b; padding-left: 3px"
             },
             {
               icon: "mdi-api",
               text: "Ajustes de API",
-              borderStyle: "padding-left: 37px",
+              borderStyle: "padding-left: 37px; text-decoration: none;",
               borderStyleSub:
                 "border-left: 2px solid #7a429b; padding-left: 3px"
             }

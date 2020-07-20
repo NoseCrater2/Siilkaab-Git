@@ -12,7 +12,8 @@
       </v-btn>
 
       <template v-slot:actions>
-        <v-btn color="primary" text>Nuevo hotel</v-btn>
+        <v-icon id="iconHotel" left>mdi-domain</v-icon>
+        <h3>{{titulo}}</h3>
       </template>
     </v-banner>
   </div>
@@ -20,6 +21,16 @@
 
 <script>
 export default {
-    name: "BotonesSuperiores"
-}
+  name: "BotonesSuperiores",
+  props: {
+    titulo: String
+  }
+};
 </script>
+
+<style scoped>
+#iconHotel {
+  margin-right: 0px;
+  margin-bottom: 6px;
+}
+</style>

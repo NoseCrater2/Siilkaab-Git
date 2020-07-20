@@ -54,7 +54,7 @@
               <v-icon small>mdi-tag-plus</v-icon>
             </template>
             <template v-slot:item.actions="{ item }">
-              <router-link :to="'hotel/'+item.id">
+              <router-link :to="{name: 'hotelNoParam' , params: {id: item.id}}" style="text-decoration: none;">
                 <v-icon small class="mr-2">mdi-pencil</v-icon>
               </router-link>
               <v-icon small>mdi-delete</v-icon>

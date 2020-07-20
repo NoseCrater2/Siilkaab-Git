@@ -2,7 +2,7 @@
   <div>
     <v-card class="pa-2" outlined tile>
       <v-list dense>
-        <v-list-item-group :v-model="iditemsListOptions" color="primary">
+        <v-list-item-group :value.sync="iditemsListOptions" mandatory color="primary">
           <v-list-item
             v-for="(item, i) in itemsListOptions"
             :key="i"

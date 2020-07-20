@@ -18,23 +18,25 @@
 
 <script>
 //Importamos los componentes
-import BarraNavSiilkaab from './components/Index/BarraNavSiilkaab'
-import NavigationDashboard from './components/Index/NavigationDashboard'
+import BarraNavSiilkaab from "./components/Index/BarraNavSiilkaab";
+import NavigationDashboard from "./components/Index/NavigationDashboard";
 
 export default {
   data() {
     return {
       lastStorage: this.$store.state.lastStorage,
-      dialog: false,
+      dialog: false
     };
   },
   props: {
     source: String
   },
   //Usamos los componentes
-  components:{
+  components: {
     BarraNavSiilkaab,
     NavigationDashboard
   }
 };
 </script>
+
+
