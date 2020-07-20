@@ -42,4 +42,9 @@ class Room extends Model
         return $this->hasOne(RoomAmenity::class);
     }
 
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'rooms', 'binnacleable_type','binnacleable_id');
+    }
+
 }

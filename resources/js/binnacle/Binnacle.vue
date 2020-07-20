@@ -5,12 +5,13 @@
       <div v-if="binnacles">
 
      
-    <v-timeline :dense="$vuetify.breakpoint.smAndDown">
+    <v-timeline :reverse=true :dense="$vuetify.breakpoint.smAndDown">
       <v-timeline-item
       v-for="(binnacle, i) in binnacles"
       :key="i"
-        color="purple lighten-2"
-        fill-dot
+       
+        color="orange"
+        small
        
       >
       <template v-slot:opposite>
@@ -21,29 +22,79 @@
         </template>
       
         <v-card>
-          <v-card-title class="purple lighten-2">
-            <v-icon
-              dark
-              size="42"
-              class="mr-4"
-            >
-              mdi-magnify
-            </v-icon>
-            <h2 class="display-1 white--text font-weight-light">{{binnacle.action}}</h2>
+          <v-expansion-panels focusable>
+            <v-expansion-panel>
+              <div v-if="binnacle.action==='CREATED'">
+                <v-expansion-panel-header  :class="`${colors.create}`">
+                  <v-responsive class="text-uppercase dense" >
+                    {{binnacle.action }} over table  <strong>{{binnacle.model }}</strong>
+                  </v-responsive>
+                </v-expansion-panel-header>
+              </div>
+              <div v-if="binnacle.action==='UPDATED'">
+                <v-expansion-panel-header  :class="`${colors.update}`">
+                  <v-responsive class="text-uppercase dense" >
+                    {{binnacle.action }} over table  <strong>{{binnacle.model }}</strong>
+                  </v-responsive>
+                </v-expansion-panel-header>
+              </div>
+              <div v-if="binnacle.action==='DELETED'">
+                <v-expansion-panel-header  :class="`${colors.delete}`">
+                  <v-responsive class="text-uppercase dense" >
+                    {{binnacle.action }} over table  <strong>{{binnacle.model }}</strong>
+                  </v-responsive>
+                </v-expansion-panel-header>
+              </div>
+
+
+            <v-expansion-panel-content>
+              <div v-for="(details,d) in binnacle.details" :key="d">
+                <strong>{{d}}</strong>: {{details}} <br>
+              </div>
+            </v-expansion-panel-content>
+            </v-expansion-panel>
+            </v-expansion-panels>
+         <!-- <div v-if="binnacle.action==='CREATED'">
+          <v-card-title :class="`${colors.create}`">
+            <v-icon dark size="30" class="mr-4">mdi-database-check</v-icon>
+            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
           </v-card-title>
+          </div>
+          <div v-else-if="binnacle.action==='UPDATED'">
+          <v-card-title :class="`${colors.update}`">
+            <v-icon dark size="30" class="mr-4">mdi-database-edit</v-icon>
+            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
+          </v-card-title>
+          </div>
+          <div v-else-if="binnacle.action==='DELETED'">
+          <v-card-title :class="`${colors.delete}`">
+            <v-icon dark size="30" class="mr-4">mdi-database-remove</v-icon>
+            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
+          </v-card-title>
+          </div>
           <v-container>
             <v-row>
               <v-col cols="12" md="10">
-               {{binnacle.details}} Con IP {{binnacle.ip}}
+               <div v-for="(details,d) in binnacle.details" :key="d">
+                  
+                 <strong>{{d}}</strong>: {{details}} <br>
+                 
+               </div>
+               Con IP {{binnacle.ip}}
               </v-col>
               <v-col
                 class="hidden-sm-and-down text-right"
                 md="2"
               >
-                <v-icon size="64">mdi-calendar-text</v-icon>
+              <div v-if="binnacle.model == 'users'">
+                <v-icon size="64">mdi-account</v-icon>
+              </div>
+              <div v-if="binnacle.model == 'Hotel'">
+                <v-icon size="64">mdi-office-building</v-icon>
+              </div>
               </v-col>
             </v-row>
-          </v-container>
+          </v-container> -->
         </v-card>
       </v-timeline-item>
     </v-timeline>
@@ -61,6 +112,12 @@ export default {
         return{
             binnacles:null,
             loading: false,
+            colors:{
+              create: 'blue lighten-2',
+              update: 'green lighten-2',
+              delete: 'red lighten-2',
+              forcedelete: 'black lighten-2',
+            }
    
         }
   },

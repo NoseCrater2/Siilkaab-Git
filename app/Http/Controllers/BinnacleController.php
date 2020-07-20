@@ -19,7 +19,7 @@ class BinnacleController extends Controller
     {
 
         return  BinnacleIndexResource::collection(
-            Binnacle::latest()->get()->unique('user')
+            Binnacle::latest()->get()->unique('actor_id')
         );
             
         
@@ -38,7 +38,7 @@ class BinnacleController extends Controller
     public function show(Binnacle $binnacle)
     {        
         return  BinnacleShowResource::collection(
-            Binnacle::where('user', $binnacle->user)->get()
+            Binnacle::where('actor_id', $binnacle->actor_id)->orderBy('updated_at', 'desc')->get()
         );
     }
 

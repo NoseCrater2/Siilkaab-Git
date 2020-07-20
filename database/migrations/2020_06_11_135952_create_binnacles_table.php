@@ -16,10 +16,15 @@ class CreateBinnaclesTable extends Migration
         Schema::create('binnacles', function (Blueprint $table) {
 
             $table->bigIncrements('id')->unsigned();
-            $table->string('user')->nullable();
-            $table->enum('action',['CREATED','UPDATED','SAVED','DELETED'])->nullable();
-            $table->string('model')->nullable();
-            $table->string('details')->nullable();
+            $table->string('binnacleable_type');
+            // Which record from the table are we referencing
+            $table->integer('binnacleable_id')->unsigned();
+            // Who made the action
+            $table->integer('actor_id')->unsigned();
+            $table->string('actor')->nullable();
+            $table->text('body')->nullable();
+            // What did they do
+            $table->string('action')->nullable();
             $table->timestamps();
         });
     }

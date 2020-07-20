@@ -21,4 +21,9 @@ class Restaurant extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'restaurants', 'binnacleable_type','binnacleable_id');
+    }
 }

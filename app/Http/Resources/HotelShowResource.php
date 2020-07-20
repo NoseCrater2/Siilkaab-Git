@@ -17,7 +17,7 @@ class HotelShowResource extends JsonResource
         return [
             'id' => $this->id,
             'Title' => $this->title,
-            'Url' => $this->url,
+            'Url' => url($this->url),
             'ReferenceConde' => $this->reference_code,
             'Image' => $this->image,
             'LargeText' => $this->large_text,

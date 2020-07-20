@@ -49,6 +49,9 @@ Route::apiResource('restaurants','Api\RestaurantController')->only('index','show
 Route::apiResource('schedules','Api\ScheduleController')->only('index','show','store','update','destroy');
 Route::apiResource('securities','Api\SecurityController')->only('index','show','store','update','destroy');
 Route::apiResource('users','Api\UserController')->only('index','show','store','update','destroy');
+Route::name('verify')->get('users/verify/{token}','Api\UserController@verify');
+Route::name('resend')->get('users/{user}/resend','Api\UserController@resend');
+
 Route::apiResource('hotels_users/{user}','Api\HotelUserController')->only('index','store');
 Route::apiResource('hotels_users/{user}/hotels','Api\HotelUserController')->only('destroy');
 Route::get('timezones','Api\HotelController@getTimeZones');

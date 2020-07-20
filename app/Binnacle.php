@@ -7,9 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Binnacle extends Model
 {
     protected $fillable= [
-        'user',
+        'id',
+        'binnacleable_id',
+        'actor_id',
+        'actor',
         'action',
-        'model',
-        'details',
+        'binnacleable_type',
+        'body',
     ];
+
+    public function binnacleable()
+    {
+        return $this->morphTo();
+    }
 }

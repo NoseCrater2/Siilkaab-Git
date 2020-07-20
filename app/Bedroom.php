@@ -20,4 +20,9 @@ class Bedroom extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'bedrooms', 'binnacleable_type','binnacleable_id');
+    }
+
 }

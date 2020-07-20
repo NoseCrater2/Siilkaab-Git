@@ -23,4 +23,9 @@ class Pool extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'pools', 'binnacleable_type','binnacleable_id');
+    }
 }

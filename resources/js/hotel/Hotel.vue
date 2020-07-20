@@ -270,9 +270,7 @@ import { TiptapVuetifyPlugin } from "tiptap-vuetify";
 import "tiptap-vuetify/dist/main.css";
 // Vuetify Object (as described in the Vuetify 2 documentation)
 const vuetify = new Vuetify({
-  lang: {
-    current: "es"
-  }
+ 
 });
 // use Vuetify's plugin
 Vue.use(Vuetify);

@@ -2,11 +2,15 @@
 
 namespace App\Observers;
 
-use App\Binnacle;
 use App\Configuration;
+use App\Traits\SaveBinnacleTrait;
+
 
 class ConfigurationObserver
 {
+
+    use SaveBinnacleTrait;
+
     /**
      * Handle the configuration "created" event.
      *
@@ -15,13 +19,7 @@ class ConfigurationObserver
      */
     public function created(Configuration $configuration)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Configuration';
-        $binnacle->details = 'Configuration from Hotel with id '.$configuration->hotel->id;
-        $binnacle->save();
+        $this->track($configuration,'CREATED');
     }
 
     /**
@@ -32,13 +30,7 @@ class ConfigurationObserver
      */
     public function updated(Configuration $configuration)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Configuration';
-        $binnacle->details = 'Configuration from Hotel with id '.$configuration->hotel->id;
-        $binnacle->save();
+        $this->track($configuration,'UPDATED');
     }
 
     /**
@@ -49,13 +41,8 @@ class ConfigurationObserver
      */
     public function deleted(Configuration $configuration)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Configuration';
-        $binnacle->details = 'Configuration from Hotel with id '.$configuration->hotel->id;
-        $binnacle->save();
+        $this->track($configuration,'DELETED');
+
     }
 
     
@@ -68,12 +55,6 @@ class ConfigurationObserver
      */
     public function forceDeleted(Configuration $configuration)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Configuration';
-        $binnacle->details = 'Configuration from Hotel with id '.$configuration->hotel->id;
-        $binnacle->save();
+        $this->track($configuration,'FORCE DELETED');
     }
 }

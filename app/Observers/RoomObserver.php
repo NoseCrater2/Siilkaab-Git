@@ -3,9 +3,11 @@
 namespace App\Observers;
 
 use App\Room;
+use App\Traits\SaveBinnacleTrait;
 
 class RoomObserver
 {
+    use SaveBinnacleTrait;
     /**
      * Handle the = room "created" event.
      *
@@ -14,13 +16,7 @@ class RoomObserver
      */
     public function created(Room $room)
     {
-        $user = auth('api')->user();
-        $binnacle = new Room;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Room';
-        $binnacle->details = 'Room from Hotel with id '.$room->hotel->id;
-        $binnacle->save();
+        $this->track($room,'CREATED');
     }
 
     /**
@@ -31,13 +27,7 @@ class RoomObserver
      */
     public function updated(Room $room)
     {
-        $user = auth('api')->user();
-        $binnacle = new Room;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Room';
-        $binnacle->details = 'Room from Hotel with id '.$room->hotel->id;
-        $binnacle->save();
+        $this->track($room,'UPDATED');
     }
 
     /**
@@ -48,24 +38,7 @@ class RoomObserver
      */
     public function deleted(Room $room)
     {
-        $user = auth('api')->user();
-        $binnacle = new Room;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Room';
-        $binnacle->details = 'Room from Hotel with id '.$room->hotel->id;
-        $binnacle->save();
-    }
-
-    /**
-     * Handle the = room "restored" event.
-     *
-     * @param  \App\=Room  $=Room
-     * @return void
-     */
-    public function restored(Room $room)
-    {
-        
+        $this->track($room,'DELETED');
     }
 
     /**
@@ -76,12 +49,6 @@ class RoomObserver
      */
     public function forceDeleted(Room $room)
     {
-        $user = auth('api')->user();
-        $binnacle = new Room;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Room';
-        $binnacle->details = 'Room from Hotel with id '.$room->hotel->id;
-        $binnacle->save();
+        $this->track($room,'FORCE DELETED');
     }
 }

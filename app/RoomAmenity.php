@@ -89,4 +89,9 @@ class RoomAmenity extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'room_amenities', 'binnacleable_type','binnacleable_id');
+    }
 }

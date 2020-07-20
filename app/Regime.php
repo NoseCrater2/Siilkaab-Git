@@ -22,8 +22,8 @@ class Regime extends Model
         'hotel_id'
     ];
 
-    public function hotel()
+    public function binnacles()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->morphMany(Binnacle::class,'regimes', 'binnacleable_type','binnacleable_id');
     }
 }

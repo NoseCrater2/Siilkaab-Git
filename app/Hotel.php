@@ -68,4 +68,9 @@ class Hotel extends Model
         return $this->hasMany(HotelUser::class);
     }
 
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'hotels', 'binnacleable_type','binnacleable_id');
+    }
+
 }

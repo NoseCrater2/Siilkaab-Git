@@ -35,7 +35,7 @@
         :clipped="$vuetify.breakpoint.xlOnly || $vuetify.breakpoint.lgAndDown"
       >
         <v-list dense nav class="py-0" style="padding-left: 0px">
-          <v-div v-for="(item, index) of itemsElementList" :key="item.title">
+          <div v-for="(item, index) of itemsElementList" :key="item.title">
             <v-list-item
               v-if="index===0"
               two-line
@@ -69,7 +69,7 @@
                   <v-list-item-title>{{item.text}}</v-list-item-title>
                 </v-list-item-content>
               </template>
-              <v-div v-for="subItems of item.children" :key="subItems.id">
+              <div v-for="subItems of item.children" :key="subItems.id">
                 <v-list-item
                   v-if="index >= 2"
                   link
@@ -84,9 +84,9 @@
                     <v-list-item-title>{{ subItems.text }}</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
-              </v-div>
+              </div>
             </v-list-group>
-          </v-div>
+          </div>
         </v-list>
       </v-navigation-drawer>
     </v-app>

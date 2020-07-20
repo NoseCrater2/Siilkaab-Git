@@ -3,9 +3,12 @@
 namespace App\Observers;
 
 use App\Bedroom;
+use App\Traits\SaveBinnacleTrait;
 
 class BedroomObserver
 {
+
+    use SaveBinnacleTrait;
     /**
      * Handle the bedroom "created" event.
      *
@@ -14,13 +17,7 @@ class BedroomObserver
      */
     public function created(Bedroom $bedroom)
     {
-        $user = auth('api')->user();
-        $binnacle = new Bedroom;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Bedroom';
-        $binnacle->details = 'Bedroom from Room with id '.$bedroom->room->id;
-        $binnacle->save();
+        $this->track($bedroom,'CREATED');
     }
 
     /**
@@ -31,13 +28,7 @@ class BedroomObserver
      */
     public function updated(Bedroom $bedroom)
     {
-        $user = auth('api')->user();
-        $binnacle = new Bedroom;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Bedroom';
-        $binnacle->details = 'Bedroom from Room with id '.$bedroom->room->id;
-        $binnacle->save();
+        $this->track($bedroom,'UPDATED');
     }
 
     /**
@@ -48,25 +39,10 @@ class BedroomObserver
      */
     public function deleted(Bedroom $bedroom)
     {
-        $user = auth('api')->user();
-        $binnacle = new Bedroom;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Bedroom';
-        $binnacle->details = 'Bedroom from Room with id '.$bedroom->room->id;
-        $binnacle->save();
+        $this->track($bedroom,'DELETED');
     }
 
-    /**
-     * Handle the bedroom "restored" event.
-     *
-     * @param  \App\Bedroom  $bedroom
-     * @return void
-     */
-    public function restored(Bedroom $bedroom)
-    {
-        //
-    }
+    
 
     /**
      * Handle the bedroom "force deleted" event.
@@ -76,12 +52,6 @@ class BedroomObserver
      */
     public function forceDeleted(Bedroom $bedroom)
     {
-        $user = auth('api')->user();
-        $binnacle = new Bedroom;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Bedroom';
-        $binnacle->details = 'Bedroom from Room with id '.$bedroom->room->id;
-        $binnacle->save();
+        $this->track($bedroom,'FORCE DELETED');
     }
 }

@@ -21,5 +21,10 @@ class Condition extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'conditions', 'binnacleable_type','binnacleable_id');
+    }
    
 }

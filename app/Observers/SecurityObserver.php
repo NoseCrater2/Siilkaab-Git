@@ -3,10 +3,11 @@
 namespace App\Observers;
 
 use App\Security;
-use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class SecurityObserver
 {
+    use SaveBinnacleTrait;
     /**
      * Handle the security "created" event.
      *
@@ -15,13 +16,7 @@ class SecurityObserver
      */
     public function created(Security $security)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Security';
-        $binnacle->details = 'Security from Hotel with id '.$security->hotel->id;
-        $binnacle->save();
+        $this->track($security,'CREATED');
     }
 
     /**
@@ -32,13 +27,7 @@ class SecurityObserver
      */
     public function updated(Security $security)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Security';
-        $binnacle->details = 'Security from Hotel with id '.$security->hotel->id;
-        $binnacle->save();
+        $this->track($security,'UPDATED');
     }
 
     /**
@@ -49,13 +38,7 @@ class SecurityObserver
      */
     public function deleted(Security $security)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Security';
-        $binnacle->details = 'Security from Hotel with id '.$security->hotel->id;
-        $binnacle->save();
+        $this->track($security,'DELETED');
     }
 
     
@@ -68,12 +51,6 @@ class SecurityObserver
      */
     public function forceDeleted(Security $security)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Security';
-        $binnacle->details = 'Security from Hotel with id '.$security->hotel->id;
-        $binnacle->save();
+        $this->track($security,'FORCE DELETED');
     }
 }
