@@ -4,9 +4,12 @@ namespace App\Observers;
 
 use App\Amenity;
 use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class AmenityObserver
 {
+
+    use SaveBinnacleTrait;
     /**
      * Handle the amenity "created" event.
      *
@@ -15,13 +18,7 @@ class AmenityObserver
      */
     public function created(Amenity $amenity)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Amenity';
-        $binnacle->details = 'Amenity from Hotel with id '.$amenity->hotel->id;
-        $binnacle->save();
+        $this->track($amenity,'CREATED');
     }
 
     /**
@@ -32,13 +29,7 @@ class AmenityObserver
      */
     public function updated(Amenity $amenity)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Amenity';
-        $binnacle->details = 'Amenity from Hotel with id '.$amenity->hotel->id;
-        $binnacle->save();
+        $this->track($amenity,'UPDATED');
     }
 
     /**
@@ -49,25 +40,10 @@ class AmenityObserver
      */
     public function deleted(Amenity $amenity)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Amenity';
-        $binnacle->details = 'Amenity from Hotel with id '.$amenity->hotel->id;
-        $binnacle->save();
+        $this->track($amenity,'DELETED');
     }
 
-    /**
-     * Handle the amenity "restored" event.
-     *
-     * @param  \App\Amenity  $amenity
-     * @return void
-     */
-    public function restored(Amenity $amenity)
-    {
-        //
-    }
+   
 
     /**
      * Handle the amenity "force deleted" event.
@@ -77,12 +53,6 @@ class AmenityObserver
      */
     public function forceDeleted(Amenity $amenity)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Amenity';
-        $binnacle->details = 'Amenity from Hotel with id '.$amenity->hotel->id;
-        $binnacle->save();
+        $this->track($amenity,'FORCE DELETED');
     }
 }

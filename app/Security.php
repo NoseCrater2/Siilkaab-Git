@@ -21,4 +21,9 @@ class Security extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'security', 'binnacleable_type','binnacleable_id');
+    }
 }

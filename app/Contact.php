@@ -33,4 +33,9 @@ class Contact extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'contacts', 'binnacleable_type','binnacleable_id');
+    }
 }

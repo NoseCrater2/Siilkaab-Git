@@ -20,9 +20,11 @@ use App\Observers\RestaurantObserver;
 use App\Observers\UserObserver;
 use App\Regime;
 use App\Restaurant;
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Mail\UserCreated;
+use App\Mail\UserMailChanged;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Mail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,6 +55,20 @@ class AppServiceProvider extends ServiceProvider
         Regime::observe(RegimeObserver::class);
         User::observe(UserObserver::class);
         HotelUser::observe(HotelUserObserver::class);
-        //JsonResource::withoutWrapping();
+
+        User::created(function($user)
+        {
+            retry(5,function() use($user){Mail::to($user)->send(new UserCreated($user));
+                },100);
+        });
+
+        User::updated(function($user)
+        {
+            if($user->isDirty('email')){
+                retry(5,function() use ($user){Mail::to($user)->send(new UserMailChanged($user));
+                    },100);
+            }   
+           
+        });
     }
 }

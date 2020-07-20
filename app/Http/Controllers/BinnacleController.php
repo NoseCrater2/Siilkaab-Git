@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Binnacle;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\BinnacleIndexResource;
+use App\Http\Resources\BinnacleShowResource;
 use Illuminate\Http\Request;
 
 class BinnacleController extends Controller
@@ -15,9 +17,12 @@ class BinnacleController extends Controller
      */
     public function index()
     {
-        return BinnacleIndexResource::collection(
-            Binnacle::all()
+
+        return  BinnacleIndexResource::collection(
+            Binnacle::latest()->get()->unique('actor_id')
         );
+            
+        
     }
 
     
@@ -31,8 +36,10 @@ class BinnacleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Binnacle $binnacle)
-    {
-        return new BinnacleIndexResource(Binnacle::findOrFail($binnacle->id));
+    {        
+        return  BinnacleShowResource::collection(
+            Binnacle::where('actor_id', $binnacle->actor_id)->orderBy('updated_at', 'desc')->get()
+        );
     }
 
   

@@ -3,10 +3,11 @@
 namespace App\Observers;
 
 use App\Condition;
-use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class ConditionObserver
 {
+    use SaveBinnacleTrait;
     /**
      * Handle the condition "created" event.
      *
@@ -15,13 +16,7 @@ class ConditionObserver
      */
     public function created(Condition $condition)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Conditions';
-        $binnacle->details = 'Condition from Hotel with id '.$condition->hotel->id;
-        $binnacle->save();
+        $this->track($condition,'CREATED');
     }
 
     /**
@@ -32,13 +27,7 @@ class ConditionObserver
      */
     public function updated(Condition $condition)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Conditions';
-        $binnacle->details = 'Condition from Hotel with id '.$condition->hotel->id;
-        $binnacle->save();
+        $this->track($condition,'UPDATED');
     }
 
     /**
@@ -49,25 +38,10 @@ class ConditionObserver
      */
     public function deleted(Condition $condition)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Conditions';
-        $binnacle->details = 'Condition from Hotel with id '.$condition->hotel->id;
-        $binnacle->save();
+        $this->track($condition,'DELETED');
     }
 
-    /**
-     * Handle the condition "restored" event.
-     *
-     * @param  \App\Condition  $condition
-     * @return void
-     */
-    public function restored(Condition $condition)
-    {
-        //
-    }
+    
 
     /**
      * Handle the condition "force deleted" event.
@@ -77,12 +51,6 @@ class ConditionObserver
      */
     public function forceDeleted(Condition $condition)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Conditions';
-        $binnacle->details = 'Condition from Hotel with id '.$condition->hotel->id;
-        $binnacle->save();
+        $this->track($condition,'FORCE DELETED');
     }
 }

@@ -10,17 +10,7 @@
         <div v-else>
             <v-app id="inspire">
                 <v-card >
-                     <v-card-title>Historial de Usuarios
-                         <v-spacer></v-spacer>
-                            <v-text-field
-                              v-model="search"
-                              append-icon="mdi-magnify"
-                              label="Buscar registro"
-                              single-line
-                              hide-details
-                            ></v-text-field>
-                             
-                    </v-card-title>
+                    
                 <v-data-table
                     v-model="selected"
                     item-key="Fecha"
@@ -35,9 +25,30 @@
             >
             
             <template v-slot:top>
+              <v-toolbar flat color="white">
+              <v-toolbar-title>Historial de Usuarios</v-toolbar-title>
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          ></v-divider>
+          <v-spacer></v-spacer>
+           <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Buscar Usuario"
+              single-line
+              hide-details
+              align="center"
+            ></v-text-field>
+            </v-toolbar>
                 <v-switch v-model="singleSelect" label="Selección única" class="pa-3"></v-switch>
             </template>
              <template v-slot:item.actions="{ item }">
+               <router-link :to="'binnacle/'+item.id">
+                 <v-icon small class="mr-2">mdi-eye</v-icon>
+               </router-link>
+                
         <v-icon
           small
           @click="deleteItem(item)"
@@ -66,15 +77,15 @@ export default {
           columns: 3,
           headers: [
         {
-          text: 'Fecha',
+          text: 'Última acción',
           align: 'start',
           sortable: true,
           value: 'created_at',
         },
+        { text: 'Usuario', value: 'user' },
         { text: 'Acción', value: 'action' },
-        { text: 'Mdelo', value: 'model' },
-        { text: 'Detalles', value: 'details' },
-        { text: 'ID', value: 'id' },
+        { text: 'Modelo', value: 'model' },
+        { text: 'Dirección IP', value: 'ip' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
         };

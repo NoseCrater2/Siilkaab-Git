@@ -17,7 +17,7 @@
             <v-btn color="primary" text>Nuevo hotel</v-btn>
           </template>
         </v-banner>
-
+        
         <v-container>
           <v-row no-gutters>
             <v-col id="columMenu" cols="6" md="3" sm="12">
@@ -28,7 +28,7 @@
                       <strong>{{hotel.Title}}</strong>
                     </h5>
                   </v-subheader>
-                  <v-list-item-group v-model="item" color="primary">
+                  <v-list-item-group v-model="iditemsListOptions" color="primary">
                     <v-list-item v-for="(item, i) in itemsListOptions" :key="i">
                       <v-list-item-icon>
                         <v-icon v-text="item.icon"></v-icon>
@@ -42,121 +42,216 @@
               </v-card>
             </v-col>
             <v-col cols="12" sm="auto" md="9">
-              <v-card class="pa-2" outlined tile>
-                <!--Contenido del card-->
-                <!--PRINCIPAL-->
-                <v-banner single-line>
-                  <h3>Principal</h3>
-                </v-banner>
+              <v-div v-if="iditemsListOptions===0">
+                <v-card class="pa-2" outlined tile>
+                  <!--Contenido del card-->
+                  <!--PRINCIPAL-->
+                  <v-banner single-line>
+                    <h3>Principal</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="8">
+                      <v-text-field v-model="titulo" label="Titulo" required></v-text-field>
+                    </v-col>
 
-                <v-row class="pa-6">
-                  <v-col cols="12" md="8">
-                    <v-text-field v-model="titulo" label="Titulo" required></v-text-field>
-                  </v-col>
+                    <v-col cols="12" md="8">
+                      <v-text-field v-model="url" label="URL" required></v-text-field>
+                    </v-col>
 
-                  <v-col cols="12" md="8">
-                    <v-text-field v-model="url" label="URL" required></v-text-field>
-                  </v-col>
-
-                  <v-col cols="12" md="8">
-                    <v-text-field v-model="codigRef" label="Codigo de referencia" required></v-text-field>
-                  </v-col>
-                </v-row>
-                <!--FOTOS-->
-                <v-banner single-line>
-                  <h3>Fotos</h3>
-                </v-banner>
-
-                <div class="pa-10">
-                  <v-row>
-                    <v-img
-                      max-width="400"
-                      class="white--text align-end"
-                      height="200px"
-                      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                    ></v-img>
+                    <v-col cols="12" md="8">
+                      <v-text-field v-model="codigRef" label="Codigo de referencia" required></v-text-field>
+                    </v-col>
                   </v-row>
+                  <!--FOTOS-->
+                  <v-banner single-line>
+                    <h3>Fotos</h3>
+                  </v-banner>
+
+                  <div class="pa-10">
+                    <v-row>
+                      <v-img
+                        max-width="400"
+                        class="white--text align-end"
+                        height="200px"
+                        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                      ></v-img>
+                    </v-row>
+                    <br />
+                    <v-btn small color="grey" class="white--text">Seleccionar imagen</v-btn>
+                  </div>
                   <br />
-                  <v-btn small color="grey" class="white--text">Seleccionar imagen</v-btn>
-                </div>
-                <br />
-                <!--TEXTOS-->
-                <v-banner single-line>
-                  <h3>Textos</h3>
-                </v-banner>
+                  <!--TEXTOS-->
+                  <v-banner single-line>
+                    <h3>Textos</h3>
+                  </v-banner>
 
-                <div class="pa-4">
-                  <v-col cols="12" sm="6" md="12">
-                    <v-textarea
-                      outlined
-                      label="Texto corto"
-                      no-resize
-                      rows="4"
-                      row-height="30"
-                      :counter="240"
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="12">
-                    <!--INICIA TOOLBAR-->
-                    <!--<v-toolbar dense>
-                      <v-overflow-btn
-                        :items="textos_ToolbalSize"
-                        label="Tamaño"
-                        hide-details
-                        menu-props="top"
-                        overflow
-                        class="pa-0"
-                      ></v-overflow-btn>
+                  <div class="pa-4">
+                    <v-col cols="12" sm="6" md="12">
+                      <v-textarea
+                        outlined
+                        label="Texto corto"
+                        no-resize
+                        rows="4"
+                        row-height="30"
+                        :counter="240"
+                      ></v-textarea>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="12">
+                      <!--<v-textarea outlined no-resize rows="13" row-height="30" v-model="textoLargo"></v-textarea>-->
+                      <!--<vue-markdown :source="textoLargo" :html="false" :toc="false" show="show"></vue-markdown>-->
 
-                      <v-btn-toggle v-model="seleccionUnica" color="black" dense group>
-                        <v-btn>
-                          <v-icon small>mdi-format-title</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-bold</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-italic</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-underline</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-color-fill</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-quote-close</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-link-variant</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-table-large</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-list-bulleted</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-list-numbered</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-format-align-justify</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-emoticon</v-icon>
-                        </v-btn>
-                        <v-btn>
-                          <v-icon small>mdi-eye</v-icon>
-                        </v-btn>
-                      </v-btn-toggle>
-                    </v-toolbar>-->
-                    <!--TERMINA TOOLBAR-->
-                    <!--<v-textarea outlined no-resize rows="13" row-height="30" v-model="textoLargo"></v-textarea>-->
-                    <!--<vue-markdown :source="textoLargo" :html="false" :toc="false" show="show"></vue-markdown>-->
-                    <markdown :value="markdownText" :options="markdownOptions" :html="editorHtml" :visible="editorVisible" previewStyle="vertical" initialEditType="wysiwyg" height="400px"></markdown>
-                  </v-col>
-                </div>
-              </v-card>
+                      <div>
+                        <!-- Use the component in the right place of the template -->
+                        <tiptap-vuetify v-model="content" :extensions="extensions" />
+                      </div>
+                    </v-col>
+                  </div>
+                </v-card>
+              </v-div>
+              <v-div v-if="iditemsListOptions===1">
+                <v-card class="pa-2" outlined tile>
+                  <!--Contenido del card-->
+                  <!--PRINCIPAL-->
+                  <v-banner single-line>
+                    <h3>Principal</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="8">
+                      <v-autocomplete v-model="value" :items="items" dense filled label="Divisa"></v-autocomplete>
+                    </v-col>
+
+                    <v-col cols="12" md="8">
+                      <v-autocomplete
+                        v-model="value"
+                        :items="items"
+                        dense
+                        filled
+                        label="Zona horaria"
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                  <!--NOTIFICACION-->
+                  <v-banner single-line>
+                    <h3>Notificacion</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="8">
+                      <v-text-field v-model="titulo" label="Notificacion voucher reservas" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="8">
+                      <v-text-field
+                        v-model="url"
+                        label="Notificacion detalles de la reserva"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="8">
+                      <v-text-field
+                        v-model="codigRef"
+                        label="Notificación datos de tarjeta"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-div>
+              <v-div v-if="iditemsListOptions===2">
+                <v-card class="pa-2" outlined tile>
+                  <!--Contenido del card-->
+                  <!--DIRECCION-->
+                  <v-banner single-line>
+                    <h3>Direccion</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="URL del sitio web" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="url" label="Email" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="codigRef" label="Telefono" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Direccion" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Codigo postal" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Ciudad" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Provincia" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-autocomplete v-model="value" :items="items" dense filled label="Pais"></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                  <!--LOCALIZACION-->
+                  <v-banner single-line>
+                    <h3>Localizacion</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Representante legal" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="url" label="Nombre de gerente" required></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-div>
+              <v-div v-if="iditemsListOptions===3">
+                <v-card class="pa-2" outlined tile>
+                  <!--Contenido del card-->
+                  <!--CONDICIONES-->
+                  <v-banner single-line>
+                    <h3>Condiciones</h3>
+                  </v-banner>
+                  <v-row class="pa-6">
+                    <v-col cols="12" md="6">
+                      <v-switch v-model="switch1" inset label="Solo adultos"></v-switch>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Niño desde" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="url" label="Regimen adulto desde" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="codigRef" label="Adulto desde" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Check-in time" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field v-model="titulo" label="Check-out time" required></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-banner single-line>
+                    <!--TEXTOS DE CONDICIONES-->
+                    <h3>Textos de condiciones</h3>
+                  </v-banner>
+                  <div class="pa-4">
+                    <v-col cols="12" sm="6" md="12">
+                      <!--<v-textarea outlined no-resize rows="13" row-height="30" v-model="textoLargo"></v-textarea>-->
+                      <!--<vue-markdown :source="textoLargo" :html="false" :toc="false" show="show"></vue-markdown>-->
+
+                      <div>
+                        <!-- Use the component in the right place of the template -->
+                        <tiptap-vuetify v-model="content" :extensions="extensions" />
+                      </div>
+                    </v-col>
+                  </div>
+                </v-card>
+              </v-div>
             </v-col>
           </v-row>
         </v-container>
@@ -167,11 +262,47 @@
 
 <script>
 //import VueMarkdown from "vue-markdown";
+import Vue from "vue";
+import Vuetify from "vuetify";
+// import plugin
+import { TiptapVuetifyPlugin } from "tiptap-vuetify";
+// don't forget to import CSS styles
+import "tiptap-vuetify/dist/main.css";
+// Vuetify Object (as described in the Vuetify 2 documentation)
+const vuetify = new Vuetify({
+ 
+});
+// use Vuetify's plugin
+Vue.use(Vuetify);
+// use this package's plugin
+Vue.use(TiptapVuetifyPlugin, {
+  // the next line is important! You need to provide the Vuetify Object to this place.
+  vuetify, // same as "vuetify: vuetify"
+  // optional, default to 'md' (default vuetify icons before v2.0.0)
+  iconsGroup: "mdi"
+});
 
-import "@toast-ui/editor/dist/toastui-editor.css";
-import "codemirror/lib/codemirror.css";
-import '@toast-ui/editor/dist/i18n/es-es';
-import { Editor } from "@toast-ui/vue-editor";
+import {
+  TiptapVuetify,
+  Heading,
+  Bold,
+  Italic,
+  Strike,
+  Underline,
+  Paragraph,
+  BulletList,
+  OrderedList,
+  ListItem,
+  Link,
+  Table,
+  TableHeader,
+  TableCell,
+  TableRow,
+  Blockquote,
+  HardBreak,
+  HorizontalRule,
+  History
+} from "tiptap-vuetify";
 
 export default {
   data() {
@@ -179,16 +310,14 @@ export default {
       hotel: null,
       loading: false,
       //Al inicializar item en 0 indicamos que se por defecto el item seleccionado es el primero
-      item: 0,
+      iditemsListOptions: 0,
       itemsListOptions: [
         { text: "Información", icon: "mdi-information" },
         { text: "Configuración", icon: "mdi-cog" },
         { text: "Contacto", icon: "mdi-email" },
         { text: "Condiciones", icon: "mdi-gavel" },
-        { text: "Tarifa maestra", icon: "mdi-calculator" },
         { text: "Regimenes", icon: "mdi-silverware-fork-knife" },
-        { text: "Amenities", icon: "mdi-tag-multiple" },
-        { text: "Integraciones", icon: "mdi-power-plug" }
+        { text: "Amenidades", icon: "mdi-tag-multiple" }
       ],
       //SECCION PRINCIPAL INICIA
       titulo: "",
@@ -206,35 +335,42 @@ export default {
       ],
       //seleccionUnica: undefined,
       //textoLargo: ""
-      markdownText: "",
-      markdownOptions: {
-        minHeight: "200px",
-        language: "es-ES",
-        useCommandShortcut: true,
-        useDefaultHTMLSanitizer: true,
-        usageStatistics: true,
-        hideModeSwitch: true,
-        toolbarItems: [
-          "heading",
-          "bold",
-          "italic",
-          "hr",
-          "quote",
-          "ul",
-          "ol",
-          "table",
-          "link"
-        ]
-      },
-      editorHtml: "",
-      editorVisible: true
+      // declare extensions you want to use
+      extensions: [
+        History,
+        [
+          Heading,
+          {
+            options: {
+              levels: [1, 2, 3]
+            }
+          }
+        ],
+        Bold,
+        Italic,
+        Underline,
+        Strike,
+        HorizontalRule,
+        Blockquote,
+        ListItem,
+        BulletList,
+        OrderedList,
+        Table,
+        TableHeader,
+        TableCell,
+        TableRow,
+        Link,
+        HardBreak
+      ],
+      // starting editor's content
+      content: ""
       //CAMPO TEXTO LARGO TERMINA
       //SECCION TEXTOS TERMINA
     };
   },
   components: {
     //VueMarkdown,
-    markdown: Editor
+    TiptapVuetify
   },
   mounted() {
     this.loading = true;

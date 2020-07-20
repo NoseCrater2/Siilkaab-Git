@@ -3,10 +3,11 @@
 namespace App\Observers;
 
 use App\Pool;
-use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class PoolObserver
 {
+    use SaveBinnacleTrait;
     /**
      * Handle the pool "created" event.
      *
@@ -15,13 +16,7 @@ class PoolObserver
      */
     public function created(Pool $pool)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Pool';
-        $binnacle->details = 'Pool from Hotel with id '.$pool->hotel->id;
-        $binnacle->save();
+        $this->track($pool,'CREATED');
     }
 
     /**
@@ -32,13 +27,7 @@ class PoolObserver
      */
     public function updated(Pool $pool)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Pool';
-        $binnacle->details = 'Pool from Hotel with id '.$pool->hotel->id;
-        $binnacle->save();
+        $this->track($pool,'UPDATED');
     }
 
     /**
@@ -49,13 +38,7 @@ class PoolObserver
      */
     public function deleted(Pool $pool)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Pool';
-        $binnacle->details = 'Pool from Hotel with id '.$pool->hotel->id;
-        $binnacle->save();
+        $this->track($pool,'DELETED');
     }
 
     
@@ -68,12 +51,6 @@ class PoolObserver
      */
     public function forceDeleted(Pool $pool)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Pool';
-        $binnacle->details = 'Pool from Hotel with id '.$pool->hotel->id;
-        $binnacle->save();
+        $this->track($pool,'FORCE DELETED');
     }
 }

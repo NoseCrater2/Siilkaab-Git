@@ -15,13 +15,7 @@ class HotelUserObserver
      */
     public function created(HotelUser $hotelUser)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Assign Hotel';
-        $binnacle->details = "Hotel ".$hotelUser->hotel->title." has assigned to ".$hotelUser->user->name;
-        $binnacle->save();
+        
     }
 
     /**
@@ -43,13 +37,7 @@ class HotelUserObserver
      */
     public function deleted(HotelUser $hotelUser)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Revoke Hotel';
-        $binnacle->details = "Hotel ".$hotelUser->hotel->title." has revoked to ".$hotelUser->user->name;
-        $binnacle->save();
+       
     }
 
     /**

@@ -3,10 +3,11 @@
 namespace App\Observers;
 
 use App\Regime;
-use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class RegimeObserver
 {
+    use SaveBinnacleTrait;
     /**
      * Handle the regime "created" event.
      *
@@ -15,13 +16,7 @@ class RegimeObserver
      */
     public function created(Regime $regime)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Regime';
-        $binnacle->details = 'Regime from Hotel with id '.$regime->hotel->id;
-        $binnacle->save();
+        $this->track($regime,'CREATED');
     }
 
     /**
@@ -32,13 +27,7 @@ class RegimeObserver
      */
     public function updated(Regime $regime)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Regime';
-        $binnacle->details = 'Regime from Hotel with id '.$regime->hotel->id;
-        $binnacle->save();
+        $this->track($regime,'UPDATED');
     }
 
     /**
@@ -49,16 +38,8 @@ class RegimeObserver
      */
     public function deleted(Regime $regime)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Regime';
-        $binnacle->details = 'Regime from Hotel with id '.$regime->hotel->id;
-        $binnacle->save();
+        $this->track($regime,'DELETED');
     }
-
-    
 
     /**
      * Handle the regime "force deleted" event.
@@ -68,12 +49,6 @@ class RegimeObserver
      */
     public function forceDeleted(Regime $regime)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Regime';
-        $binnacle->details = 'Regime from Hotel with id '.$regime->hotel->id;
-        $binnacle->save();
+        $this->track($regime,'FORCE DELETED');
     }
 }

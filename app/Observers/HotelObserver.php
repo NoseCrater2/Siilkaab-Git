@@ -4,13 +4,11 @@ namespace App\Observers;
 
 use App\Hotel;
 use App\Binnacle;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Laravel\Passport\Passport;
+use App\Traits\SaveBinnacleTrait;
 
 class HotelObserver
 {
-
+    use SaveBinnacleTrait;
     /**
      * Handle the hotel "created" event.
      *
@@ -19,14 +17,7 @@ class HotelObserver
      */
     public function created(Hotel $hotel)
     {
-    
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Hotel';
-        $binnacle->details = $hotel->title;
-        $binnacle->save();
+        $this->track($hotel,'CREATED');
     }
 
     /**
@@ -37,13 +28,7 @@ class HotelObserver
      */
     public function updated(Hotel $hotel)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Hotel';
-        $binnacle->details = $hotel->title;
-        $binnacle->save();
+        $this->track($hotel,'UPDATED');
     }
 
     /**
@@ -54,13 +39,7 @@ class HotelObserver
      */
     public function deleted(Hotel $hotel)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Hotel';
-        $binnacle->details = $hotel->title;
-        $binnacle->save();
+        $this->track($hotel,'DELETED');
     }
 
     /**

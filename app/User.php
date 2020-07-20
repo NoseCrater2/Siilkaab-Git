@@ -6,6 +6,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','last_name','email', 'password','type','language','timezone','currency_id'
+        'name','last_name','email', 'password','type','language','timezone','remember_token', 'email_verified_at'
     ];
 
     /**
@@ -26,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at'
+        'password', 'remember_token', 'email_verified_at','parent_id'
     ];
 
     /**
@@ -56,5 +57,24 @@ class User extends Authenticatable
     public function HotelUser()
     {
         return $this->hasMany(HotelUser::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class,'parent_id');
+    }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'users', 'binnacleable_type','binnacleable_id');
+    }
+
+    public static function generarVerificationToken(){
+        return Str::random(40);
     }
 }

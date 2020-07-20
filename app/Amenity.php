@@ -68,5 +68,10 @@ class Amenity extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'amenities', 'binnacleable_type','binnacleable_id');
+    }
    
 }

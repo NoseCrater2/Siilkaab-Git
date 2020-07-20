@@ -14,14 +14,17 @@ class Condition extends Model
         'checkin_time',
         'checkout_time',
         'cancelation_text',
-        'manager_name',
-        'legal_rep',
         'hotel_id'
     ];
 
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'conditions', 'binnacleable_type','binnacleable_id');
     }
    
 }

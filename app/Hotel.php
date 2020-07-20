@@ -54,6 +54,11 @@ class Hotel extends Model
         return $this->hasMany(Restaurant::class);
     }
 
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
     public function security(){
         return $this->hasOne(Security::class);
     }
@@ -61,6 +66,11 @@ class Hotel extends Model
     public function HotelUser()
     {
         return $this->hasMany(HotelUser::class);
+    }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'hotels', 'binnacleable_type','binnacleable_id');
     }
 
 }

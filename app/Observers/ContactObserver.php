@@ -3,10 +3,12 @@
 namespace App\Observers;
 
 use App\Contact;
-use App\Binnacle;
+use App\Traits\SaveBinnacleTrait;
 
 class ContactObserver
 {
+
+    use SaveBinnacleTrait;
     /**
      * Handle the contact "created" event.
      *
@@ -15,13 +17,7 @@ class ContactObserver
      */
     public function created(Contact $contact)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'CREATED';
-        $binnacle->model = 'Contact';
-        $binnacle->details = 'Contact from Hotel with id '.$contact->hotel->id;
-        $binnacle->save();
+        $this->track($contact,'CREATED');
     }
 
     /**
@@ -32,13 +28,7 @@ class ContactObserver
      */
     public function updated(Contact $contact)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'UPDATED';
-        $binnacle->model = 'Contact';
-        $binnacle->details = 'Contact from Hotel with id '.$contact->hotel->id;
-        $binnacle->save();
+        $this->track($contact,'UPDATED');
     }
 
     /**
@@ -49,13 +39,7 @@ class ContactObserver
      */
     public function deleted(Contact $contact)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'DELETED';
-        $binnacle->model = 'Contact';
-        $binnacle->details = 'Contact from Hotel with id '.$contact->hotel->id;
-        $binnacle->save();
+        $this->track($contact,'DELETED');
     }
 
    
@@ -68,12 +52,6 @@ class ContactObserver
      */
     public function forceDeleted(Contact $contact)
     {
-        $user = auth('api')->user();
-        $binnacle = new Binnacle;
-        $binnacle->user =  isset($user->name)?$user->name.' '.$user->last_name:null;
-        $binnacle->action = 'force deleted';
-        $binnacle->model = 'Contact';
-        $binnacle->details = 'Contact from Hotel with id '.$contact->hotel->id;
-        $binnacle->save();
+        $this->track($contact,'FORCE DELETED');
     }
 }

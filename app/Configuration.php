@@ -24,5 +24,10 @@ class Configuration extends Model
     {
         return $this->belongsTo('App\Currency');
     }
+
+    public function binnacles()
+    {
+        return $this->morphMany(Binnacle::class,'configurations', 'binnacleable_type','binnacleable_id');
+    }
    
 }

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\UserIndexResource;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCreated;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -18,8 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        //$logged_user = User::find(auth('api')->user()->id);
+
         return UserIndexResource::collection(
-            User::all()
+           // $logged_user->users->all()
+           User::all()
         );
     }
 
@@ -33,14 +39,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+         //$logged_user = User::find(auth('api')->user()->id);
         $data = $request->all();
         $rules =[
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'type' => 'required|in:manager,administrator,super',
-            'language' => 'string',
+            'language' => 'required|string',
             'timezone' => 'required|timezone',
-            'currency_id' => 'required|exists:currencies,id'
+            
         ];
 
         $validator= Validator::make($data,$rules, Messages::getMessages());
@@ -49,12 +56,16 @@ class UserController extends Controller
             return response($validator->errors(),422);
             
         }else{
-            $pas = User::make_password();
-            $GLOBALS['password_pivote'] = $pas;
-            $data['password'] = bcrypt($pas);
-            $user = User::create($data);
+           
+                $pas = User::make_password();
+                $GLOBALS['password_pivote'] = $pas;
+                $data['password'] = bcrypt($pas);
+                $data['remember_token'] = User::generarVerificationToken();
+                $user = User::create($data);
         
-            return new UserIndexResource(User::findOrFail($user->id));
+                return new UserIndexResource(User::findOrFail($user->id));
+            
+            
         }
         
         
@@ -69,7 +80,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserIndexResource(User::findOrFail($user->id));
+        //$logged_user = User::find(auth('api')->user()->id);
+        return new UserIndexResource(User::findOrFail(
+           // $logged_user->users($user->id)
+            $user->id
+        ));
     }
 
     
@@ -91,18 +106,17 @@ class UserController extends Controller
             'type' => 'in:manager,administrator,super',
             'language' => 'string',
             'timezone' => 'timezone',
-            'currency_id' => 'exists:currencies,id'
+            
         ];
-
 
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
             return response($validator->errors(),422);
         }else{
-            $data = $request->all();
-            $pas = User::make_password();
-            $GLOBALS['password_pivote'] = $pas;
-            $data['password'] = bcrypt($pas);
+            if($data['email'] != $user->email){
+                $user->email_verified_at = null;
+                $user->remember_token = User::generarVerificationToken();
+            }
             $user->update($data);
             return new UserIndexResource(User::findOrFail($user->id));
         }     
@@ -120,5 +134,37 @@ class UserController extends Controller
         $user->delete();
         return new UserIndexResource($user);
 
+    }
+   
+
+    public function verify($token)
+    {
+        $user = User::where('remember_token', $token)->firstOrFail();
+
+        $user->email_verified_at = Carbon::now();
+        $user->remember_token = null;
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Email verified'
+        ]);
+    }
+
+
+    public function resend(User $user)
+    {
+        if($user->email_verified_at != null){
+            return response()->json([
+                'message' => 'This user has been verified'
+            ]);
+        }
+
+        retry(5,function(
+            $user){Mail::to($user)->send(new UserCreated($user));
+            },100);
+        return response()->json([
+            'message' => 'Email has been resend'
+        ]);
     }
 }
