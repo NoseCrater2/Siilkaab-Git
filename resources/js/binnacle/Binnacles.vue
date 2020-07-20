@@ -38,6 +38,10 @@
                 <v-switch v-model="singleSelect" label="Selección única" class="pa-3"></v-switch>
             </template>
              <template v-slot:item.actions="{ item }">
+               <router-link :to="'binnacle/'+item.id">
+                 <v-icon small class="mr-2">mdi-eye</v-icon>
+               </router-link>
+                
         <v-icon
           small
           @click="deleteItem(item)"
@@ -71,10 +75,10 @@ export default {
           sortable: true,
           value: 'created_at',
         },
+        { text: 'Usuario', value: 'user' },
         { text: 'Acción', value: 'action' },
         { text: 'Mdelo', value: 'model' },
-        { text: 'Detalles', value: 'details' },
-        { text: 'ID', value: 'id' },
+        { text: 'Dirección IP', value: 'ip' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
         };

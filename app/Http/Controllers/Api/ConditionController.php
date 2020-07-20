@@ -110,6 +110,7 @@ class ConditionController extends Controller
     public function destroy(Condition $condition)
     {
         $condition->delete();
+        return new ConditionIndexResource($condition);
     }
 
 

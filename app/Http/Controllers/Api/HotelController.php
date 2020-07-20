@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Hotel;
 use DateTimeZone;
 use App\Messages;
@@ -20,8 +21,10 @@ class HotelController extends Controller
 {
     public function index()
     {
+        //$logged_user = User::find(auth('api')->user()->id);
         return HotelIndexResource::collection(
-            Hotel::all()
+            //$logged_user->hotels
+           Hotel::all()
         );
     }
 
@@ -102,8 +105,9 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        $hotel->delete(); 
-        //return new HotelShowResource(Hotel::findOrFail($hotel));
+        Storage::delete($hotel->image);
+        $hotel->delete();
+        return new HotelIndexResource($hotel);
 
     }
 

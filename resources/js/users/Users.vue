@@ -123,35 +123,6 @@
 
 
                 </v-col>
-                <v-col cols="12" sm="6">
-
-                  <div v-if="currencies !== []">
-                    <v-autocomplete
-                    :items="currencies"
-                    label="Moneda*"
-                    item-value="currency_id"
-                    item-text="currency"
-                    v-model="editedItem.currency_id"
-                    :error-messages="getErrors.data.currency_id"
-                    required
-                    >
-                    
-                    </v-autocomplete>
-                  </div>
-
-                  <div v-else>
-                    <v-autocomplete
-                    :items="[]"
-                    label="Moneda*"
-                    item-text="currency"
-                    item-value="currency_id"
-                    v-model="editedItem.currency_id"
-                    :error-messages="getErrors.data.currency_id"
-                    required
-                    ></v-autocomplete>
-                  </div>
-                  
-                </v-col>
               </v-row>
              
             </v-container>
@@ -280,7 +251,7 @@ export default {
       },
       ...mapState({
         users: state => state.UsersModule.users,
-        currencies: state => state.UsersModule.currencies,
+        //currencies: state => state.UsersModule.currencies,
         timezones: state => state.UsersModule.timezones,
       }),
      ...mapGetters([
@@ -294,7 +265,7 @@ export default {
     
      this.$store.dispatch('getUsers'),
      this.$store.dispatch('getTimeZones')
-     this.$store.dispatch('getCurrencies')
+    // this.$store.dispatch('getCurrencies')
      
     },
 
