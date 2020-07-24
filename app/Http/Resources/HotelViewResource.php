@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class HotelUserIndexResource extends JsonResource
+class HotelViewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,8 @@ class HotelUserIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            
-            'hotel_id'=> $this->hotel_id,
-          
+            'hotel_id' => $this->id,
+            'title' => $this->title."(". $this->reference_code.")",
         ];
     }
 }

@@ -61,6 +61,13 @@ class Amenity extends Model
         'vip_service',
         'calefaction',
         'keep_bags',
+        'security_24h',
+        'security_alarm',
+        'smoke_detectors',
+        'in_security_cams',
+        'out_security_cams',
+        'fire_extinguishers',
+        'safe_deposit_box',
         'hotel_id'
     ];
 
