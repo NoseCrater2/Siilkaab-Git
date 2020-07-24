@@ -8,11 +8,13 @@ use DateTimeZone;
 use App\Messages;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\HotelShowResource;
 use App\Http\Resources\HotelIndexResource;
+use App\Http\Resources\HotelViewResource;
 
 
 use function GuzzleHttp\json_decode;
@@ -105,8 +107,20 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
+        DB::transaction(function()use ($hotel){
+        $hotel->amenity()->delete();
+        $hotel->condition()->delete();
+        $hotel->configuration()->delete();
+        $hotel->contact()->delete();
+        $hotel->pools()->delete();
+        $hotel->regimes()->delete();
+        $hotel->restaurants()->delete();
+        $hotel->rooms()->delete();
+        $hotel->security()->delete();
+        $hotel->users()->detach();
         Storage::delete($hotel->image);
         $hotel->delete();
+        });
         return new HotelIndexResource($hotel);
 
     }
@@ -147,6 +161,23 @@ class HotelController extends Controller
       
         return DateTimeZone::listIdentifiers(DateTimeZone::AMERICA); 
        
+    }
+
+    public function getHotelsForNoAdmin()
+    {
+        $logged_user = User::find(auth('api')->user()->id);
+        return HotelViewResource::collection(
+            $logged_user->hotels
+          
+        );
+    }
+
+    public function getHotelsForAdmin()
+    {
+        return HotelViewResource::collection(
+           
+           Hotel::all()
+        );
     }
 
     

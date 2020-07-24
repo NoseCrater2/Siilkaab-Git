@@ -15,7 +15,7 @@ class CreateAmenitiesTable extends Migration
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->enum('spa',['free','paid','flag'])->default('flag');
+            $table->enum('spa',['free','paid','flag'])->default('flag');#SERVICIOS DESTACADOS
             $table->boolean('air_conditioned')->default(false);
             $table->boolean('no_smoke_rooms')->default(false);
             $table->boolean('air_transfer_service')->default(false);
@@ -27,34 +27,34 @@ class CreateAmenitiesTable extends Migration
             $table->boolean('bar')->default(false);
             $table->boolean('garden')->default(false);
             $table->enum('water_park',['free','paid','flag'])->default('flag');
-            $table->integer('num_rooms')->required();
+            $table->integer('num_rooms')->required();#BUILDING INFORMATION (INFORMACIÓN DEL EDIFICIO)
             $table->integer('num_floors')->required();
-            $table->enum('beach',['private','in front','flag'])->default('flag');
+            $table->enum('beach',['private','in front','flag'])->default('flag');#ACTIVITIES (ACTIVIDADES)
             $table->boolean('recreational_activities')->default(false);
             $table->enum('romantic_dinners',['free','paid','flag'])->default('flag');
             $table->enum('touristic_tour',['free','paid','flag'])->default('flag');
-            $table->boolean('guarded_parking')->default(false);
+            $table->boolean('guarded_parking')->default(false);#TRANSPORT (TRANSPORTE)
             $table->boolean('street_parking')->default(false);
             $table->boolean('garage_parking')->default(false);
             $table->boolean('special_parking')->default(false);
-            $table->boolean('reg_inout_private')->default(false);
+            $table->boolean('reg_inout_private')->default(false);#RECEPCION SERVICES (SERVICIOS DE RECEPCION)
             $table->boolean('reg_inout_express')->default(false);
             $table->boolean('touristic_info')->default(false);
             $table->boolean('parking_service')->default(false);
             $table->boolean('currency_change')->default(false);
-            $table->boolean('outdoor_furniture')->default(false);
+            $table->boolean('outdoor_furniture')->default(false);#COMMON AREAS (ZONAS COMUNES)
             $table->boolean('terrace_solarium')->default(false);
             $table->boolean('shared_dinner')->default(false);
             $table->boolean('shared_salon')->default(false);
             $table->boolean('game_zone')->default(false);
             $table->boolean('library')->default(false);
-            $table->enum('daily_housekipping',['free','paid','flag'])->default('flag');
+            $table->enum('daily_housekipping',['free','paid','flag'])->default('flag');#CLEANING SERVICES(SERVICIOS DE LIMPIEZA)
             $table->boolean('laundry_service')->default(false);
             $table->boolean('iron_service')->default(false);
-            $table->boolean('meeting_room')->default(false);
+            $table->boolean('meeting_room')->default(false);#BUSINESS FACILITIES(INSTALACIONES DE NEGOCIOS)
             $table->boolean('meeting_center')->default(false);
             $table->boolean('fax_photocopier')->default(false);
-            $table->boolean('coffee_break')->default(false);
+            $table->boolean('coffee_break')->default(false);#MISCELLANEOUS (VARIOS)
             $table->boolean('souvenirs_store')->default(false);
             $table->boolean('inclusive_service')->default(false);
             $table->boolean('elevator')->default(false);
@@ -68,7 +68,16 @@ class CreateAmenitiesTable extends Migration
             $table->boolean('bridal_suite')->default(false);
             $table->boolean('vip_service')->default(false);
             $table->boolean('calefaction')->default(false);
-            $table->boolean('keep_bags')->default(false);
+
+            $table->boolean('keep_bags')->default(false);#seguridaD
+            $table->boolean('security_24h')->default(false);
+            $table->boolean('security_alarm')->default(false);
+            $table->boolean('smoke_detectors')->default(false);
+            $table->boolean('in_security_cams')->default(false);
+            $table->boolean('out_security_cams')->default(false);
+            $table->boolean('fire_extinguishers')->default(false);
+            $table->boolean('safe_deposit_box')->default(false);
+
             $table->unsignedBigInteger('hotel_id');
             $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
             $table->timestamps();

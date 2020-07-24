@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\HotelUser;
 use App\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\UserIndexResource;
@@ -123,16 +125,43 @@ class UserController extends Controller
        
     }
 
+
+    public function delete(Request $request)
+    {
+
+        $data = $request->all();
+
+        $rules = [
+            "userIds"    => "required|array|min:1",
+            "userIds.*"  => "required|exists:users,id|distinct|min:1",
+        ];
+                
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return response($validator->errors(),422);
+        }else{
+            DB::transaction(function()use ($data){
+
+            HotelUser::whereIn('user_id',$data['userIds'])->delete();
+            User::destroy($data['userIds']);
+           
+            });
+
+            return response($data['userIds'],200);
+        }
+        
+       
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy()
     {
-        $user->delete();
-        return new UserIndexResource($user);
+      
 
     }
    

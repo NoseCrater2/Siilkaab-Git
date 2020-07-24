@@ -17,8 +17,8 @@ class CreateRegimesTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->enum('priority',['normal','medium','high'])->default('normal');
             $table->boolean('only_room')->required()->default(false);
-            $table->datetime('start_period');
-            $table->datetime('final_period');
+            $table->datetime('start_period')->nullable();
+            $table->datetime('final_period')->nullable();
             $table->double('lodging_breakfast_children')->default(0.0);
             $table->double('lodging_breakfast_adult')->default(0.0);
             $table->double('half_pension_children')->default(0.0);

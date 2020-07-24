@@ -15,10 +15,9 @@ class HotelUserIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'hotel_id'=> $this->hotel_id,
-            'user_id'=> $this->user_id,
             
+            'hotel_id'=> $this->hotel_id,
+          
         ];
     }
 }

@@ -15,7 +15,7 @@ class CreateRoomAmenitiesTable extends Migration
     {
         Schema::create('room_amenities', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->boolean('air_conditioning')->default(false);
+            $table->boolean('air_conditioning')->default(false); 
             $table->boolean('balcony')->default(false);
             $table->boolean('bathrub')->default(false);
             $table->boolean('view')->default(false);

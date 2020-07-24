@@ -18,11 +18,11 @@ class HotelUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( User $user)
+    public function index(User $user)
     {
 
         return HotelUserIndexResource::collection(
-            HotelUser::all()
+            HotelUser::where('user_id','=',$user->id)->get()
         );
 
     }
@@ -50,9 +50,9 @@ class HotelUserController extends Controller
             return response($validator->errors(),422);
         }else{
             $hotel_array = $data['hotels'];
-            $user->hotels()->syncWithoutDetaching($hotel_array);
+            $user->hotels()->sync($hotel_array);
             return HotelUserIndexResource::collection(
-                HotelUser::all()
+                HotelUser::where('user_id','=',$user->id)->get()
             );
         }
        

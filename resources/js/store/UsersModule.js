@@ -2,6 +2,7 @@ import axios from 'axios';
 const UsersModule = {
     state :{
         users: [],
+        newUserId:null,
         timezones: [],
         currencies: [],
         errors : {
@@ -28,6 +29,10 @@ const UsersModule = {
   
       getStatus(state){
         return state.status;
+      },
+
+      getUserId(state){
+        return state.newUserId;
       }
     },
     mutations: {
@@ -55,14 +60,15 @@ const UsersModule = {
         });
       },
       saveUser(state,newUser){
-        state.users.push(newUser)
+        state.users.push(newUser);
+        state.newUserId = newUser.id;
       },
       deleteUser(state, deletedUser) {
-        state.users.map(function(currentUser){
-          if(currentUser.id === deletedUser.id){
-            state.users.splice(state.users.indexOf(currentUser), 1);
-          }
+        deletedUser.forEach(currentUser => {
+        let  u = state.users.find((user => user.id === currentUser))
+        state.users.splice(state.users.indexOf(u),1)
         });
+       
       },
   
     },
@@ -105,14 +111,15 @@ const UsersModule = {
         }
       },
   
-      deleteUser: async function ({ commit},user){
+      deleteUser: async function ({ commit},ids){
         try {
           const request = await axios
-          .delete("/api/users/"+user.id)
-          commit('deleteUser',request.data.data);
-          commit('setStatus',request.status);
+          .post("/api/deleteusers/",ids)
+          console.log(request.data)
+         commit('deleteUser',request.data);
+         // commit('setStatus',request.status);
         } catch (error) {
-          commit('setStatus',error.response.status);
+         // commit('setStatus',error.response.status);
         }
       },
   

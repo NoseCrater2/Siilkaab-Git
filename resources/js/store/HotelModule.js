@@ -1,6 +1,8 @@
 import axios from "axios";
 const HotelModule = {
     state: {
+        hotels: null,
+        assignHotels: null,
         iditemsListOptions: 0,
         hotel: null,
         currencies: null,
@@ -13,6 +15,11 @@ const HotelModule = {
         amenities: null,
         contentInformation: "", //Esta es la variable que utilizara el Markdown TipTap (MarkdownCompo.vue)
         contentConditions: ""
+    },
+    getters:{
+        getAssignHotels(state){
+            return state.assignHotels;
+          },
     },
     mutations: {
         //Se reinician los estados (principalmente por el problema del router-link)
@@ -36,6 +43,15 @@ const HotelModule = {
             state.hotel = payload;
             state.contentInformation = payload.LargeText;
         },
+        setHotels(state, payload) {
+            state.hotels = payload;
+            
+        },
+
+        setAssignHotels(state, payload) {
+            state.assignHotels = payload;  
+        },
+
         setCurrencies(state, payload) {
             state.currencies = payload;
         },
@@ -150,7 +166,41 @@ const HotelModule = {
                 //console.log(typeof(configuration))
                 commit("setAmenities", amenities);
             } catch (error) {}
-        }
+        },
+
+        getHotelsForAdmin: async function({ commit }) {
+            try {
+                const request = await axios.get(`/api/adminhotels/`);
+                let hotels = request.data.data;
+               
+                //console.log(typeof(configuration))
+                commit("setHotels", hotels);
+            } catch (error) {}
+        },
+
+        getAssignHotels: async function({ commit },id) {
+            try {
+                const request = await axios.get(`/api/hotels_users/${id}`);
+                let assignHotels= request.data.data;
+                
+                //console.log(typeof(configuration))
+                commit("setAssignHotels", assignHotels);
+            } catch (error) {}
+        },
+
+        setHotelsToUsers: async function({ commit },hotels) {
+            try {
+               if(hotels[1].hotels !== null){
+                const request = await axios.post("/api/hotels_users/"+hotels[0].id,hotels[1])
+               }
+                
+                //let assignHotels= request.data.data;
+                
+               // commit("setAssignHotels", assignHotels);
+            } catch (error) {
+                console.log('An error has ocurred')
+            }
+        },
     }
 };
 export default HotelModule;
