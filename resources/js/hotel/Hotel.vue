@@ -30,6 +30,9 @@
               <div v-if="iditemsListOptions===4">
                 <Regimenes></Regimenes>
               </div>
+              <div v-if="iditemsListOptions===5">
+                <Amenidades></Amenidades>
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -48,6 +51,7 @@ import Configuracion from "../components/Hotel/Configuracion";
 import Contacto from "../components/Hotel/Contacto";
 import Condiciones from "../components/Hotel/Condiciones";
 import Regimenes from "../components/Hotel/Regimenes";
+import Amenidades from "../components/Hotel/Amenidades";
 
 export default {
   created() {
@@ -67,23 +71,27 @@ export default {
         if (this.hotel.idRegime !== null) {
           this.getRegimes(this.hotel.idRegime).then(() => {});
         }
+        if (this.hotel.idAmenity !== null) {
+          this.getAmenities(this.hotel.idAmenity).then(() => {});
+        }
       });
     }
   },
   data() {
     return {
-      tituloHotel: ""
+      tituloHotel: "",
     };
   },
   computed: {
     ...mapState({
-      hotel: state => state.HotelModule.hotel,
-      iditemsListOptions: state => state.HotelModule.iditemsListOptions,
-      configuration: state => state.HotelModule.configuration,
-      contacts: state => state.HotelModule.contacts,
-      conditions: state => state.HotelModule.conditions,
-      regimes: state => state.HotelModule.regimes
-    })
+      hotel: (state) => state.HotelModule.hotel,
+      iditemsListOptions: (state) => state.HotelModule.iditemsListOptions,
+      configuration: (state) => state.HotelModule.configuration,
+      contacts: (state) => state.HotelModule.contacts,
+      conditions: (state) => state.HotelModule.conditions,
+      regimes: (state) => state.HotelModule.regimes,
+      amenities: (state) => state.HotelModule.amenities,
+    }),
   },
   methods: {
     ...mapActions([
@@ -91,9 +99,10 @@ export default {
       "getConfiguration",
       "getContacts",
       "getConditions",
-      "getRegimes"
+      "getRegimes",
+      "getAmenities",
     ]),
-    ...mapMutations(["setReinicialized"])
+    ...mapMutations(["setReinicialized"]),
   },
   components: {
     BotonesSuperiores,
@@ -102,8 +111,9 @@ export default {
     Configuracion,
     Contacto,
     Condiciones,
-    Regimenes
-  }
+    Regimenes,
+    Amenidades,
+  },
 };
 </script>
 
