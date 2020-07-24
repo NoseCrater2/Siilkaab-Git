@@ -837,19 +837,80 @@ export default {
       (this.swCalefaction = this.amenities.calefaction),
       (this.swKeepBags = this.amenities.keep_bags);
   },
+  updated() {
+    if (this.ddwnSpa == "Gratis") {
+      this.this.amenities.spa = "free";
+    }
+    if (this.ddwnSpa == "De Pago") {
+      this.this.amenities.spa = "paid";
+    }
+    if (this.ddwnSpa == "Flag") {
+      this.this.amenities.spa = "flag";
+    }
+
+    if (this.ddwnAcuatic == "Gratis") {
+      this.this.amenities.water_park = "free";
+    }
+    if (this.ddwnAcuatic == "De Pago") {
+      this.this.amenities.water_park = "paid";
+    }
+    if (this.ddwnAcuatic == "Flag") {
+      this.this.amenities.water_park = "flag";
+    }
+
+    if (this.ddwnBeach == "Privada") {
+      this.this.amenities.beach = "private";
+    }
+    if (this.ddwnBeach == "En frente") {
+      this.this.amenities.beach = "in front";
+    }
+    if (this.ddwnBeach == "Flag") {
+      this.this.amenities.beach = "flag";
+    }
+
+    if (this.ddwnRomanticD == "Gratis") {
+      this.this.amenities.romantic_dinners = "free";
+    }
+    if (this.ddwnRomanticD == "De Pago") {
+      this.this.amenities.romantic_dinners = "paid";
+    }
+    if (this.ddwnRomanticD == "Flag") {
+      this.this.amenities.romantic_dinners = "flag";
+    }
+
+    if (this.ddwnTouristicT == "Gratis") {
+      this.this.amenities.touristic_tour = "free";
+    }
+    if (this.ddwnTouristicT == "De Pago") {
+      this.this.amenities.touristic_tour = "paid";
+    }
+    if (this.ddwnTouristicT == "Flag") {
+      this.this.amenities.touristic_tour = "flag";
+    }
+
+    if (this.ddwnDailyH == "Gratis") {
+      this.this.amenities.daily_housekipping = "free";
+    }
+    if (this.ddwnDailyH == "De Pago") {
+      this.this.amenities.daily_housekipping = "paid";
+    }
+    if (this.ddwnDailyH == "Flag") {
+      this.this.amenities.daily_housekipping = "flag";
+    }
+  },
   data() {
     return {
-      spaItems: ["free", "paid", "flag"],
+      spaItems: ["Gratis", "De Pago", "Flag"],
       ddwnSpa: null,
-      acuaticItems: ["free", "paid", "flag"],
+      acuaticItems: ["Gratis", "De Pago", "Flag"],
       ddwnAcuatic: null,
-      beachItems: ["private", "in front", "flag"],
+      beachItems: ["Privada", "En frente", "Flag"],
       ddwnBeach: null,
-      romanticDItems: ["free", "paid", "flag"],
+      romanticDItems: ["Gratis", "De Pago", "Flag"],
       ddwnRomanticD: null,
-      touristicTItems: ["free", "paid", "flag"],
+      touristicTItems: ["Gratis", "De Pago", "Flag"],
       ddwnTouristicT: null,
-      dailyHItems: ["free", "paid", "flag"],
+      dailyHItems: ["Gratis", "De Pago", "Flag"],
       ddwnDailyH: null,
       swAirConditioned: null,
       swNoSmokeRooms: null,

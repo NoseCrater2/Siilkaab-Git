@@ -68,6 +68,9 @@ export default {
         if (this.hotel.idCondition !== null) {
           this.getConditions(this.hotel.idCondition).then(() => {});
         }
+        if (this.hotel.idRegime !== null) {
+          this.getRegimes(this.hotel.idRegime).then(() => {});
+        }
         if (this.hotel.idAmenity !== null) {
           this.getAmenities(this.hotel.idAmenity).then(() => {});
         }
@@ -76,19 +79,19 @@ export default {
   },
   data() {
     return {
-      tituloHotel: ""
+      tituloHotel: "",
     };
   },
   computed: {
     ...mapState({
-      hotel: state => state.HotelModule.hotel,
-      iditemsListOptions: state => state.HotelModule.iditemsListOptions,
-      configuration: state => state.HotelModule.configuration,
-      contacts: state => state.HotelModule.contacts,
-      conditions: state => state.HotelModule.conditions,
-      regimes: state => state.HotelModule.regimes,
-      amenities: state => state.HotelModule.amenities
-    })
+      hotel: (state) => state.HotelModule.hotel,
+      iditemsListOptions: (state) => state.HotelModule.iditemsListOptions,
+      configuration: (state) => state.HotelModule.configuration,
+      contacts: (state) => state.HotelModule.contacts,
+      conditions: (state) => state.HotelModule.conditions,
+      regimes: (state) => state.HotelModule.regimes,
+      amenities: (state) => state.HotelModule.amenities,
+    }),
   },
   methods: {
     ...mapActions([
@@ -97,9 +100,9 @@ export default {
       "getContacts",
       "getConditions",
       "getRegimes",
-      "getAmenities"
+      "getAmenities",
     ]),
-    ...mapMutations(["setReinicialized"])
+    ...mapMutations(["setReinicialized"]),
   },
   components: {
     BotonesSuperiores,
@@ -109,8 +112,8 @@ export default {
     Contacto,
     Condiciones,
     Regimenes,
-    Amenidades
-  }
+    Amenidades,
+  },
 };
 </script>
 

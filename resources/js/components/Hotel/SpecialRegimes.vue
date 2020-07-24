@@ -133,6 +133,7 @@ export default {
   data() {
     return {
       //DATOS DEL FORMULARIO
+      id: this.idCompo,
       priorities: ["Normal", "Media", "Alta"],
       countIdCompo: -1,
       propStartDate: null,
