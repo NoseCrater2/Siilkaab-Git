@@ -12,8 +12,9 @@ const HotelModule = {
         contacts: null,
         conditions: null,
         regimes: null,
+        amenities: null,
         contentInformation: "", //Esta es la variable que utilizara el Markdown TipTap (MarkdownCompo.vue)
-        contentConditions: "" 
+        contentConditions: ""
     },
     getters:{
         getAssignHotels(state){
@@ -24,15 +25,15 @@ const HotelModule = {
         //Se reinician los estados (principalmente por el problema del router-link)
         setReinicialized(state) {
             (state.iditemsListOptions = 0),
-            (state.hotel = null),
-            (state.currencies = null),
-            (state.timezones = null),
-            (state.countries = null),
-            (state.configuration = null),
-            (state.contacts = null),
-            (state.conditions = null),
-            (state.contentInformation = ""),
-            (state.contentConditions = "")
+                (state.hotel = null),
+                (state.currencies = null),
+                (state.timezones = null),
+                (state.countries = null),
+                (state.configuration = null),
+                (state.contacts = null),
+                (state.conditions = null),
+                (state.contentInformation = ""),
+                (state.contentConditions = "");
         },
         //Metodo para mover el contador de items del MenuLateral.vue y ser usado en Hotel.vue
         countIditemsListOptions(state, index) {
@@ -73,12 +74,15 @@ const HotelModule = {
         setRegimes(state, payload) {
             state.regimes = payload;
         },
+        setAmenities(state, payload) {
+            state.amenities = payload;
+        },
         //Metodo que guarda el estado de las variables usadas en el Markdown mientras el hotel este configurandose
-        setContents(state, objContents){
-            if(objContents.info === "Information"){
+        setContents(state, objContents) {
+            if (objContents.info === "Information") {
                 state.contentInformation = objContents.fullText;
             }
-            if(objContents.info === "Conditions"){
+            if (objContents.info === "Conditions") {
                 state.contentConditions = objContents.fullText;
             }
         }
@@ -146,11 +150,21 @@ const HotelModule = {
         },
         getRegimes: async function({ commit }, id) {
             try {
-                const request = await axios.get(`/api/regimes/${id[0]}`);
-                let regimes = request.data.data;
-                console.log(regimes)
+                let arrayRegimes = [];
+                id.forEach(async elID => {
+                    const request = await axios.get(`/api/regimes/${elID}`);
+                    arrayRegimes.push(request.data.data);
+                });
                 //console.log(typeof(configuration))
-                commit("setRegimes", regimes);
+                commit("setRegimes", arrayRegimes);
+            } catch (error) {}
+        },
+        getAmenities: async function({ commit }, id) {
+            try {
+                const request = await axios.get(`/api/amenities/${id}`);
+                let amenities = request.data.data;
+                //console.log(typeof(configuration))
+                commit("setAmenities", amenities);
             } catch (error) {}
         },
 
