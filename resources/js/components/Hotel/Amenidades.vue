@@ -634,7 +634,7 @@
                         <span class="mb-4">
                           <strong>Bolsas de seguridad</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swKeepBags" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -644,7 +644,7 @@
                         <span class="mb-4">
                           <strong>Seguridad las 24 horas</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swSecurity24h" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -654,7 +654,7 @@
                         <span class="mb-4">
                           <strong>Alarma de seguridad</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swSecurityAlarm" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -664,7 +664,7 @@
                         <span class="mb-4">
                           <strong>Detectores de humo</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swSmookeDetectors" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -674,7 +674,7 @@
                         <span class="mb-4">
                           <strong>Camaras de seguridad internas</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swInSecurityCams" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -684,7 +684,7 @@
                         <span class="mb-4">
                           <strong>Camaras de seguridad externas</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swOutSecurityCams" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -694,7 +694,7 @@
                         <span class="mb-4">
                           <strong>Extintor de incendios</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swFireExtinguishers" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -704,7 +704,7 @@
                         <span class="mb-4">
                           <strong>Caja fuerte</strong>
                         </span>
-                        <v-switch inset></v-switch>
+                        <v-switch v-model="swSafeDepositBox" inset></v-switch>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -839,63 +839,63 @@ export default {
   },
   updated() {
     if (this.ddwnSpa == "Gratis") {
-      this.this.amenities.spa = "free";
+      this.amenities.spa = "free";
     }
     if (this.ddwnSpa == "De Pago") {
-      this.this.amenities.spa = "paid";
+      this.amenities.spa = "paid";
     }
     if (this.ddwnSpa == "Flag") {
-      this.this.amenities.spa = "flag";
+      this.amenities.spa = "flag";
     }
 
     if (this.ddwnAcuatic == "Gratis") {
-      this.this.amenities.water_park = "free";
+      this.amenities.water_park = "free";
     }
     if (this.ddwnAcuatic == "De Pago") {
-      this.this.amenities.water_park = "paid";
+      this.amenities.water_park = "paid";
     }
     if (this.ddwnAcuatic == "Flag") {
-      this.this.amenities.water_park = "flag";
+      this.amenities.water_park = "flag";
     }
 
     if (this.ddwnBeach == "Privada") {
-      this.this.amenities.beach = "private";
+      this.amenities.beach = "private";
     }
     if (this.ddwnBeach == "En frente") {
-      this.this.amenities.beach = "in front";
+      this.amenities.beach = "in front";
     }
     if (this.ddwnBeach == "Flag") {
-      this.this.amenities.beach = "flag";
+      this.amenities.beach = "flag";
     }
 
     if (this.ddwnRomanticD == "Gratis") {
-      this.this.amenities.romantic_dinners = "free";
+      this.amenities.romantic_dinners = "free";
     }
     if (this.ddwnRomanticD == "De Pago") {
-      this.this.amenities.romantic_dinners = "paid";
+      this.amenities.romantic_dinners = "paid";
     }
     if (this.ddwnRomanticD == "Flag") {
-      this.this.amenities.romantic_dinners = "flag";
+      this.amenities.romantic_dinners = "flag";
     }
 
     if (this.ddwnTouristicT == "Gratis") {
-      this.this.amenities.touristic_tour = "free";
+      this.amenities.touristic_tour = "free";
     }
     if (this.ddwnTouristicT == "De Pago") {
-      this.this.amenities.touristic_tour = "paid";
+      this.amenities.touristic_tour = "paid";
     }
     if (this.ddwnTouristicT == "Flag") {
-      this.this.amenities.touristic_tour = "flag";
+      this.amenities.touristic_tour = "flag";
     }
 
     if (this.ddwnDailyH == "Gratis") {
-      this.this.amenities.daily_housekipping = "free";
+      this.amenities.daily_housekipping = "free";
     }
     if (this.ddwnDailyH == "De Pago") {
-      this.this.amenities.daily_housekipping = "paid";
+      this.amenities.daily_housekipping = "paid";
     }
     if (this.ddwnDailyH == "Flag") {
-      this.this.amenities.daily_housekipping = "flag";
+      this.amenities.daily_housekipping = "flag";
     }
   },
   data() {
@@ -958,6 +958,14 @@ export default {
       swVipService: null,
       swCalefaction: null,
       swKeepBags: null,
+
+      swSecurity24h: null,
+      swSecurityAlarm: null,
+      swSmookeDetectors: null,
+      swInSecurityCams: null,
+      swOutSecurityCams: null,
+      swFireExtinguishers: null,
+      swSafeDepositBox: null,
     };
   },
   computed: {
