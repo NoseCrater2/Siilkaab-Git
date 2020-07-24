@@ -33,6 +33,9 @@ Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 
 
 Route::apiResource('hotels','Api\HotelController')->only('index','show','store','update','destroy');
+Route::name('hotelsnoadmin')->get('myhotels/','Api\HotelController@getHotelsForNoAdmin');
+Route::name('hotelsadmin')->get('adminhotels/','Api\HotelController@getHotelsForAdmin');
+
 Route::apiResource('rooms','Api\RoomController')->only('index','show','store','update','destroy');
 Route::apiResource('bedrooms','Api\BedroomController')->only('index','show','store','update','destroy');
 Route::apiResource('room_amenities','Api\RoomAmenityController')->only('index','show','store','update','destroy');
@@ -49,6 +52,7 @@ Route::apiResource('restaurants','Api\RestaurantController')->only('index','show
 Route::apiResource('schedules','Api\ScheduleController')->only('index','show','store','update','destroy');
 Route::apiResource('securities','Api\SecurityController')->only('index','show','store','update','destroy');
 Route::apiResource('users','Api\UserController')->only('index','show','store','update','destroy');
+Route::post('deleteusers','Api\UserController@delete');
 Route::name('verify')->get('users/verify/{token}','Api\UserController@verify');
 Route::name('resend')->get('users/{user}/resend','Api\UserController@resend');
 

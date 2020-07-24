@@ -54,47 +54,7 @@
             </v-expansion-panel-content>
             </v-expansion-panel>
             </v-expansion-panels>
-         <!-- <div v-if="binnacle.action==='CREATED'">
-          <v-card-title :class="`${colors.create}`">
-            <v-icon dark size="30" class="mr-4">mdi-database-check</v-icon>
-            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
-          </v-card-title>
-          </div>
-          <div v-else-if="binnacle.action==='UPDATED'">
-          <v-card-title :class="`${colors.update}`">
-            <v-icon dark size="30" class="mr-4">mdi-database-edit</v-icon>
-            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
-          </v-card-title>
-          </div>
-          <div v-else-if="binnacle.action==='DELETED'">
-          <v-card-title :class="`${colors.delete}`">
-            <v-icon dark size="30" class="mr-4">mdi-database-remove</v-icon>
-            <h1 class="display-1 white--text font-weight-light">{{binnacle.action}}</h1>
-          </v-card-title>
-          </div>
-          <v-container>
-            <v-row>
-              <v-col cols="12" md="10">
-               <div v-for="(details,d) in binnacle.details" :key="d">
-                  
-                 <strong>{{d}}</strong>: {{details}} <br>
-                 
-               </div>
-               Con IP {{binnacle.ip}}
-              </v-col>
-              <v-col
-                class="hidden-sm-and-down text-right"
-                md="2"
-              >
-              <div v-if="binnacle.model == 'users'">
-                <v-icon size="64">mdi-account</v-icon>
-              </div>
-              <div v-if="binnacle.model == 'Hotel'">
-                <v-icon size="64">mdi-office-building</v-icon>
-              </div>
-              </v-col>
-            </v-row>
-          </v-container> -->
+        
         </v-card>
       </v-timeline-item>
     </v-timeline>
