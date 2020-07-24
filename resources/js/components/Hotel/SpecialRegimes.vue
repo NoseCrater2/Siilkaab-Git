@@ -14,73 +14,19 @@
       </v-col>
       <!--MENU DESDE-->
       <v-col cols="12" md="4">
-        <v-menu
-          ref="fromMenu"
-          v-model="fromMenu"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="now"
-          transition="scale-transition"
-          min-width="290px"
-          offset-y
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="from"
-              class="mt-3"
-              label="Desde"
-              prepend-icon="mdi-calendar-month"
-              dense
-              readonly
-              outlined
-              hide-details
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="from" no-title scrollable>
-            <v-spacer></v-spacer>
-            <v-btn text color="primary" @click="fromMenu = false">Cancelar</v-btn>
-            <v-btn text color="primary" @click="$refs.fromMenu.save(from)">Aceptar</v-btn>
-          </v-date-picker>
-        </v-menu>
-      </v-col>
-      <!--MENU HASTA-->
-      <v-col cols="12" md="4">
-        <v-menu
-          ref="toMenu"
-          v-model="toMenu"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="to"
-          transition="scale-transition"
-          min-width="290px"
-          offset-y
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="to"
-              class="mt-3"
-              label="Hasta"
-              prepend-icon="mdi-calendar-month"
-              dense
-              readonly
-              outlined
-              hide-details
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="to" no-title scrollable>
-            <v-spacer></v-spacer>
-            <v-btn text color="primary" @click="toMenu = false">Cancelar</v-btn>
-            <v-btn text color="primary" @click="$refs.toMenu.save(to)">Aceptar</v-btn>
-          </v-date-picker>
-        </v-menu>
+        <DateTimePicker :dates="getStartDate"></DateTimePicker>
       </v-col>
 
-      <v-col cols="12" md="8">
+      <!--MENU HASTA-->
+      <v-col cols="12" md="4">
+        <DateTimePicker :dates="getFinalDate"></DateTimePicker>
+      </v-col>
+
+      <v-col cols="12" md="5">
         <v-switch v-model="swOnlyRoom" inset label="Solo habitacion"></v-switch>
+      </v-col>
+      <v-col cols="2" md="6">
+        <v-autocomplete :items="priorities" v-model="ddwnPriority" dense filled label="Prioridad"></v-autocomplete>
       </v-col>
       <v-col cols="12" md="5">
         <v-switch v-model="swBreakfast" inset label="Alojamiento y desayuno"></v-switch>
@@ -96,7 +42,7 @@
         <v-switch v-model="swHalfPension" inset label="Media pension"></v-switch>
       </v-col>
       <v-col cols="2" md="3">
-        <v-text-field v-model="txtHalPensionAdult" label="Adulto" required></v-text-field>
+        <v-text-field v-model="txtHalfPensionAdult" label="Adulto" required></v-text-field>
       </v-col>
       <v-col cols="2" md="3">
         <v-text-field v-model="txtHalfPensionChildren" label="Niño" required></v-text-field>
@@ -124,26 +70,111 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import DateTimePicker from "../DateTimePicker/DateTimePicker";
+
 export default {
-  el: "#ppp",
   name: "SpecialRegimes",
+  created() {
+    if (this.objArrCompo.start_period != null && this.objArrCompo.final_period != null) {
+      this.propStartDate = {
+        info: "Start",
+        prop: this.objArrCompo.start_period
+      };
+      this.propFinalDate = {
+        info: "Final",
+        prop: this.objArrCompo.final_period
+      };
+    }
+    this.swOnlyRoom = this.objArrCompo.only_room;
+    if (this.objArrCompo.priority != null) {
+      if (this.objArrCompo.priority == "normal") {
+        this.ddwnPriority = "Normal";
+      }
+      if (this.objArrCompo.priority == "medium") {
+        this.ddwnPriority = "Media";
+      }
+      if (this.objArrCompo.priority == "high") {
+        this.ddwnPriority = "Alta";
+      }
+    }
+    this.txtBreakfastChildren = this.objArrCompo.lodging_breakfast_children;
+    this.txtBreakfastAdult = this.objArrCompo.lodging_breakfast_adult;
+    if (this.txtBreakfastChildren != null) {
+      this.swBreakfast = 1;
+    }
+    this.txtHalfPensionChildren = this.objArrCompo.half_pension_children;
+    this.txtHalfPensionAdult = this.objArrCompo.half_pension_adult;
+    if (this.txtHalfPensionChildren != null) {
+      this.swHalfPension = 1;
+    }
+    this.txtFullPensionChildren = this.objArrCompo.full_pension_children;
+    this.txtFullPensionAdult = this.objArrCompo.full_pension_adult;
+    if (this.txtFullPensionChildren != null) {
+      this.swFullPension = 1;
+    }
+    this.txtAllIncludedChildren = this.objArrCompo.all_included_children;
+    this.txtAllIncludedAdult = this.objArrCompo.all_included_adult;
+    if (this.txtAllIncludedChildren != null) {
+      this.swAllIncluded = 1;
+    }
+  },
+  updated() {
+    if (this.ddwnPriority == "Normal") {
+      this.objArrCompo.priority = "normal";
+    }
+    if (this.ddwnPriority == "Media") {
+      this.objArrCompo.priority = "medium";
+    }
+    if (this.ddwnPriority == "Alta") {
+      this.objArrCompo.priority = "high";
+    }
+  },
   data() {
     return {
-      //Variables de calendario
-      from: null,
-      fromMenu: false,
-      to: null,
-      toMenu: false,
-      id: this.idCompo
+      //DATOS DEL FORMULARIO
+      priorities: ["Normal", "Media", "Alta"],
+      countIdCompo: -1,
+      propStartDate: null,
+      propFinalDate: null,
+      swOnlyRoom: null,
+      ddwnPriority: null,
+      swBreakfast: null,
+      txtBreakfastAdult: null,
+      txtBreakfastChildren: null,
+      swHalfPension: null,
+      txtHalfPensionAdult: null,
+      txtHalfPensionChildren: null,
+      swFullPension: null,
+      txtFullPensionAdult: null,
+      txtFullPensionChildren: null,
+      swAllIncluded: null,
+      txtAllIncludedAdult: null,
+      txtAllIncludedChildren: null
     };
+  },
+  computed: {
+    ...mapState({
+      regimes: state => state.HotelModule.regimes
+    }),
+    getStartDate(){
+      return this.propStartDate;
+    },
+    getFinalDate(){
+      return this.propFinalDate;
+    }
   },
   methods: {
     removeCompo(id) {
       this.$emit("removeCompo", id);
     }
   },
+  components: {
+    DateTimePicker
+  },
   props: {
-    idCompo: Number
+    idCompo: Number,
+    objArrCompo: Object
   }
 };
 </script>
