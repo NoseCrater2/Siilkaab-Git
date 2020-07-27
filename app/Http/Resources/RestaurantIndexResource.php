@@ -17,6 +17,7 @@ class RestaurantIndexResource extends JsonResource
         return [
             'name' => $this->name,
             'menu_type' => $this->menu_type,
+            'schedules' => $this->schedules,
             'hotel_id'=> isset($this->hotel)?$this->hotel->id:null,
             'hotel'=> isset($this->hotel)?$this->hotel->title:null,
         ];

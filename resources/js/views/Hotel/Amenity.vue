@@ -61,6 +61,7 @@
                           <strong>Aire acondicionado</strong>
                         </span>
                         <v-switch v-model="swAirConditioned" inset></v-switch>
+                        <CarrouselRestaurant></CarrouselRestaurant>
                       </v-row>
                     </v-card>
                   </v-col>
@@ -720,6 +721,7 @@
 
 <script>
 import { mapState } from "vuex";
+import CarrouselRestaurant from "../../components/Hotel/CarrouselRestaurant"
 
 export default {
   name: "Amenity",
@@ -981,6 +983,9 @@ export default {
       amenities: (state) => state.HotelModule.amenities,
     }),
   },
+  components:{
+    CarrouselRestaurant
+  }
 };
 </script>
 
