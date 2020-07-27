@@ -76,7 +76,7 @@
 import MarkdownCompo from "../../components/Markdown/MarkdownCompo";
 import { mapState } from "vuex";
 export default {
-  name: "Informacion",
+  name: "Information",
   data() {
     return {};
   },

@@ -24,7 +24,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 export default {
-  name: "MenuLateral",
+  name: "LateralMenu",
   data() {
     return {
       itemsListOptions: [

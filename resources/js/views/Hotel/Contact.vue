@@ -68,7 +68,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "Contacto",
+  name: "Contact",
   mounted() {
     this.getCountries().then(() => {});
   },

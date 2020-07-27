@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HotelsTable from '../components/Hotels/HotelsTable'
+import HotelsTable from './HotelsTable'
 
 export default {
   components: {

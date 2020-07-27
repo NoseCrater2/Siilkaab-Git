@@ -75,8 +75,8 @@ export default {
       drawer: null,
       route: "",
       paddingAvatar: "", //Clase que se añade al avatar del navigation si este esta en la config mini
-      arregloStatusClick: [false, false, false], //Array que contendra los estados del clic de cada menu desplegable del nav drawer
-      banderaStatusClickCOMPUTED: false, //Bandera que unificara el resultado de 'arregloStatusClick' para comprobarse en la Computed
+      arrayClickStatus: [false, false, false], //Array que contendra los estados del clic de cada menu desplegable del nav drawer
+      flagClickStatusCOMPUTED: false, //Bandera que unificara el resultado de 'arrayClickStatus' para comprobarse en la Computed
       itemsElementList: [
         {
           icon: "mdi-poll",
@@ -205,20 +205,20 @@ export default {
     //Metodo llamado por el boton del item deslplegable del navigation drawer para expandirlo en pantallas sm/xs
     expandNavigationDrawer() {
       //Se utiliza arguments por convencion de Js que indica cuando un metodo no fue creado para recibir explicitamente parametros
-      for(let i = 0; i<this.arregloStatusClick.length; i++){
+      for(let i = 0; i<this.arrayClickStatus.length; i++){
         if(i === arguments[0]){
           //Si coincide, cambia el valor a su contrario y los demas items los vuelve falsos
-          this.arregloStatusClick[i] = !this.arregloStatusClick[i];
+          this.arrayClickStatus[i] = !this.arrayClickStatus[i];
         }
         else{
-          this.arregloStatusClick[i] = false;
+          this.arrayClickStatus[i] = false;
         }
       }
-      if(this.arregloStatusClick[0] == true || this.arregloStatusClick[1] == true || this.arregloStatusClick[2] == true){
-        this.banderaStatusClickCOMPUTED = true;
+      if(this.arrayClickStatus[0] == true || this.arrayClickStatus[1] == true || this.arrayClickStatus[2] == true){
+        this.flagClickStatusCOMPUTED = true;
       }
-      if(this.arregloStatusClick[0] == false && this.arregloStatusClick[1] == false && this.arregloStatusClick[2] == false){
-        this.banderaStatusClickCOMPUTED = false;
+      if(this.arrayClickStatus[0] == false && this.arrayClickStatus[1] == false && this.arrayClickStatus[2] == false){
+        this.flagClickStatusCOMPUTED = false;
       }
     }
   },
@@ -228,13 +228,13 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
           this.paddingAvatar = " padding-left: 7px"
-          if(this.banderaStatusClickCOMPUTED == true){
+          if(this.flagClickStatusCOMPUTED == true){
             return false;
           }
           return true;
         case "sm":
           this.paddingAvatar = " padding-left: 7px"
-          if(this.banderaStatusClickCOMPUTED == true){
+          if(this.flagClickStatusCOMPUTED == true){
             return false;
           }
           return true;

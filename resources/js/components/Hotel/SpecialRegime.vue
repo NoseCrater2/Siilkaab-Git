@@ -74,7 +74,7 @@ import { mapState } from "vuex";
 import DateTimePicker from "../DateTimePicker/DateTimePicker";
 
 export default {
-  name: "SpecialRegimes",
+  name: "SpecialRegime",
   created() {
     if (this.objArrCompo.start_period != null && this.objArrCompo.final_period != null) {
       this.propStartDate = {

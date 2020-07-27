@@ -13,7 +13,7 @@
 
       <template v-slot:actions>
         <v-icon id="iconHotel" left>mdi-domain</v-icon>
-        <h3>{{titulo}}</h3>
+        <h3>{{title}}</h3>
       </template>
     </v-banner>
   </div>
@@ -21,9 +21,9 @@
 
 <script>
 export default {
-  name: "BotonesSuperiores",
+  name: "ButtonActionsSup",
   props: {
-    titulo: String
+    title: String
   }
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <!--Usamos el componente BarraNavSiilkaab.vue-->
-      <BarraNavSiilkaab></BarraNavSiilkaab>
+      <!--Usamos el componente NavbarSiilkaab.vue-->
+      <NavbarSiilkaab></NavbarSiilkaab>
       <v-main>
         <v-container align="start" justify="center">
           <!--Aqui se vera con router-view la informacion de hoteles, usuarios, etc-->
@@ -18,8 +18,8 @@
 
 <script>
 //Importamos los componentes
-import BarraNavSiilkaab from "./components/Index/BarraNavSiilkaab";
-import NavigationDashboard from "./components/Index/NavigationDashboard";
+import NavbarSiilkaab from "./NavbarSiilkaab";
+import NavigationDashboard from "./NavigationDashboard";
 
 export default {
   data() {
@@ -33,7 +33,7 @@ export default {
   },
   //Usamos los componentes
   components: {
-    BarraNavSiilkaab,
+    NavbarSiilkaab,
     NavigationDashboard
   }
 };

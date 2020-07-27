@@ -70,6 +70,13 @@ class AmenityIndexResource extends JsonResource
         'vip_service'=> $this->vip_service,
         'calefaction'=> $this->calefaction,
         'keep_bags'=> $this->keep_bags,
+        'security_24h'=> $this->security_24h,
+        'security_alarm'=> $this->security_alarm,
+        'smoke_detectors'=> $this->smoke_detectors,
+        'in_security_cams'=> $this->in_security_cams,
+        'out_security_cams'=> $this->out_security_cams,
+        'fire_extinguishers'=> $this->fire_extinguishers,
+        'safe_deposit_box'=> $this->safe_deposit_box,
         'hotel_id'=> isset($this->hotel)?$this->hotel->id:null,
         'hotel'=> isset($this->hotel)?$this->hotel->title:null,
     ];

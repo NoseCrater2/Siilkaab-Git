@@ -1,64 +1,53 @@
-import Hotels from "./hotels/Hotels";
-import Hotel from "./hotel/Hotel";
+import Hotels from "./views/Hotels/Hotels";
+import Hotel from "./views/Hotel/Hotel";
 import Users from "./users/Users";
 import Binnacles from "./binnacle/Binnacles";
 import Binnacle from "./binnacle/Binnacle";
-import Dashboard from "./panels/Dashboard";
-
+import Dashboard from "./views/Panel/Dashboard";
 
 import VueRouter from "vue-router";
-
-
-
 
 const routes = [
     {
         path: "/",
-        component: Dashboard, 
+        component: Dashboard,
         name: "home"
     },
-
+    {
+        path: "/hotels",
+        component: Hotels,
+        name: "Hotels"
+    },
     {
         path: "/hotel/:id",
-        component: Hotel, 
-        name: "hotelNoParam",
-       
-    },
-    {
-        path: "/hotel/",
-        component: Hotel, 
-        name: "hotelParam",
-    },
-    {
-        path: "/hotels/",
-        component: Hotels, 
-        name: "hotels"
+        component: Hotel,
+        name: "Hotel"
     },
     {
         path: "/users/",
-        component: Users, 
+        component: Users,
         name: "users"
     },
     {
         path: "/binnacles/",
-        component: Binnacles, 
+        component: Binnacles,
         name: "binnacles"
     },
     {
         path: "/binnacle/:id",
-        component: Binnacle, 
+        component: Binnacle,
         name: "binnacle"
     },
     {
         path: "/panel/",
-        component: Dashboard, 
+        component: Dashboard,
         name: "panel"
-    },
+    }
 ];
 
 const router = new VueRouter({
     routes,
-    mode: 'history',
+    mode: "history"
 });
 
 export default router;
