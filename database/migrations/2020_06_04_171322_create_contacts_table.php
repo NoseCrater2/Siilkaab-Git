@@ -27,7 +27,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('hotel_id');
             $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('hotel_id')->references('id')->on('hotels');
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->timestamps();
         });
     }

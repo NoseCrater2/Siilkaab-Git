@@ -317,6 +317,7 @@ export default {
   },
      
   close () {
+     this.userIds.userIds= []
     this.selectedHotels = null
     this.selected = []
     this.isEditing = false

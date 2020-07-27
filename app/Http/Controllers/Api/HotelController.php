@@ -6,6 +6,7 @@ use App\User;
 use App\Hotel;
 use DateTimeZone;
 use App\Messages;
+use App\HotelUser;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +100,34 @@ class HotelController extends Controller
         
     }
 
+    public function delete(Request $request)
+    {
+
+        $data = $request->all();
+
+        $rules = [
+            "hotelIds"    => "required|array|min:1",
+            "hotelIds.*"  => "required|exists:hotels,id|distinct|min:1",
+        ];
+                
+        $validator= Validator::make($data,$rules, Messages::getMessages());
+
+        if($validator->fails()){
+            return response($validator->errors(),422);
+        }else{
+            DB::transaction(function()use ($data){
+
+            HotelUser::whereIn('hotel_id',$data['hotelIds'])->delete();
+            Hotel::destroy($data['hotelIds']);
+           
+            });
+
+            return response($data['hotelIds'],200);
+        }
+        
+       
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -108,15 +137,6 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         DB::transaction(function()use ($hotel){
-        $hotel->amenity()->delete();
-        $hotel->condition()->delete();
-        $hotel->configuration()->delete();
-        $hotel->contact()->delete();
-        $hotel->pools()->delete();
-        $hotel->regimes()->delete();
-        $hotel->restaurants()->delete();
-        $hotel->rooms()->delete();
-        $hotel->security()->delete();
         $hotel->users()->detach();
         Storage::delete($hotel->image);
         $hotel->delete();
