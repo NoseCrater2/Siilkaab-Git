@@ -722,7 +722,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "Amenidades",
+  name: "Amenity",
   created() {
     if (this.amenities.spa != null) {
       if (this.amenities.spa == "free") {
@@ -836,6 +836,13 @@ export default {
       (this.swVipService = this.amenities.vip_service),
       (this.swCalefaction = this.amenities.calefaction),
       (this.swKeepBags = this.amenities.keep_bags);
+      (this.swSecurity24h = this.amenities.security_24h),
+      (this.swSecurityAlarm = this.amenities.security_alarm),
+      (this.swSmookeDetectors = this.amenities.smoke_detectors),
+      (this.swInSecurityCams = this.amenities.in_security_cams),
+      (this.swOutSecurityCams = this.amenities.out_security_cams),
+      (this.swFireExtinguishers = this.amenities.fire_extinguishers),
+      (this.swSafeDepositBox = this.amenities.safe_deposit_box);
   },
   updated() {
     if (this.ddwnSpa == "Gratis") {

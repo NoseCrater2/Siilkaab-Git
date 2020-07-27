@@ -68,7 +68,7 @@
           se aplicará
         </span>
       </v-row>
-      <!--ETIQUETA SpecialRegimes.vue-->
+      <!--ETIQUETA SpecialRegime.vue-->
       <component
         v-for="(component) in arrayComponents"
         :idCompo="component.idCompo"
@@ -87,12 +87,12 @@
 </template>
 
 <script>
-import SpecialRegimes from "../Hotel/SpecialRegimes";
+import SpecialRegime from "../../components/Hotel/SpecialRegime";
 
 import { mapState } from "vuex";
 
 export default {
-  name: "Regimenes",
+  name: "Regime",
   created() {
     let count = this.regimes.length-1;
     while(count>0){
@@ -172,21 +172,21 @@ export default {
     })
   },
   components: {
-    SpecialRegimes
+    SpecialRegime
   },
   methods: {
     addCompo() {
       this.countIdCompo++;
       this.arrayComponents.push({
         idCompo: this.countIdCompo,
-        TagSRegimes: SpecialRegimes
+        TagSRegimes: SpecialRegime
       });
     },
     addCompo(obj) {
       this.countIdCompo++;
       this.arrayComponents.push({
         idCompo: this.countIdCompo,
-        TagSRegimes: SpecialRegimes,
+        TagSRegimes: SpecialRegime,
         objArrCompo: obj
       });
     },

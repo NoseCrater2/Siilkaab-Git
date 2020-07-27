@@ -2,36 +2,36 @@
   <div>
     <div id="app">
       <v-app id="inspire">
-        <!--Usamos componente BotonesSuperiores.vue-->
-        <BotonesSuperiores :titulo="tituloHotel"></BotonesSuperiores>
+        <!--Usamos componente ButtonActionsSup.vue-->
+        <ButtonActionsSup :title="hotelTitle"></ButtonActionsSup>
         <v-container>
           <v-row no-gutters>
             <v-col id="columMenu" cols="6" md="3" sm="12">
-              <!--Usamos componente MenuLateral-->
-              <MenuLateral></MenuLateral>
+              <!--Usamos componente LateralMenu-->
+              <LateralMenu></LateralMenu>
             </v-col>
             <v-col cols="12" sm="auto" md="9">
               <div v-if="iditemsListOptions===0">
-                <Informacion></Informacion>
+                <Information></Information>
               </div>
 
               <div v-if="iditemsListOptions===1">
-                <Configuracion></Configuracion>
+                <Configuration></Configuration>
               </div>
 
               <div v-if="iditemsListOptions===2">
-                <Contacto></Contacto>
+                <Contact></Contact>
               </div>
 
               <div v-if="iditemsListOptions===3">
-                <Condiciones></Condiciones>
+                <Condition></Condition>
               </div>
 
               <div v-if="iditemsListOptions===4">
-                <Regimenes></Regimenes>
+                <Regime></Regime>
               </div>
               <div v-if="iditemsListOptions===5">
-                <Amenidades></Amenidades>
+                <Amenity></Amenity>
               </div>
             </v-col>
           </v-row>
@@ -44,21 +44,21 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 
-import BotonesSuperiores from "../components/Hotel/BotonesSuperiores";
-import MenuLateral from "../components/Hotel/MenuLateral";
-import Informacion from "../components/Hotel/Informacion";
-import Configuracion from "../components/Hotel/Configuracion";
-import Contacto from "../components/Hotel/Contacto";
-import Condiciones from "../components/Hotel/Condiciones";
-import Regimenes from "../components/Hotel/Regimenes";
-import Amenidades from "../components/Hotel/Amenidades";
+import ButtonActionsSup from "../../views/Hotel/ButtonActionsSup";
+import LateralMenu from "../../views/Hotel/LateralMenu";
+import Information from "../../views/Hotel/Information";
+import Configuration from "../../views/Hotel/Configuration";
+import Contact from "../../views/Hotel/Contact";
+import Condition from "../../views/Hotel/Condition";
+import Regime from "../../views/Hotel/Regime";
+import Amenity from "../../views/Hotel/Amenity";
 
 export default {
   created() {
     if (this.$route.params.id) {
       this.setReinicialized(); //Reinicia el objeto hotel (esto es por que no hay una recarga de pag con router-link)
       this.getHotel(this.$route.params.id).then(() => {
-        this.tituloHotel = this.hotel.Title;
+        this.hotelTitle = this.hotel.Title;
         if (this.hotel.idConfiguration !== null) {
           this.getConfiguration(this.hotel.idConfiguration).then(() => {});
         }
@@ -79,7 +79,7 @@ export default {
   },
   data() {
     return {
-      tituloHotel: "",
+      hotelTitle: "",
     };
   },
   computed: {
@@ -105,14 +105,14 @@ export default {
     ...mapMutations(["setReinicialized"]),
   },
   components: {
-    BotonesSuperiores,
-    MenuLateral,
-    Informacion,
-    Configuracion,
-    Contacto,
-    Condiciones,
-    Regimenes,
-    Amenidades,
+    ButtonActionsSup,
+    LateralMenu,
+    Information,
+    Configuration,
+    Contact,
+    Condition,
+    Regime,
+    Amenity,
   },
 };
 </script>

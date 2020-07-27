@@ -24,6 +24,6 @@
 
 <script>
 export default {
-  name: "BarraNavSiilkaab"
+  name: "NavbarSiilkaab"
 };
 </script>

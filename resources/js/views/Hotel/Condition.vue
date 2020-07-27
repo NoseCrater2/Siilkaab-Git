@@ -53,7 +53,7 @@
 import MarkdownCompo from "../../components/Markdown/MarkdownCompo";
 import { mapState } from "vuex";
 export default {
-  name: "Condiciones",
+  name: "Condition",
   components: {
     //Usamos componente MarkdownCompo (ubicado en la carpeta componentes. Es un componente de otro compo llamado TipTap)
     MarkdownCompo
