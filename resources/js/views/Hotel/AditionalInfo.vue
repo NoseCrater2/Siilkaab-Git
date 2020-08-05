@@ -7,15 +7,15 @@
         <v-banner single-line>
           <div class="flexed">
             <v-icon class="iconsInformation" left>mdi-tag-multiple</v-icon>
-            <h3>Amenidades</h3>
+            <h3>Información adicional</h3>
           </div>
         </v-banner>
         <div class="pa-4">
           <v-col cols="12" sm="6" md="12">
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
-                  <strong>Informacion del edificio</strong>
+                <v-expansion-panel-header color="#b2b2b2">
+                  <strong>Informacion de propiedad</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <v-row no-gutters>
@@ -24,7 +24,7 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Numero de habitaciones</strong>
                         </span>
-                        <v-text-field  class="ml-auto" v-model="amenities.num_rooms" required></v-text-field>
+                        <v-text-field class="ml-auto" v-model="aditionalInfo.num_rooms" required></v-text-field>
                       </v-card>
                     </v-col>
                     <v-col cols="6" style="margin-bottom: 1%">
@@ -32,7 +32,7 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Numero de pisos</strong>
                         </span>
-                        <v-text-field class="ml-auto" v-model="amenities.num_floors" required></v-text-field>
+                        <v-text-field class="ml-auto" v-model="aditionalInfo.num_floors" required></v-text-field>
                       </v-card>
                     </v-col>
                   </v-row>
@@ -42,7 +42,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Servicios destacados</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -52,7 +52,13 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Spa</strong>
                         </span>
-                        <v-autocomplete class="ml-auto" :items="spaItems" v-model="ddwnSpa" dense filled></v-autocomplete>
+                        <v-autocomplete
+                          class="ml-auto"
+                          :items="spaItems"
+                          v-model="ddwnSpa"
+                          dense
+                          filled
+                        ></v-autocomplete>
                       </v-card>
                     </v-col>
                     <v-col cols="6" style="margin-bottom: 1%">
@@ -61,7 +67,6 @@
                           <strong>Aire acondicionado</strong>
                         </span>
                         <v-switch class="ml-auto" v-model="swAirConditioned" inset></v-switch>
-                        <!--<CarrouselRestaurant></CarrouselRestaurant>-->
                       </v-card>
                     </v-col>
                     <v-col cols="6" style="margin-bottom: 1%">
@@ -141,7 +146,18 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Parque acuatico</strong>
                         </span>
-                        <v-autocomplete class="ml-auto" :items="acuaticItems" v-model="ddwnAcuatic" dense filled></v-autocomplete>
+                        <v-autocomplete
+                          class="ml-auto"
+                          :items="acuaticItems"
+                          v-model="ddwnAcuatic"
+                          dense
+                          filled
+                        ></v-autocomplete>
+                      </v-card>
+                    </v-col>
+                    <v-col cols="12" style="margin-bottom: 1%">
+                      <v-card outlined style="padding: 2%">
+                        <CarrouselRestaurant></CarrouselRestaurant>
                       </v-card>
                     </v-col>
                   </v-row>
@@ -151,7 +167,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Actividades</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -161,7 +177,13 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Playa</strong>
                         </span>
-                        <v-autocomplete class="ml-auto" :items="beachItems" v-model="ddwnBeach" dense filled></v-autocomplete>
+                        <v-autocomplete
+                          class="ml-auto"
+                          :items="beachItems"
+                          v-model="ddwnBeach"
+                          dense
+                          filled
+                        ></v-autocomplete>
                       </v-card>
                     </v-col>
                     <v-col cols="6" style="margin-bottom: 1%">
@@ -207,7 +229,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Transporte</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -251,7 +273,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Servicios de recepcion</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -303,7 +325,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Zonas comunes</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -363,7 +385,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Servicios de limpieza</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -373,7 +395,13 @@
                         <span class="d-flex align-center" style="margin-right: 5%">
                           <strong>Limpieza interna diaria</strong>
                         </span>
-                        <v-autocomplete class="ml-auto" :items="dailyHItems" v-model="ddwnDailyH" dense filled></v-autocomplete>
+                        <v-autocomplete
+                          class="ml-auto"
+                          :items="dailyHItems"
+                          v-model="ddwnDailyH"
+                          dense
+                          filled
+                        ></v-autocomplete>
                       </v-card>
                     </v-col>
                     <v-col cols="6" style="margin-bottom: 1%">
@@ -399,7 +427,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Instalaciones de negocios</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -435,7 +463,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Varios</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -559,7 +587,7 @@
             <br />
             <v-expansion-panels focusable accordion multiple>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#1565c0">
+                <v-expansion-panel-header color="#b2b2b2">
                   <strong>Seguridad</strong>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -644,187 +672,187 @@ import { mapState } from "vuex";
 import CarrouselRestaurant from "../../components/Hotel/CarrouselRestaurant";
 
 export default {
-  name: "Amenity",
+  name: "AditionalInfo",
   created() {
-    if (this.amenities.spa != null) {
-      if (this.amenities.spa == "free") {
+    if (this.aditionalInfo.spa != null) {
+      if (this.aditionalInfo.spa == "free") {
         this.ddwnSpa = "Gratis";
       }
-      if (this.amenities.spa == "paid") {
+      if (this.aditionalInfo.spa == "paid") {
         this.ddwnSpa = "De Pago";
       }
-      if (this.amenities.spa == "flag") {
+      if (this.aditionalInfo.spa == "flag") {
         this.ddwnSpa = "Flag";
       }
     }
-    if (this.amenities.water_park != null) {
-      if (this.amenities.water_park == "free") {
+    if (this.aditionalInfo.water_park != null) {
+      if (this.aditionalInfo.water_park == "free") {
         this.ddwnAcuatic = "Gratis";
       }
-      if (this.amenities.water_park == "paid") {
+      if (this.aditionalInfo.water_park == "paid") {
         this.ddwnAcuatic = "De Pago";
       }
-      if (this.amenities.water_park == "flag") {
+      if (this.aditionalInfo.water_park == "flag") {
         this.ddwnAcuatic = "Flag";
       }
     }
-    if (this.amenities.beach != null) {
-      if (this.amenities.beach == "private") {
+    if (this.aditionalInfo.beach != null) {
+      if (this.aditionalInfo.beach == "private") {
         this.ddwnBeach = "Privada";
       }
-      if (this.amenities.beach == "in front") {
+      if (this.aditionalInfo.beach == "in front") {
         this.ddwnBeach = "En frente";
       }
-      if (this.amenities.beach == "flag") {
+      if (this.aditionalInfo.beach == "flag") {
         this.ddwnBeach = "Flag";
       }
     }
-    if (this.amenities.romantic_dinners != null) {
-      if (this.amenities.romantic_dinners == "free") {
+    if (this.aditionalInfo.romantic_dinners != null) {
+      if (this.aditionalInfo.romantic_dinners == "free") {
         this.ddwnRomanticD = "Gratis";
       }
-      if (this.amenities.romantic_dinners == "paid") {
+      if (this.aditionalInfo.romantic_dinners == "paid") {
         this.ddwnRomanticD = "De pago";
       }
-      if (this.amenities.romantic_dinners == "flag") {
+      if (this.aditionalInfo.romantic_dinners == "flag") {
         this.ddwnRomanticD = "Flag";
       }
     }
-    if (this.amenities.touristic_tour != null) {
-      if (this.amenities.touristic_tour == "free") {
+    if (this.aditionalInfo.touristic_tour != null) {
+      if (this.aditionalInfo.touristic_tour == "free") {
         this.ddwnTouristicT = "Gratis";
       }
-      if (this.amenities.touristic_tour == "paid") {
+      if (this.aditionalInfo.touristic_tour == "paid") {
         this.ddwnTouristicT = "De pago";
       }
-      if (this.amenities.touristic_tour == "flag") {
+      if (this.aditionalInfo.touristic_tour == "flag") {
         this.ddwnTouristicT = "Flag";
       }
     }
-    if (this.amenities.daily_housekipping != null) {
-      if (this.amenities.daily_housekipping == "free") {
+    if (this.aditionalInfo.daily_housekipping != null) {
+      if (this.aditionalInfo.daily_housekipping == "free") {
         this.ddwnDailyH = "Gratis";
       }
-      if (this.amenities.daily_housekipping == "paid") {
+      if (this.aditionalInfo.daily_housekipping == "paid") {
         this.ddwnDailyH = "De pago";
       }
-      if (this.amenities.daily_housekipping == "flag") {
+      if (this.aditionalInfo.daily_housekipping == "flag") {
         this.ddwnDailyH = "Flag";
       }
     }
-    (this.swAirConditioned = this.amenities.air_conditioned),
-      (this.swNoSmokeRooms = this.amenities.no_smoke_rooms),
-      (this.swAirTransferService = this.amenities.air_transfer_service),
-      (this.swAirCollectService = this.amenities.air_collect_service),
-      (this.swRecection_24h = this.amenities.recection_24h),
-      (this.swGym = this.amenities.gym),
-      (this.swRoomService = this.amenities.room_service),
-      (this.swTerrace = this.amenities.terrace),
-      (this.swBar = this.amenities.bar),
-      (this.swGarden = this.amenities.garden),
-      (this.swRecreationalActivities = this.amenities.recreational_activities),
-      (this.swGuardedParking = this.amenities.guarded_parking),
-      (this.swStreetParking = this.amenities.street_parking),
-      (this.swGarageParking = this.amenities.garage_parking),
-      (this.swSpecialParking = this.amenities.special_parking),
-      (this.swReg_inout_private = this.amenities.reg_inout_private),
-      (this.swReg_inout_express = this.amenities.reg_inout_express),
-      (this.swTouristicInfo = this.amenities.touristic_info),
-      (this.swParkingService = this.amenities.parking_service),
-      (this.swCurrencyChange = this.amenities.currency_change),
-      (this.swOutdoorFurniture = this.amenities.outdoor_furniture),
-      (this.swTerraceSolarium = this.amenities.terrace_solarium),
-      (this.swSharedDinner = this.amenities.shared_dinner),
-      (this.swSharedSalon = this.amenities.shared_salon),
-      (this.swGameZone = this.amenities.game_zone),
-      (this.swLibrary = this.amenities.library),
-      (this.swLaundryService = this.amenities.laundry_service),
-      (this.swIronService = this.amenities.iron_service),
-      (this.swMeetingRoom = this.amenities.meeting_room),
-      (this.swMeetingCenter = this.amenities.meeting_center),
-      (this.swFaxPhotocopier = this.amenities.fax_photocopier),
-      (this.swCoffeeBreak = this.amenities.coffee_break),
-      (this.swSouvenirsStore = this.amenities.souvenirs_store),
-      (this.swInclusiveService = this.amenities.inclusive_service),
-      (this.swElevator = this.amenities.elevator),
-      (this.swSmokingZone = this.amenities.smoking_zone),
-      (this.swNoSmoking = this.amenities.no_smoking),
-      (this.swPetFriendly = this.amenities.pet_friendly),
-      (this.swPetHouse = this.amenities.pet_house),
-      (this.swPetBasket = this.amenities.PetBasket),
-      (this.swOnlyAdults = this.amenities.only_adults),
-      (this.swSanitizedRooms = this.amenities.sanitized_rooms),
-      (this.swBridalSuite = this.amenities.bridal_suite),
-      (this.swVipService = this.amenities.vip_service),
-      (this.swCalefaction = this.amenities.calefaction),
-      (this.swKeepBags = this.amenities.keep_bags);
-    (this.swSecurity24h = this.amenities.security_24h),
-      (this.swSecurityAlarm = this.amenities.security_alarm),
-      (this.swSmookeDetectors = this.amenities.smoke_detectors),
-      (this.swInSecurityCams = this.amenities.in_security_cams),
-      (this.swOutSecurityCams = this.amenities.out_security_cams),
-      (this.swFireExtinguishers = this.amenities.fire_extinguishers),
-      (this.swSafeDepositBox = this.amenities.safe_deposit_box);
+    (this.swAirConditioned = this.aditionalInfo.air_conditioned),
+      (this.swNoSmokeRooms = this.aditionalInfo.no_smoke_rooms),
+      (this.swAirTransferService = this.aditionalInfo.air_transfer_service),
+      (this.swAirCollectService = this.aditionalInfo.air_collect_service),
+      (this.swRecection_24h = this.aditionalInfo.recection_24h),
+      (this.swGym = this.aditionalInfo.gym),
+      (this.swRoomService = this.aditionalInfo.room_service),
+      (this.swTerrace = this.aditionalInfo.terrace),
+      (this.swBar = this.aditionalInfo.bar),
+      (this.swGarden = this.aditionalInfo.garden),
+      (this.swRecreationalActivities = this.aditionalInfo.recreational_activities),
+      (this.swGuardedParking = this.aditionalInfo.guarded_parking),
+      (this.swStreetParking = this.aditionalInfo.street_parking),
+      (this.swGarageParking = this.aditionalInfo.garage_parking),
+      (this.swSpecialParking = this.aditionalInfo.special_parking),
+      (this.swReg_inout_private = this.aditionalInfo.reg_inout_private),
+      (this.swReg_inout_express = this.aditionalInfo.reg_inout_express),
+      (this.swTouristicInfo = this.aditionalInfo.touristic_info),
+      (this.swParkingService = this.aditionalInfo.parking_service),
+      (this.swCurrencyChange = this.aditionalInfo.currency_change),
+      (this.swOutdoorFurniture = this.aditionalInfo.outdoor_furniture),
+      (this.swTerraceSolarium = this.aditionalInfo.terrace_solarium),
+      (this.swSharedDinner = this.aditionalInfo.shared_dinner),
+      (this.swSharedSalon = this.aditionalInfo.shared_salon),
+      (this.swGameZone = this.aditionalInfo.game_zone),
+      (this.swLibrary = this.aditionalInfo.library),
+      (this.swLaundryService = this.aditionalInfo.laundry_service),
+      (this.swIronService = this.aditionalInfo.iron_service),
+      (this.swMeetingRoom = this.aditionalInfo.meeting_room),
+      (this.swMeetingCenter = this.aditionalInfo.meeting_center),
+      (this.swFaxPhotocopier = this.aditionalInfo.fax_photocopier),
+      (this.swCoffeeBreak = this.aditionalInfo.coffee_break),
+      (this.swSouvenirsStore = this.aditionalInfo.souvenirs_store),
+      (this.swInclusiveService = this.aditionalInfo.inclusive_service),
+      (this.swElevator = this.aditionalInfo.elevator),
+      (this.swSmokingZone = this.aditionalInfo.smoking_zone),
+      (this.swNoSmoking = this.aditionalInfo.no_smoking),
+      (this.swPetFriendly = this.aditionalInfo.pet_friendly),
+      (this.swPetHouse = this.aditionalInfo.pet_house),
+      (this.swPetBasket = this.aditionalInfo.PetBasket),
+      (this.swOnlyAdults = this.aditionalInfo.only_adults),
+      (this.swSanitizedRooms = this.aditionalInfo.sanitized_rooms),
+      (this.swBridalSuite = this.aditionalInfo.bridal_suite),
+      (this.swVipService = this.aditionalInfo.vip_service),
+      (this.swCalefaction = this.aditionalInfo.calefaction),
+      (this.swKeepBags = this.aditionalInfo.keep_bags);
+    (this.swSecurity24h = this.aditionalInfo.security_24h),
+      (this.swSecurityAlarm = this.aditionalInfo.security_alarm),
+      (this.swSmookeDetectors = this.aditionalInfo.smoke_detectors),
+      (this.swInSecurityCams = this.aditionalInfo.in_security_cams),
+      (this.swOutSecurityCams = this.aditionalInfo.out_security_cams),
+      (this.swFireExtinguishers = this.aditionalInfo.fire_extinguishers),
+      (this.swSafeDepositBox = this.aditionalInfo.safe_deposit_box);
   },
   updated() {
     if (this.ddwnSpa == "Gratis") {
-      this.amenities.spa = "free";
+      this.aditionalInfo.spa = "free";
     }
     if (this.ddwnSpa == "De Pago") {
-      this.amenities.spa = "paid";
+      this.aditionalInfo.spa = "paid";
     }
     if (this.ddwnSpa == "Flag") {
-      this.amenities.spa = "flag";
+      this.aditionalInfo.spa = "flag";
     }
 
     if (this.ddwnAcuatic == "Gratis") {
-      this.amenities.water_park = "free";
+      this.aditionalInfo.water_park = "free";
     }
     if (this.ddwnAcuatic == "De Pago") {
-      this.amenities.water_park = "paid";
+      this.aditionalInfo.water_park = "paid";
     }
     if (this.ddwnAcuatic == "Flag") {
-      this.amenities.water_park = "flag";
+      this.aditionalInfo.water_park = "flag";
     }
 
     if (this.ddwnBeach == "Privada") {
-      this.amenities.beach = "private";
+      this.aditionalInfo.beach = "private";
     }
     if (this.ddwnBeach == "En frente") {
-      this.amenities.beach = "in front";
+      this.aditionalInfo.beach = "in front";
     }
     if (this.ddwnBeach == "Flag") {
-      this.amenities.beach = "flag";
+      this.aditionalInfo.beach = "flag";
     }
 
     if (this.ddwnRomanticD == "Gratis") {
-      this.amenities.romantic_dinners = "free";
+      this.aditionalInfo.romantic_dinners = "free";
     }
     if (this.ddwnRomanticD == "De Pago") {
-      this.amenities.romantic_dinners = "paid";
+      this.aditionalInfo.romantic_dinners = "paid";
     }
     if (this.ddwnRomanticD == "Flag") {
-      this.amenities.romantic_dinners = "flag";
+      this.aditionalInfo.romantic_dinners = "flag";
     }
 
     if (this.ddwnTouristicT == "Gratis") {
-      this.amenities.touristic_tour = "free";
+      this.aditionalInfo.touristic_tour = "free";
     }
     if (this.ddwnTouristicT == "De Pago") {
-      this.amenities.touristic_tour = "paid";
+      this.aditionalInfo.touristic_tour = "paid";
     }
     if (this.ddwnTouristicT == "Flag") {
-      this.amenities.touristic_tour = "flag";
+      this.aditionalInfo.touristic_tour = "flag";
     }
 
     if (this.ddwnDailyH == "Gratis") {
-      this.amenities.daily_housekipping = "free";
+      this.aditionalInfo.daily_housekipping = "free";
     }
     if (this.ddwnDailyH == "De Pago") {
-      this.amenities.daily_housekipping = "paid";
+      this.aditionalInfo.daily_housekipping = "paid";
     }
     if (this.ddwnDailyH == "Flag") {
-      this.amenities.daily_housekipping = "flag";
+      this.aditionalInfo.daily_housekipping = "flag";
     }
   },
   data() {
@@ -900,7 +928,7 @@ export default {
   computed: {
     ...mapState({
       hotel: (state) => state.HotelModule.hotel,
-      amenities: (state) => state.HotelModule.amenities,
+      aditionalInfo: (state) => state.HotelModule.aditionalInfo,
     }),
   },
   components: {
