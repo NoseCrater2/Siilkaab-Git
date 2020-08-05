@@ -22,12 +22,15 @@
         ></component>
       </v-carousel>
 
-      <v-btn
-        small
-        depressed
-        color="primary"
-        @click="addCompoButton()"
-      >Añadir restaurante</v-btn>
+      <div class="d-flex justify-end">
+        <v-btn
+          class="mt-2"
+          small
+          depressed
+          color="primary"
+          @click="addCompoButton()"
+        >Añadir restaurante</v-btn>
+      </div>
     </div>
   </div>
 </template>

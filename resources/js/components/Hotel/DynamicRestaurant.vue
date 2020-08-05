@@ -1,22 +1,22 @@
 <template>
   <v-carousel-item>
-    <v-sheet color="#eeeeee" height="90%">
+    <v-sheet color="#eeeeee" height="100%">
       <div style="padding: 2%">
         <v-row class="ml-1">
-        <span>
-          <h3>
-            <strong>Restaurante #{{idCompo+1}}</strong>
-          </h3>
-        </span>
-        <v-btn
-          small
-          class="ml-16 white--text"
-          depressed
-          color="red"
-          @click="removeCompo(id)"
-        >Eliminar restaurante</v-btn>
+          <span>
+            <h2>
+              <strong>Restaurante #{{idCompo+1}}</strong>
+            </h2>
+          </span>
+          <v-btn
+            small
+            class="ml-11 white--text"
+            depressed
+            color="red"
+            @click="removeCompo(id)"
+          >Eliminar restaurante</v-btn>
         </v-row>
-
+        <br />
         <v-text-field v-model="restaurantName" label="Nombre del restaurante" required></v-text-field>
         <br />
         <span>
@@ -34,14 +34,14 @@
         <br />
         <span>Dile a los clientes cuándo pueden usar este servicio</span>
         <v-row>
-          <v-col md="11" style="display: flex">
+          <v-col md="13" style="display: flex">
             <v-autocomplete
               :items="weekDays"
               v-model="ddwnDayModel"
               dense
               filled
               label="Dia"
-              style="margin-right: 8%"
+              style="margin-right: 4%"
             ></v-autocomplete>
             <v-dialog
               ref="dialogFromHour"
@@ -60,7 +60,7 @@
                   dense
                   filled
                   label="Desde"
-                  style="margin-right: 6%"
+                  style="margin-right: 2%"
                 ></v-autocomplete>
               </template>
               <v-time-picker v-if="modalFromHour" v-model="fromHour" format="24hr" full-width>
@@ -86,7 +86,7 @@
                   dense
                   filled
                   label="Hasta"
-                  style="margin-right: 6%"
+                  style="margin-right: 2%"
                 ></v-autocomplete>
               </template>
               <v-time-picker v-if="modalToHour" v-model="toHour" format="24hr" full-width>
@@ -95,7 +95,7 @@
                 <v-btn text color="primary" @click="$refs.dialogToHour.save(toHour)">Aceptar</v-btn>
               </v-time-picker>
             </v-dialog>
-            <v-btn class="mt-1" depressed fab dark small color="primary">
+            <v-btn class="mt-3" x-small depressed fab dark color="primary">
               <v-icon dark>mdi-pencil</v-icon>
             </v-btn>
           </v-col>
@@ -146,8 +146,8 @@ export default {
             this.ddwnDayModel = "Sábado";
           }
         }
-        this.fromHour = this.objArrCompo.schedules[0].start_time;
-        this.toHour = this.objArrCompo.schedules[0].end_time;
+        this.fromHour = this.objArrCompo.schedules[0].start_time.slice(0, -3);
+        this.toHour = this.objArrCompo.schedules[0].end_time.slice(0, -3);
       }
     }
   },
