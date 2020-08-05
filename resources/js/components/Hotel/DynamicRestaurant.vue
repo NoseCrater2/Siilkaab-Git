@@ -1,12 +1,22 @@
 <template>
   <v-carousel-item>
-    <v-sheet color="#eeeeee" height="100%">
+    <v-sheet color="#eeeeee" height="90%">
       <div style="padding: 2%">
+        <v-row class="ml-1">
         <span>
           <h3>
             <strong>Restaurante #{{idCompo+1}}</strong>
           </h3>
         </span>
+        <v-btn
+          small
+          class="ml-16 white--text"
+          depressed
+          color="red"
+          @click="removeCompo(id)"
+        >Eliminar restaurante</v-btn>
+        </v-row>
+
         <v-text-field v-model="restaurantName" label="Nombre del restaurante" required></v-text-field>
         <br />
         <span>
@@ -143,6 +153,7 @@ export default {
   },
   data() {
     return {
+      id: this.idCompo,
       weekDays: [
         "Domingo",
         "Lunes",

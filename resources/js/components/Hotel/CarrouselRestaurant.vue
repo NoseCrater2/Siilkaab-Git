@@ -23,11 +23,11 @@
       </v-carousel>
 
       <v-btn
-        class="mt-3"
+        small
         depressed
         color="primary"
         @click="addCompoButton()"
-      >Añadir otro restaurante</v-btn>
+      >Añadir restaurante</v-btn>
     </div>
   </div>
 </template>
