@@ -6,6 +6,7 @@ import router from "./routes";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import Index from "./views/Index/Index";
+import Reservations from "./views/Reservations/Payments"
 import storeDefinition from "./store/store";
 
 window.Vue = require("vue");
@@ -46,7 +47,8 @@ const app = new Vue({
     router,
     store,
     components: {
-        index: Index
+        index: Index,
+        reservations: Reservations
     },
     data: () => ({
         drawer: null

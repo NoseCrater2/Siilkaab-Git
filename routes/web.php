@@ -13,11 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('paypal',function ()
+{
+    return view('paypal');
+});
+
+Route::get('payments',function ()
+{
+    return view('payments');
+})->name('payments');
+
+
 Route::get('/{any?}', function () {
     return view('welcome');
 })->where('any','^(?!api\/)[\/\w\.-]*');
 
-Route::get('users',function ()
-{
-    return view('users');
-});

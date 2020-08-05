@@ -284,7 +284,7 @@ export default {
   },
 
   mounted(){  
-    this.$store.dispatch('getUsers'),
+    this.$store.dispatch('getUsers')
     this.$store.dispatch('getTimeZones')
     this.$store.dispatch('getCurrencies')
     this.$store.dispatch('getHotelsForAdmin') 

@@ -1,7 +1,8 @@
 import axios from "axios";
 const HotelModule = {
     state: {
-        hotels: null,
+        allhotels: [],
+        hotels: [],
         assignHotels: null,
         iditemsListOptions: 0,
         hotel: null,
@@ -22,6 +23,7 @@ const HotelModule = {
           },
     },
     mutations: {
+
         //Se reinician los estados (principalmente por el problema del router-link)
         setReinicialized(state) {
             (state.iditemsListOptions = 0),
@@ -48,6 +50,18 @@ const HotelModule = {
             
         },
 
+        editHotel(state,hotel){
+            state.allhotels.map(function(currentHotel){
+              if(currentHotel.id === hotel.id){
+                Object.assign(currentHotel,hotel);
+              }
+            });
+          },
+
+        setAllHotels(state, payload) {
+            state.allhotels = payload;
+            
+        },
         setAssignHotels(state, payload) {
             state.assignHotels = payload;  
         },
@@ -85,9 +99,30 @@ const HotelModule = {
             if (objContents.info === "Conditions") {
                 state.contentConditions = objContents.fullText;
             }
-        }
+        },
+        deleteHotel(state, deletedHotel) {
+            deletedHotel.forEach(currentHotel => {
+            let h = state.allhotels.find((allhotel => allhotel.id === currentHotel))
+            state.allhotels.splice(state.allhotels.indexOf(h),1)
+            });
+           
+          },
     },
     actions: {
+
+        getHotels: async function ({ commit, state }){
+            if(state.allhotels.length === 0){
+                const request =  await axios
+                .get("/api/hotels");
+                const allhotels = request.data.data
+                commit('setAllHotels',allhotels)
+            }else{
+                
+                return state.allhotels
+            } 
+    
+          },
+
         getHotel: async function({ commit }, id) {
             try {
                 const request = await axios.get(`/api/hotels/${id}`);
@@ -97,6 +132,7 @@ const HotelModule = {
                 //
             }
         },
+
         getCurrencies: async function({ commit }) {
             try {
                 const request = await axios.get("/api/currencies");
@@ -182,8 +218,6 @@ const HotelModule = {
             try {
                 const request = await axios.get(`/api/hotels_users/${id}`);
                 let assignHotels= request.data.data;
-                
-                //console.log(typeof(configuration))
                 commit("setAssignHotels", assignHotels);
             } catch (error) {}
         },
@@ -201,6 +235,32 @@ const HotelModule = {
                 console.log('An error has ocurred')
             }
         },
+
+        deleteHotels: async function ({ commit},ids){
+            try {
+              const request = await axios
+              .post("/api/deletehotels/",ids)
+             commit('deleteHotel',request.data);
+             // commit('setStatus',request.status);
+            } catch (error) {
+             // commit('setStatus',error.response.status);
+            }
+          },
+
+          editHotel: async function ({ commit},newHotel){
+            try {
+              const request = await axios
+              .put("/api/hotels/"+newHotel.id,newHotel)
+              commit('editHotel',request.data.data);
+             // commit('setStatus',request.status);
+            } catch (error) {
+              commit('setErrors',error.response)
+              commit('setStatus',error.response.status);
+            }
+          },
+
+
+
     }
 };
 export default HotelModule;

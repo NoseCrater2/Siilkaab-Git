@@ -46,7 +46,11 @@ class HotelController extends Controller
             'reference_code'=>'required',
             'image'=>'image',
             'short_text' => 'required',
-            'large_text' => 'string'
+            'large_text' => 'string',
+            'type' => 'required|in:bungalow,cabana,build',
+            'num_rooms' => 'required_if:type,build',
+            'num_floors' => 'required_if:type,build',
+            'enabled' => 'in:0,1',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
@@ -81,6 +85,10 @@ class HotelController extends Controller
             'title'=>'unique:hotels,id,'.'$hotel->id',
             'url'=>'url',
             'image'=>'image',
+            'type' => 'in:bungalow,cabana,build',
+            'num_rooms' => 'required_if:type,build',
+            'num_floors' => 'required_if:type,build',
+            'enabled' => 'in:0,1',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
@@ -167,12 +175,9 @@ class HotelController extends Controller
         $response = $client->request('GET',"latest?base=$origen&symbols=$destino");
         //$rate = $response->rates
 
-        $res = json_decode( $response->getBody()->getContents() );
+        
 
-
-        $done = $res->rates;
-
-        return $done;
+        return $response;
 
     }
 

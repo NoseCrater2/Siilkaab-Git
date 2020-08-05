@@ -18,11 +18,12 @@ class HotelIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            //'Url' => $this->url,
             'reference_code' => $this->reference_code,
-            //'Image' => $this->image,
-            //'LargeText' => $this->large_text,
-            'shortText' => $this->short_text,
+            'rooms' => $this->rooms->count(),
+            'rates' => $this->rates->count(),
+            'discounts' => $this->discounts->count(),
+            'extras' => $this->extras->count(),
+            'enabled' => $this->enabled
         ];
     }
 }
