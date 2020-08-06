@@ -33,7 +33,7 @@ export default {
         { text: "Contacto", icon: "mdi-email" },
         { text: "Condiciones", icon: "mdi-gavel" },
         { text: "Regimenes", icon: "mdi-silverware-fork-knife" },
-        { text: "Amenidades", icon: "mdi-tag-multiple" }
+        { text: "Información adicional", icon: "mdi-tag-multiple" }
       ]
     };
   },

@@ -12,14 +12,15 @@ const HotelModule = {
         contacts: null,
         conditions: null,
         regimes: null,
-        amenities: null,
+        restaurants: null,
+        aditionalInfo: null,
         contentInformation: "", //Esta es la variable que utilizara el Markdown TipTap (MarkdownCompo.vue)
         contentConditions: ""
     },
-    getters:{
-        getAssignHotels(state){
+    getters: {
+        getAssignHotels(state) {
             return state.assignHotels;
-          },
+        }
     },
     mutations: {
         //Se reinician los estados (principalmente por el problema del router-link)
@@ -32,6 +33,9 @@ const HotelModule = {
                 (state.configuration = null),
                 (state.contacts = null),
                 (state.conditions = null),
+                (state.regimes = null),
+                (state.restaurants = null),
+                (state.aditionalInfo = null),
                 (state.contentInformation = ""),
                 (state.contentConditions = "");
         },
@@ -45,11 +49,10 @@ const HotelModule = {
         },
         setHotels(state, payload) {
             state.hotels = payload;
-            
         },
 
         setAssignHotels(state, payload) {
-            state.assignHotels = payload;  
+            state.assignHotels = payload;
         },
 
         setCurrencies(state, payload) {
@@ -74,8 +77,11 @@ const HotelModule = {
         setRegimes(state, payload) {
             state.regimes = payload;
         },
-        setAmenities(state, payload) {
-            state.amenities = payload;
+        setRestaurants(state, payload) {
+            state.restaurants = payload;
+        },
+        setAditionalInfo(state, payload) {
+            state.aditionalInfo = payload;
         },
         //Metodo que guarda el estado de las variables usadas en el Markdown mientras el hotel este configurandose
         setContents(state, objContents) {
@@ -159,12 +165,20 @@ const HotelModule = {
                 commit("setRegimes", arrayRegimes);
             } catch (error) {}
         },
-        getAmenities: async function({ commit }, id) {
+        getRestaurants: async function({ commit }) {
+            try {
+                const request = await axios.get("/api/restaurants");
+                let restaurants = request.data.data;
+                //console.log(typeof(configuration))
+                commit("setRestaurants", restaurants);
+            } catch (error) {}
+        },
+        getAditionalInfo: async function({ commit }, id) {
             try {
                 const request = await axios.get(`/api/amenities/${id}`);
-                let amenities = request.data.data;
+                let aditionalInfo = request.data.data;
                 //console.log(typeof(configuration))
-                commit("setAmenities", amenities);
+                commit("setAditionalInfo", aditionalInfo);
             } catch (error) {}
         },
 
@@ -172,35 +186,38 @@ const HotelModule = {
             try {
                 const request = await axios.get(`/api/adminhotels/`);
                 let hotels = request.data.data;
-               
+
                 //console.log(typeof(configuration))
                 commit("setHotels", hotels);
             } catch (error) {}
         },
 
-        getAssignHotels: async function({ commit },id) {
+        getAssignHotels: async function({ commit }, id) {
             try {
                 const request = await axios.get(`/api/hotels_users/${id}`);
-                let assignHotels= request.data.data;
-                
+                let assignHotels = request.data.data;
+
                 //console.log(typeof(configuration))
                 commit("setAssignHotels", assignHotels);
             } catch (error) {}
         },
 
-        setHotelsToUsers: async function({ commit },hotels) {
+        setHotelsToUsers: async function({ commit }, hotels) {
             try {
-               if(hotels[1].hotels !== null){
-                const request = await axios.post("/api/hotels_users/"+hotels[0].id,hotels[1])
-               }
-                
+                if (hotels[1].hotels !== null) {
+                    const request = await axios.post(
+                        "/api/hotels_users/" + hotels[0].id,
+                        hotels[1]
+                    );
+                }
+
                 //let assignHotels= request.data.data;
-                
-               // commit("setAssignHotels", assignHotels);
+
+                // commit("setAssignHotels", assignHotels);
             } catch (error) {
-                console.log('An error has ocurred')
+                console.log("An error has ocurred");
             }
-        },
+        }
     }
 };
 export default HotelModule;
