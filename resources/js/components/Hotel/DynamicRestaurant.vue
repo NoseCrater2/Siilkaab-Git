@@ -10,7 +10,7 @@
           </span>
           <v-btn
             small
-            class="ml-11 white--text"
+            class="ml-9 white--text"
             depressed
             color="red"
             @click="removeCompo(id)"
@@ -188,4 +188,11 @@ export default {
   },
 };
 </script>
-    
+
+<style scoped>
+/*Estilo para el scroll del carousel*/
+.v-sheet {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+</style>
