@@ -74,6 +74,8 @@ export default {
         if (this.hotel.idAmenity !== null) {
           this.getAditionalInfo(this.hotel.idAmenity).then(() => {});
           this.getRestaurants().then(() => {});
+          this.getPools().then(() => {
+          });
         }
       });
     }
@@ -92,6 +94,7 @@ export default {
       conditions: (state) => state.HotelModule.conditions,
       regimes: (state) => state.HotelModule.regimes,
       restaurants: (state) => state.HotelModule.restaurants,
+      pools: (state) => state.HotelModule.pools,
       aditionalInfo: (state) => state.HotelModule.aditionalInfo,
     }),
   },
@@ -103,6 +106,7 @@ export default {
       "getConditions",
       "getRegimes",
       "getRestaurants",
+      "getPools",
       "getAditionalInfo",
     ]),
     ...mapMutations(["setReinicialized"]),

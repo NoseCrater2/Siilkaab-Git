@@ -13,6 +13,7 @@ const HotelModule = {
         conditions: null,
         regimes: null,
         restaurants: null,
+        pools: null,
         aditionalInfo: null,
         contentInformation: "", //Esta es la variable que utilizara el Markdown TipTap (MarkdownCompo.vue)
         contentConditions: ""
@@ -35,6 +36,7 @@ const HotelModule = {
                 (state.conditions = null),
                 (state.regimes = null),
                 (state.restaurants = null),
+                (state.pools = null),
                 (state.aditionalInfo = null),
                 (state.contentInformation = ""),
                 (state.contentConditions = "");
@@ -79,6 +81,9 @@ const HotelModule = {
         },
         setRestaurants(state, payload) {
             state.restaurants = payload;
+        },
+        setPools(state, payload) {
+            state.pools = payload;
         },
         setAditionalInfo(state, payload) {
             state.aditionalInfo = payload;
@@ -171,6 +176,14 @@ const HotelModule = {
                 let restaurants = request.data.data;
                 //console.log(typeof(configuration))
                 commit("setRestaurants", restaurants);
+            } catch (error) {}
+        },
+        getPools: async function({ commit }) {
+            try {
+                const request = await axios.get("/api/pools");
+                let pools = request.data.data;
+                //console.log(typeof(configuration))
+                commit("setPools", pools);
             } catch (error) {}
         },
         getAditionalInfo: async function({ commit }, id) {

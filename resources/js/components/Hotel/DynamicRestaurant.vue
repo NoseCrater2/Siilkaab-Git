@@ -2,19 +2,21 @@
   <v-carousel-item>
     <v-sheet color="#eeeeee" height="100%">
       <div style="padding: 2%">
-        <v-row class="ml-1">
+        <v-row class="ml-1 d-flex">
           <span>
             <h2>
               <strong>Restaurante #{{idCompo+1}}</strong>
             </h2>
           </span>
-          <v-btn
-            small
-            class="ml-9 white--text"
-            depressed
-            color="red"
-            @click="removeCompo(id)"
-          >Eliminar restaurante</v-btn>
+          <div class="ml-auto mr-3">
+            <v-btn
+              small
+              class="white--text"
+              depressed
+              color="red"
+              @click="removeCompo(id)"
+            >Eliminar restaurante</v-btn>
+          </div>
         </v-row>
         <br />
         <v-text-field v-model="restaurantName" label="Nombre del restaurante" required></v-text-field>
@@ -32,7 +34,15 @@
           <span>
             <strong>Introduce el horario</strong>
           </span>
-          <v-btn class="ml-2" x-small depressed dark fab color="primary" @click="addCompoFromComponent()">
+          <v-btn
+            class="ml-2"
+            x-small
+            depressed
+            dark
+            fab
+            color="primary"
+            @click="addCompoFromComponent()"
+          >
             <v-icon dark>mdi-pencil</v-icon>
           </v-btn>
         </v-row>
@@ -113,8 +123,7 @@ export default {
         );
         this.objDates.modalToHour = false;
       }
-    }
-    else{
+    } else {
       this.addCompoFromComponent();
     }
   },
@@ -140,7 +149,7 @@ export default {
 
     //Metodos componente SelectTimePicker
     addCompoFromComponent() {
-      this.objDates = {}
+      this.objDates = {};
       this.countIdCompo++;
       this.arrayComponents.push({
         idCompo: this.countIdCompo,
