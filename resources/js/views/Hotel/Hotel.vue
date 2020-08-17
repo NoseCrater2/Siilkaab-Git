@@ -31,7 +31,7 @@
                 <Regime></Regime>
               </div>
               <div v-if="iditemsListOptions===5">
-                <Amenity></Amenity>
+                <AditionalInfo></AditionalInfo>
               </div>
             </v-col>
           </v-row>
@@ -51,7 +51,7 @@ import Configuration from "../../views/Hotel/Configuration";
 import Contact from "../../views/Hotel/Contact";
 import Condition from "../../views/Hotel/Condition";
 import Regime from "../../views/Hotel/Regime";
-import Amenity from "../../views/Hotel/Amenity";
+import AditionalInfo from "../../views/Hotel/AditionalInfo";
 
 export default {
   created() {
@@ -72,7 +72,8 @@ export default {
           this.getRegimes(this.hotel.idRegime).then(() => {});
         }
         if (this.hotel.idAmenity !== null) {
-          this.getAmenities(this.hotel.idAmenity).then(() => {});
+          this.getAditionalInfo(this.hotel.idAmenity).then(() => {});
+          this.getRestaurants().then(() => {});
         }
       });
     }
@@ -90,7 +91,8 @@ export default {
       contacts: (state) => state.HotelModule.contacts,
       conditions: (state) => state.HotelModule.conditions,
       regimes: (state) => state.HotelModule.regimes,
-      amenities: (state) => state.HotelModule.amenities,
+      restaurants: (state) => state.HotelModule.restaurants,
+      aditionalInfo: (state) => state.HotelModule.aditionalInfo,
     }),
   },
   methods: {
@@ -100,7 +102,8 @@ export default {
       "getContacts",
       "getConditions",
       "getRegimes",
-      "getAmenities",
+      "getRestaurants",
+      "getAditionalInfo",
     ]),
     ...mapMutations(["setReinicialized"]),
   },
@@ -112,7 +115,7 @@ export default {
     Contact,
     Condition,
     Regime,
-    Amenity,
+    AditionalInfo,
   },
 };
 </script>
