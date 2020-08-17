@@ -284,7 +284,7 @@ export default {
   },
 
   mounted(){  
-    this.$store.dispatch('getUsers')
+    this.$store.dispatch('getUsers'),
     this.$store.dispatch('getTimeZones')
     this.$store.dispatch('getCurrencies')
     this.$store.dispatch('getHotelsForAdmin') 
@@ -317,7 +317,6 @@ export default {
   },
      
   close () {
-     this.userIds.userIds= []
     this.selectedHotels = null
     this.selected = []
     this.isEditing = false

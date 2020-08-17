@@ -36,7 +36,7 @@ class RoomController extends Controller
             'type' => 'required|in:single,double,twin,twin-double,triple,quad,family,suite,studio,apartment,bed-in-room,bungalow,challet,villa,vacation-home,trailer,tent',
             'quantity' => 'required|integer|min:0',
             'rack_rate' => 'required|numeric|min:0',
-            'default_image' => 'required|image',
+            'image' => 'required|image',
             'large_text' => 'string',
             'short_text' => 'string',
             'smoking_policy' => 'in:yes,no,both',
@@ -51,9 +51,6 @@ class RoomController extends Controller
             'child_extra' => 'numeric|min:0',
             'baby_extra' => 'numeric|min:0',
             'hotel_id' => 'required|exists:hotels,id',
-            'discount_id' => 'exists:discounts,id',
-            'rate_id' => 'exists:rates,id',
-            'extra_id' => 'exists:extras,id',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
@@ -62,9 +59,9 @@ class RoomController extends Controller
         if($validator->fails()){
             return $validator->errors();
         }else{
-            if($request->hasFile('default_image')){
-                $image= $request->default_image->store('');
-                $data['default_image']=$image;
+            if($request->hasFile('image')){
+                $image= $request->image->store('');
+                $data['image']=$image;
             } 
             $room = Room::create($data);
             $room->roomAmenity()->create([
@@ -92,7 +89,7 @@ class RoomController extends Controller
             'type' => 'in:single,double,twin,twin-double,triple,quad,family,suite,studio,apartment,bed-in-room,bungalow,challet,villa,vacation-home,trailer,tent',
             'quantity' => 'integer|min:0',
             'rack_rate' => 'numeric|min:0',
-            'default_image' => 'image',
+            'image' => 'image',
             'large_text' => 'string',
             'short_text' => 'string',
             'smoking_policy' => 'in:yes,no,both',
@@ -107,17 +104,14 @@ class RoomController extends Controller
             'child_extra' => 'numeric|min:0',
             'baby_extra' => 'numeric|min:0',
             'hotel_id' => 'exists:hotels,id',
-            'discount_id' => 'exists:discounts,id',
-            'rate_id' => 'exists:rates,id',
-            'extra_id' => 'exists:extras,id',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
         if($validator->fails()){
             return response($validator->errors(),422);
         }else{
-            if($request->hasFile('default_image')){
-                Storage::delete($room->default_image);
-                $data['default_image'] = $request->default_image->store('');
+            if($request->hasFile('image')){
+                Storage::delete($room->image);
+                $data['image'] = $request->image->store('');
             }
             $room->update($data);
             return new RoomIndexresource(Room::findOrFail($room->id));
@@ -132,7 +126,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        Storage::delete($room->default_image);
+        Storage::delete($room->image);
         $room->delete();
         return new RoomIndexResource($room);
 

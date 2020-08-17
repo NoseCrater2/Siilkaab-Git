@@ -11,8 +11,6 @@ class Configuration extends Model
         'notification_details',
         'notification_card',
         'timezone',
-        'payment_place',
-        'payment_type',
         'currency_id',
         'hotel_id'
     ];

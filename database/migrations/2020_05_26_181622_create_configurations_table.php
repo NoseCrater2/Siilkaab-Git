@@ -19,10 +19,8 @@ class CreateConfigurationsTable extends Migration
             $table->string('notification_voucher')->required();
             $table->string('notification_details')->required();
             $table->string('notification_card')->required();
-            $table->enum('payment_place',['online','offline','both'])->required();
-            $table->enum('payment_type',['one','all'])->required();
             $table->unsignedBigInteger('currency_id');
-            $table->foreign('currency_id')->references('id')->on('currencies');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->unsignedBigInteger('hotel_id');
             $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
             $table->timestamps();

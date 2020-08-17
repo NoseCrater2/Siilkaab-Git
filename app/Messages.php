@@ -11,7 +11,6 @@ class Messages extends Model
        return  [
            
             'required' => 'Campo requerido',
-            'required_if' => 'Es requerido si se elige Tipo: Edificio o Torre',
             'boolean' => 'Debe ser 1 o true, 0 o false',
             'integer' => 'Debe ser un número entero',
             'min' => 'Debe ser mínimo de :min',

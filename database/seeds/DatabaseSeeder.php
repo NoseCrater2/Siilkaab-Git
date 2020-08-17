@@ -1,7 +1,5 @@
 <?php
 
-use App\Booking;
-use App\Platforms;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +22,6 @@ class DatabaseSeeder extends Seeder
         'users',
         'countries',
         'hotels',
-        'platforms',
-        'rooms',
-        'bookings',
         
       ]);
 
@@ -34,10 +29,7 @@ class DatabaseSeeder extends Seeder
         CurrenciesTableSeeder::class,
         UsersTableSeeder::class,
         CountriesTableSeeder::class,
-        HotelsTableSeeder::class,     
-        PlatformsTableSeeder::class, 
-        RoomsTableSeeder::class,
-        BookingsTableSeeder::class,
+        HotelsTableSeeder::class,      
       ]);
 
 
