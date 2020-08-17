@@ -14,6 +14,7 @@ const HotelModule = {
         conditions: null,
         regimes: null,
         restaurants: null,
+        pools: null,
         aditionalInfo: null,
         contentInformation: "", //Esta es la variable que utilizara el Markdown TipTap (MarkdownCompo.vue)
         contentConditions: ""
@@ -37,6 +38,7 @@ const HotelModule = {
                 (state.conditions = null),
                 (state.regimes = null),
                 (state.restaurants = null),
+                (state.pools = null),
                 (state.aditionalInfo = null),
                 (state.contentInformation = ""),
                 (state.contentConditions = "");
@@ -93,6 +95,9 @@ const HotelModule = {
         },
         setRestaurants(state, payload) {
             state.restaurants = payload;
+        },
+        setPools(state, payload) {
+            state.pools = payload;
         },
         setAditionalInfo(state, payload) {
             state.aditionalInfo = payload;
@@ -172,7 +177,9 @@ const HotelModule = {
                 let configuration = request.data.data;
                 //console.log(typeof(configuration))
                 commit("setConfiguration", configuration);
-            } catch (error) {}
+            } catch (error) {
+                
+            }
         },
         getContacts: async function({ commit }, id) {
             try {
@@ -201,12 +208,20 @@ const HotelModule = {
                 commit("setRegimes", arrayRegimes);
             } catch (error) {}
         },
-        getRestaurants: async function({ commit }) {
+        getRestaurants: async function({ commit }, idHotel) {
             try {
                 const request = await axios.get("/api/restaurants");
-                let restaurants = request.data.data;
+                let restaurants = request.data.data.filter(element=> element.hotel_id === idHotel );
                 //console.log(typeof(configuration))
                 commit("setRestaurants", restaurants);
+            } catch (error) {}
+        },
+        getPools: async function({ commit }, idHotel) {
+            try {
+                const request = await axios.get("/api/pools");
+                let pools = request.data.data.filter(element=> element.hotel_id === idHotel );
+                //console.log(typeof(configuration))
+                commit("setPools", pools);
             } catch (error) {}
         },
         getAditionalInfo: async function({ commit }, id) {

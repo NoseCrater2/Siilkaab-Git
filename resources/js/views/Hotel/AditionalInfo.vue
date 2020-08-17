@@ -160,6 +160,11 @@
                         <CarrouselRestaurant></CarrouselRestaurant>
                       </v-card>
                     </v-col>
+                    <v-col cols="12" style="margin-bottom: 1%">
+                      <v-card outlined style="padding: 2%">
+                        <CarrouselPool></CarrouselPool>
+                      </v-card>
+                    </v-col>
                   </v-row>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -670,6 +675,7 @@
 <script>
 import { mapState } from "vuex";
 import CarrouselRestaurant from "../../components/Hotel/CarrouselRestaurant";
+import CarrouselPool from "../../components/Hotel/CarrouselPool";
 
 export default {
   name: "AditionalInfo",
@@ -933,6 +939,7 @@ export default {
   },
   components: {
     CarrouselRestaurant,
+    CarrouselPool,
   },
 };
 </script>
