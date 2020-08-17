@@ -15,8 +15,11 @@ class ExtraIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title, 
+        'title' => $this->title,
+        'hotel_id' => $this->hotel_id,
+        'description' => $this->description,
+        'date' => $this->date,
+        'amount' => $this->amount,
         ];
     }
 }

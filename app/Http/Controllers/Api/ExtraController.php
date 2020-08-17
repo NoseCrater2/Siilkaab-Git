@@ -34,8 +34,10 @@ class ExtraController extends Controller
     {
         $data = $request->all();
         $rules = [
-            'title' => 'required',
-            'hotel_id' => 'required|exists:hotels,id'
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'amount' => 'required|numeric|min:0'
         ];
                   
         $validator= Validator::make($data,$rules, Messages::getMessages());
@@ -72,7 +74,10 @@ class ExtraController extends Controller
         $data = $request->all();
 
         $rules = [
-            'hotel_id' => 'exists:hotels,id'
+            'title' => 'string',
+            'description' => 'string',
+            'date' => 'date',
+            'amount' => 'numeric|min:0'
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
        

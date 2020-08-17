@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExtrasTable extends Migration
+class CreateBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateExtrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('extras', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('title')->required();
-            $table->text('description')->required();
-            $table->date('date')->required();
-            $table->double('amount')->required();
+            $table->date('from')->required();
+            $table->date('to')->required();
+            $table->unsignedBigInteger('room_id')->index();
+            $table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateExtrasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extras');
+        Schema::dropIfExists('bookings');
     }
 }

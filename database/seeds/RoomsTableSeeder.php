@@ -1,9 +1,9 @@
 <?php
 
-use App\Bookable;
+use App\Room;
 use Illuminate\Database\Seeder;
 
-class BookablesTableSeeder extends Seeder
+class RoomsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class BookablesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Bookable::class,100)->create();
+        factory(Room::class,15)->create();
     }
 }

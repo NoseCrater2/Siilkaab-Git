@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     protected $fillable =  [
-        'title',
-        'hotel_id',
+        'type',
+        'rack',
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
     ];
 
-    public function hotel()
+    public function rooms()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->hasMany(Room::class);
     }
 }

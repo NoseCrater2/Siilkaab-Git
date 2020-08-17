@@ -46,6 +46,7 @@ class MercadoPagoService{
 
     public function handlePayment(Request $request)
     {
+
        $request->validate([
            'card_network' => 'required',
            'card_token' => 'required',
@@ -60,22 +61,19 @@ class MercadoPagoService{
            $request->email
        );
 
+       
        if ($payment->status === "approved") {
            $name = $payment->payer->first_name;
            $currency = $payment->currency_id;
            $amount = number_format($payment->transaction_amount,0,",",".");
            $originalAmount = $request->value;
            $originalCurrency = $request->currency;
-
-           return redirect()
-                ->route('reservations')
-                ->withSuccess(['payment' => "Thanks, {$name}. We received your {$originalAmount}{$originalCurrency} payment ({$amount}{$currency})"]);
+           $res = ['payment' => "Thanks, {$name}. We received your {$originalAmount}{$originalCurrency} payment ({$amount}{$currency})"];
+           return response($res,200);
            
        }
-
-       return redirect()
-                ->route('reservations')
-                ->withErrors('We were unable to confirm your payment. Try again, please');
+       $res = 'We were unable to confirm your payment. Try again, please';
+       return response($res,500);
     }
 
     public function handleApproval()
@@ -87,7 +85,6 @@ class MercadoPagoService{
     {
         return $this->makeRequest(
             'POST',
-            '',
             '/v1/payments',
             [],
             [
@@ -111,4 +108,6 @@ class MercadoPagoService{
     {
         return $this->converter->convertCurrency($currency,$this->baseCurrency);
     }
+
+  
 }

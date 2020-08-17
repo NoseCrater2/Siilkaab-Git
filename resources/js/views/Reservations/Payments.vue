@@ -17,7 +17,7 @@
         <v-card-text>
         <v-row align="center" justify="center">
           <v-col class="display-2" cols="6">
-            {{count}} MXN
+            {{payment.value}} MXN
           </v-col>
           <v-col cols="3"  >
             <v-chip-group
@@ -25,7 +25,7 @@
             active-class="green accent-4 white--text"
             column
             >
-              <v-chip>
+              <v-chip @click="makePayment()">
                  <v-img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/PayPal_logo.svg/300px-PayPal_logo.svg.png"
               alt="paypal"
@@ -51,27 +51,29 @@
   <v-divider horizontal></v-divider>
       <v-card-text>
         <div v-if="selection === 0">
-          <component  :is="compo.p"></component>
+  
+             <component  :is="compo.p"></component>
+          
+         
         </div>
-        <div v-else-if="selection === 1">
-          <component  :is="compo.m"></component>
+        <div v-if="selection === 1">
+          <Mercadopago :objPayment ="payment" ></Mercadopago>
         </div>
        
       </v-card-text>
-  
+
+        
       <v-card-actions>
        <v-btn class="mx-2" fab dark color="red" >
         <v-icon dark>mdi-chevron-left</v-icon>
       </v-btn>
 
-        <v-spacer></v-spacer>
-        <div v-if="selection === 0">
-         <v-btn class="mx-2" fab dark color="green" @click="makePayment()" >
-        <v-icon dark>mdi-chevron-right</v-icon>
-      </v-btn>
-        </div>
          
       </v-card-actions>
+
+        <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-card>
   </v-app>
 </div>
@@ -82,14 +84,17 @@
 <script>
 import Paypal from "./Paypal";
 import Mercadopago from "./Mercadopago";
+import { mapActions, mapState } from 'vuex';
 export default {
   data () {
     return {
+       overlay:false,
+      canPay: false,
       loading: false,
       selection: 3,
       count: 0,
       payment:{
-        value: this.count,
+        value: this.randomPrice(300,5000),
         currency: 'MXN',
         platform: 0,
       },
@@ -104,15 +109,29 @@ components:{
   Paypal,
   Mercadopago,
 },
+
+computed:{
+  ...mapState({
+     paypalLink: state => state.PaymentModule.paypalLink,
+    }),
+},
+
+watch: {
+    overlay (val) {
+      val && setTimeout(() => {
+        this.overlay = false
+      }, 3000)
+    },
+  },
   methods:{
 
-     async makePayment () {
+     makePayment () {
        this.payment.platform = 1;
        this.payment.value = this.count;
-       console.log(this.payment)
-         await axios.post("/api/payments/pay",this.payment).then(
-
-         );
+     
+      this.$store.dispatch('saveLink',this.payment).then(()=>{
+          this.overlay = !this.overlay;
+      });       
     },
 
     randomPrice(inferior,superior){
@@ -125,7 +144,8 @@ components:{
   },
 
   mounted(){
-   this.count = this.randomPrice(300, 5000);
+   
+
   },
 }
 </script>

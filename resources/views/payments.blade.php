@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html class="has-aside-left has-aside-expanded">
 
 <head>
@@ -12,7 +12,7 @@
 
 <body>
     <div id="app">
-        <reservations></reservations>
+        <payments></payments>
     </div>
     
 </body>

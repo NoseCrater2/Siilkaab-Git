@@ -26,7 +26,7 @@ return [
 
     'mercadopago' => [
         'base_uri' => env('MERCADOPAGO_BASE_URI'),
-        'key' => env('MERCADOPAGO_KEY'),
+        'key' => env('MIX_MERCADOPAGO_KEY'),
         'secret' => env('MERCADOPAGO_SECRET'),
         'class' => App\Services\MercadoPagoService::class,
         'base_currency' => 'MXN',

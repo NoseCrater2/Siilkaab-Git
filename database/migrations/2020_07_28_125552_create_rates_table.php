@@ -15,9 +15,15 @@ class CreateRatesTable extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('title')->required();
-            $table->unsignedBigInteger('hotel_id');
-            $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
+            $table->enum('type',['room','person'])->default('room');
+            $table->double('rack')->default(0.0);
+            $table->double('monday')->default(0.0);
+            $table->double('tuesday')->default(0.0);
+            $table->double('wednesday')->default(0.0);
+            $table->double('thursday')->default(0.0);
+            $table->double('friday')->default(0.0);
+            $table->double('saturday')->default(0.0);
+            $table->double('sunday')->default(0.0);
             $table->timestamps();
         });
     }

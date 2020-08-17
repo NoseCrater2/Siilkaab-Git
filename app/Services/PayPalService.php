@@ -24,6 +24,7 @@ class PayPalService{
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers)
     {
         $headers['Authorization'] = $this->resolveAccesToken();
+      
     }
 
     public function decodeResponse($response)
@@ -48,8 +49,9 @@ class PayPalService{
         $approve = $orderLinks->where('rel', 'approve')->first();
 
         session()->put('approvalId', $order->id);
-
-        return redirect($approve->href);
+        
+       
+        return ($approve->href);
     }
 
     public function handleApproval()
@@ -65,12 +67,12 @@ class PayPalService{
             $currency = $payment->currency_code;
 
             return redirect()
-                ->route('web/payments')
+                ->route('payments')
                 ->withSuccess(['payment' => "Thanks, {$name}. We received your {$amount}{$currency} payment."]);
         }
 
         return redirect()
-        ->route('web/payments')
+        ->route('payments')
         ->withErrors('We cannot capture your payment. Try again, please.');
     }
 

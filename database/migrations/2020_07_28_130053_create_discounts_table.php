@@ -15,9 +15,21 @@ class CreateDiscountsTable extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('title')->required();
-            $table->unsignedBigInteger('hotel_id');
-            $table->foreign('hotel_id')->index()->references('id')->on('hotels')->onDelete('cascade');
+            $table->enum('type',['range','date','days','percent','nights','hot_sale','code'])->required();
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
+            $table->date('day')->nullable();
+            $table->integer('nights')->nullable();
+            $table->tinyInteger('monday')->default(0);
+            $table->tinyInteger('tuesday')->default(0);
+            $table->tinyInteger('wednesday')->default(0);
+            $table->tinyInteger('thursday')->default(0);
+            $table->tinyInteger('friday')->default(0);
+            $table->tinyInteger('saturday')->default(0);
+            $table->tinyInteger('sunday')->default(0);
+            $table->string('code')->default(null);
+            $table->double('unitary_discount')->nullable();
+            $table->double('general_discount')->nullable();
             $table->timestamps();
         });
     }

@@ -15,8 +15,15 @@ class RateIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title, 
+            'type' => $this->type,
+            'rack' => $this->rack,
+            'monday' => $this->monday,
+            'tuesday' => $this->tuesday,
+            'wednesday' => $this->wednesday,
+            'thursday' => $this->thursday,
+            'friday' => $this->friday,
+            'saturday' => $this->saturday,
+            'sunday' => $this->sunday,
         ];
     }
 }

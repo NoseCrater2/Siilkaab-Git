@@ -7,12 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Discount extends Model
 {
     protected $fillable =  [
-        'title',
-        'hotel_id',
+        'type',
+        'start',
+        'end',
+        'day',
+        'nights',
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+        'code',
+        'unitary_discount',
+        'general_discount',
     ];
 
-    public function hotel()
+    public function rooms()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->hasMany(Room::class);
     }
 }

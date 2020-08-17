@@ -35,8 +35,15 @@ class RateController extends Controller
     {
         $data = $request->all();
         $rules = [
-            'title' => 'required',
-            'hotel_id' => 'required|exists:hotels,id'
+            'type' => 'required|in:room,person',
+            'rack' => 'required|numeric|min:0',
+            'monday' => 'numeric|min:0',
+            'tuesday' => 'numeric|min:0',
+            'wednesday' => 'numeric|min:0',
+            'thursday' => 'numeric|min:0',
+            'friday' => 'numeric|min:0',
+            'saturday' => 'numeric|min:0',
+            'sunday' => 'numeric|min:0',
         ];
                   
         $validator= Validator::make($data,$rules, Messages::getMessages());
@@ -72,7 +79,15 @@ class RateController extends Controller
         $data = $request->all();
 
         $rules = [
-            'hotel_id' => 'exists:hotels,id'
+            'type' => 'in:room|person',
+            'rack' => 'numeric|min:0',
+            'monday' => 'numeric|min:0',
+            'tuesday' => 'numeric|min:0',
+            'wednesday' => 'numeric|min:0',
+            'thursday' => 'numeric|min:0',
+            'friday' => 'numeric|min:0',
+            'saturday' => 'numeric|min:0',
+            'sunday' => 'numeric|min:0',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
        

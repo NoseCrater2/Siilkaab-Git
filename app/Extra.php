@@ -9,10 +9,13 @@ class Extra extends Model
     protected $fillable =  [
         'title',
         'hotel_id',
+        'description',
+        'date',
+        'amount',
     ];
 
-    public function hotel()
+    public function rooms()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->hasMany(Room::class);
     }
 }

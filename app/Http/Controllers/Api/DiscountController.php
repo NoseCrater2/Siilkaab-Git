@@ -34,8 +34,21 @@ class DiscountController extends Controller
     {
         $data = $request->all();
         $rules = [
-            'title' => 'required',
-            'hotel_id' => 'required|exists:hotels,id'
+            'type' => 'required|in:range,date,days,percent,nights,hot_sale,code',
+            'start' => 'required_if:type,range|date',
+            'end' => 'required_if:type,range|date|after:start',
+            'day' => 'required_if:type,date|date',
+            'nights' => 'boolean',
+            'monday' => 'boolean',
+            'tuesday' => 'boolean',
+            'wednesday' => 'boolean',
+            'thursday' => 'boolean',
+            'friday' => 'boolean',
+            'saturday' => 'boolean',
+            'sunday' => 'boolean',
+            'code' => 'string',
+            'unitary_discount' => 'numeric|min:0',
+            'general_discount' => 'numeric|min:0',
         ];
                   
         $validator= Validator::make($data,$rules, Messages::getMessages());
@@ -72,7 +85,21 @@ class DiscountController extends Controller
         $data = $request->all();
 
         $rules = [
-            'hotel_id' => 'exists:hotels,id'
+            'type' => 'in:range,date,days,percent,nights,hot_sale,code',
+            'start' => 'required_if:type,range|date',
+            'end' => 'required_if:type,range|date|after:start',
+            'day' => 'required_if:type,date|date',
+            'nights' => 'boolean',
+            'monday' => 'boolean',
+            'tuesday' => 'boolean',
+            'wednesday' => 'boolean',
+            'thursday' => 'boolean',
+            'friday' => 'boolean',
+            'saturday' => 'boolean',
+            'sunday' => 'boolean',
+            'code' => 'string',
+            'unitary_discount' => 'numeric|min:0',
+            'general_discount' => 'numeric|min:0',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
        

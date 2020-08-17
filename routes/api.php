@@ -41,6 +41,8 @@ Route::name('hotelsnoadmin')->get('myhotels/','Api\HotelController@getHotelsForN
 Route::name('hotelsadmin')->get('adminhotels/','Api\HotelController@getHotelsForAdmin');
 
 Route::apiResource('rooms','Api\RoomController')->only('index','show','store','update','destroy');
+Route::get('rooms/{room}/availability','Api\RoomAvailabilityController')->name('rooms.availability.show');
+
 Route::apiResource('rates','Api\RateController')->only('index','show','store','update','destroy');
 Route::apiResource('discounts','Api\DiscountController')->only('index','show','store','update','destroy');
 Route::apiResource('extras','Api\ExtraController')->only('index','show','store','update','destroy');
