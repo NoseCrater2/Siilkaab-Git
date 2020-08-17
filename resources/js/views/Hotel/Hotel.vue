@@ -11,26 +11,36 @@
               <LateralMenu></LateralMenu>
             </v-col>
             <v-col cols="12" sm="auto" md="9">
-              <div v-if="iditemsListOptions===0">
+              <div class="ml-8">
+                <v-text-field
+                  style="text-align:right"
+                  color="primary"
+                  loading
+                  disabled
+                  label="Obteniendo información..."
+                  v-if="chargeView===false"
+                ></v-text-field>
+              </div>
+              <div v-if="iditemsListOptions===0 && chargeView===true">
                 <Information></Information>
               </div>
 
-              <div v-if="iditemsListOptions===1">
+              <div v-if="iditemsListOptions===1 && chargeView===true">
                 <Configuration></Configuration>
               </div>
 
-              <div v-if="iditemsListOptions===2">
+              <div v-if="iditemsListOptions===2 && chargeView===true">
                 <Contact></Contact>
               </div>
 
-              <div v-if="iditemsListOptions===3">
+              <div v-if="iditemsListOptions===3 && chargeView===true">
                 <Condition></Condition>
               </div>
 
-              <div v-if="iditemsListOptions===4">
+              <div v-if="iditemsListOptions===4 && chargeView===true">
                 <Regime></Regime>
               </div>
-              <div v-if="iditemsListOptions===5">
+              <div v-if="iditemsListOptions===5 && chargeView===true">
                 <AditionalInfo></AditionalInfo>
               </div>
             </v-col>
@@ -73,29 +83,23 @@ export default {
         }
         if (this.hotel.idAmenity !== null) {
           this.getAditionalInfo(this.hotel.idAmenity).then(() => {});
-          this.getRestaurants().then(() => {});
-          this.getPools().then(() => {
-          });
+          this.getPools(this.hotel.id).then(() => {});
+          this.getRestaurants(this.hotel.id).then(() => {});
         }
+        this.chargeView = true;
       });
     }
   },
   data() {
     return {
       hotelTitle: "",
+      chargeView: false,
     };
   },
   computed: {
     ...mapState({
       hotel: (state) => state.HotelModule.hotel,
       iditemsListOptions: (state) => state.HotelModule.iditemsListOptions,
-      configuration: (state) => state.HotelModule.configuration,
-      contacts: (state) => state.HotelModule.contacts,
-      conditions: (state) => state.HotelModule.conditions,
-      regimes: (state) => state.HotelModule.regimes,
-      restaurants: (state) => state.HotelModule.restaurants,
-      pools: (state) => state.HotelModule.pools,
-      aditionalInfo: (state) => state.HotelModule.aditionalInfo,
     }),
   },
   methods: {
@@ -123,4 +127,3 @@ export default {
   },
 };
 </script>
-
