@@ -115,7 +115,6 @@ const UsersModule = {
         try {
           const request = await axios
           .post("/api/deleteusers/",ids)
-          console.log(request.data)
          commit('deleteUser',request.data);
          // commit('setStatus',request.status);
         } catch (error) {

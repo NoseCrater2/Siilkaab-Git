@@ -1,12 +1,16 @@
 import UsersModule from './UsersModule';
 import BinnacleModule from './BinnacleModule';
 import HotelModule from './HotelModule';
+import PaymentModule from './PaymentModule';
+
 export default {
 
   modules:{
     UsersModule,
     BinnacleModule,
-    HotelModule
+    HotelModule,
+    PaymentModule
+
   },
  
 }

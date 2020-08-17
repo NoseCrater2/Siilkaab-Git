@@ -5,6 +5,7 @@ import Binnacles from "./binnacle/Binnacles";
 import Binnacle from "./binnacle/Binnacle";
 import Dashboard from "./views/Panel/Dashboard";
 
+
 import VueRouter from "vue-router";
 
 const routes = [
@@ -42,7 +43,17 @@ const routes = [
         path: "/panel/",
         component: Dashboard,
         name: "panel"
-    }
+    },
+    {
+        path: "/paypal",
+        component: require("./views/Reservations/Paypal").default,
+        name: "paypal"
+    },
+    {
+        path: "/payments",
+        component: require("./views/Reservations/Payments").default,
+        name: "payments"
+    },
 ];
 
 const router = new VueRouter({

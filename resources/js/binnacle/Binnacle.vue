@@ -102,3 +102,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.v-expansion-panel-header{
+  color:#fff;
+}
+</style>

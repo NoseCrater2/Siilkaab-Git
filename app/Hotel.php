@@ -14,7 +14,11 @@ class Hotel extends Model
         'reference_code',
         'image',
         'large_text',
-        'short_text'
+        'short_text',
+        'type',
+        'num_rooms',
+        'num_floors',
+        'enabled',
     ];
 
 
@@ -71,6 +75,21 @@ class Hotel extends Model
     public function binnacles()
     {
         return $this->morphMany(Binnacle::class,'hotels', 'binnacleable_type','binnacleable_id');
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class);
+    }
+
+    public function extras()
+    {
+        return $this->hasMany(Extra::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
     }
 
 }
