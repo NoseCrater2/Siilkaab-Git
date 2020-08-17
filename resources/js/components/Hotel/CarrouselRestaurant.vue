@@ -41,10 +41,10 @@ import { mapState } from "vuex";
 export default {
   name: "CarrouselRestaurant",
   created() {
-    let count = this.restaurants.length - 1;
-    while (count >= 0) {
+    let count = 0;
+    while (count <= this.restaurants.length - 1) {
       this.addCompo(this.restaurants[count]);
-      count--;
+      count++;
     }
   },
   data() {
@@ -99,3 +99,4 @@ export default {
   },
 };
 </script>
+

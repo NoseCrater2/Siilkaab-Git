@@ -12,15 +12,15 @@
         </v-banner>
         <v-row class="pa-6">
           <v-col cols="12" md="8">
-            <v-text-field v-model="hotel.Title" label="Titulo" required></v-text-field>
+            <v-text-field v-model="computedTitle" label="Titulo" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="8">
-            <v-text-field v-model="hotel.Url" label="URL" required></v-text-field>
+            <v-text-field v-model="computedUrl" label="URL" required></v-text-field>
           </v-col>
 
           <v-col cols="12" md="8">
-            <v-text-field v-model="hotel.ReferenceCode" label="Codigo de referencia" required></v-text-field>
+            <v-text-field v-model="computedReferenceC" label="Codigo de referencia" required></v-text-field>
           </v-col>
         </v-row>
         <!--FOTOS-->
@@ -58,7 +58,7 @@
               rows="4"
               row-height="30"
               :counter="240"
-              v-model="hotel.ShortText"
+              v-model="computedShortT"
             ></v-textarea>
           </v-col>
           <v-col cols="12" sm="6" md="12">
@@ -77,17 +77,73 @@ import MarkdownCompo from "../../components/Markdown/MarkdownCompo";
 import { mapState } from "vuex";
 export default {
   name: "Information",
+  created() {
+    if (this.hotel.id !== null) {
+      this.titleModel = this.hotel.Title;
+      this.urlModel = this.hotel.Url;
+      this.referenceCModel = this.hotel.ReferenceCode;
+      this.shortTModel = this.hotel.ShortText;
+    }
+  },
   data() {
-    return {};
+    return {
+      titleModel: null,
+      urlModel: null,
+      referenceCModel: null,
+      shortTModel: null,
+    };
   },
   components: {
     //Usamos componente MarkdownCompo (ubicado en la carpeta componentes. Es un componente de otro compo llamado TipTap)
-    MarkdownCompo
+    MarkdownCompo,
   },
   computed: {
     ...mapState({
-      hotel: state => state.HotelModule.hotel
-    })
+      hotel: (state) => state.HotelModule.hotel,
+    }),
+    computedTitle: {
+      get() {
+        return this.titleModel;
+      },
+      set(model) {
+        this.titleModel = model;
+        this.hotel.Title = this.titleModel;
+        return this.titleModel;
+      },
+    },
+
+    computedUrl: {
+      get() {
+        return this.urlModel;
+      },
+      set(model) {
+        this.urlModel = model;
+        this.hotel.Url = this.urlModel;
+        return this.urlModel;
+      },
+    },
+
+    computedReferenceC: {
+      get() {
+        return this.referenceCModel;
+      },
+      set(model) {
+        this.referenceCModel = model;
+        this.hotel.ReferenceCode = this.referenceCModel;
+        return this.referenceCModel;
+      },
+    },
+
+    computedShortT: {
+      get() {
+        return this.shortTModel;
+      },
+      set(model) {
+        this.shortTModel = model;
+        this.hotel.ShortText = this.shortTModel;
+        return this.shortTModel;
+      },
+    },
   }
 };
 </script>
