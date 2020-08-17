@@ -21,10 +21,6 @@ class CreateHotelsTable extends Migration
             $table->string('image')->nullable();
             $table->string('short_text')->nullable();
             $table->text('large_text')->nullable();
-            $table->enum('type',['bungalow','cabana','build'])->default('build');
-            $table->integer('num_rooms')->default(0);
-            $table->integer('num_floors')->default(0);
-            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }

@@ -6,7 +6,6 @@ use App\User;
 use App\Hotel;
 use DateTimeZone;
 use App\Messages;
-use App\HotelUser;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,11 +45,7 @@ class HotelController extends Controller
             'reference_code'=>'required',
             'image'=>'image',
             'short_text' => 'required',
-            'large_text' => 'string',
-            'type' => 'required|in:bungalow,cabana,build',
-            'num_rooms' => 'required_if:type,build',
-            'num_floors' => 'required_if:type,build',
-            'enabled' => 'in:0,1',
+            'large_text' => 'string'
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
@@ -85,10 +80,6 @@ class HotelController extends Controller
             'title'=>'unique:hotels,id,'.'$hotel->id',
             'url'=>'url',
             'image'=>'image',
-            'type' => 'in:bungalow,cabana,build',
-            'num_rooms' => 'required_if:type,build',
-            'num_floors' => 'required_if:type,build',
-            'enabled' => 'in:0,1',
         ];
         $validator= Validator::make($data,$rules, Messages::getMessages());
 
@@ -108,34 +99,6 @@ class HotelController extends Controller
         
     }
 
-    public function delete(Request $request)
-    {
-
-        $data = $request->all();
-
-        $rules = [
-            "hotelIds"    => "required|array|min:1",
-            "hotelIds.*"  => "required|exists:hotels,id|distinct|min:1",
-        ];
-                
-        $validator= Validator::make($data,$rules, Messages::getMessages());
-
-        if($validator->fails()){
-            return response($validator->errors(),422);
-        }else{
-            DB::transaction(function()use ($data){
-
-            HotelUser::whereIn('hotel_id',$data['hotelIds'])->delete();
-            Hotel::destroy($data['hotelIds']);
-           
-            });
-
-            return response($data['hotelIds'],200);
-        }
-        
-       
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -145,6 +108,15 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         DB::transaction(function()use ($hotel){
+        $hotel->amenity()->delete();
+        $hotel->condition()->delete();
+        $hotel->configuration()->delete();
+        $hotel->contact()->delete();
+        $hotel->pools()->delete();
+        $hotel->regimes()->delete();
+        $hotel->restaurants()->delete();
+        $hotel->rooms()->delete();
+        $hotel->security()->delete();
         $hotel->users()->detach();
         Storage::delete($hotel->image);
         $hotel->delete();
@@ -175,9 +147,12 @@ class HotelController extends Controller
         $response = $client->request('GET',"latest?base=$origen&symbols=$destino");
         //$rate = $response->rates
 
-        
+        $res = json_decode( $response->getBody()->getContents() );
 
-        return $response;
+
+        $done = $res->rates;
+
+        return $done;
 
     }
 

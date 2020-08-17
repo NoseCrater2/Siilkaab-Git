@@ -22,8 +22,6 @@ use App\Regime;
 use App\Restaurant;
 use App\Mail\UserCreated;
 use App\Mail\UserMailChanged;
-use App\Observers\RoomObserver;
-use App\Room;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Mail;
@@ -57,7 +55,6 @@ class AppServiceProvider extends ServiceProvider
         Regime::observe(RegimeObserver::class);
         User::observe(UserObserver::class);
         HotelUser::observe(HotelUserObserver::class);
-        Room::observe(RoomObserver::class);
 
         User::created(function($user)
         {
