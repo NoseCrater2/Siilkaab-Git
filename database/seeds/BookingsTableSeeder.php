@@ -1,11 +1,11 @@
 <?php
 
 use App\Booking;
-use App\Bookable;
+use App\Room;
 
 use Illuminate\Database\Seeder;
 
-class BookigsTableSeeder extends Seeder
+class BookingsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class BookigsTableSeeder extends Seeder
      */
     public function run()
     {
-        Bookable::all()->each(function(Bookable $bookable){
+        Room::all()->each(function(Room $room){
             $booking = factory(Booking::class)->make();
             $bookings = collect([$booking]);
 
@@ -30,7 +30,7 @@ class BookigsTableSeeder extends Seeder
                 $bookings->push($booking);
             }
 
-            $bookable->bookings()->saveMany($bookings);
+            $room->bookings()->saveMany($bookings);
         });
     }
 }

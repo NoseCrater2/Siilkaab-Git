@@ -41,6 +41,8 @@ class ConfigurationController extends Controller
             'notification_details' => 'required|email',
             'notification_card' => 'required|email',
             'timezone' => 'required|timezone',
+            'payment_place' => 'required|in:online,offline,both',
+            'payment_type' => 'required|in:one,all',
             'currency_id' => 'required|exists:currencies,id',
             'hotel_id' => 'required|exists:hotels,id'
         ];
@@ -84,6 +86,8 @@ class ConfigurationController extends Controller
             'notification_details' => 'email',
             'notification_card' => 'email',
             'timezone' => 'timezone',
+            'payment_place' => 'in:online,offline,both',
+            'payment_type' => 'in:one,all',
             'currency_id' => 'exists:currencies,id',
             'hotel_id' => 'exists:hotels,id'
         ];

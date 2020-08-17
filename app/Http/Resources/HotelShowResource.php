@@ -27,6 +27,10 @@ class HotelShowResource extends JsonResource
             'Image' => $this->image,
             'LargeText' => $this->large_text,
             'ShortText' => $this->short_text,
+            'type' => $this->type,
+            'num_rooms' => $this->num_rooms,
+            'num_floors' => $this->num_floors,
+            'enabled' => $this->enabled,
         ];
     }
 }
